@@ -81,12 +81,24 @@ class BaseBranchResolver:
             Nom de la branche de base à utiliser
         """
         
+        # 🔍 DEBUG: Log ce qui est reçu
+        logger.info(f"🔍 DEBUG resolve_base_branch: monday_base_branch={monday_base_branch} (type={type(monday_base_branch).__name__})")
+        
         # ==========================================
         # NIVEAU 1: base_branch depuis Monday.com
         # ==========================================
-        if monday_base_branch and self._is_valid_branch_name(monday_base_branch):
-            logger.info(f"🎯 Base branch depuis Monday.com: {monday_base_branch}")
-            return self._sanitize_branch_name(monday_base_branch)
+        if monday_base_branch:
+            logger.info(f"🔍 DEBUG: Vérification validité de '{monday_base_branch}'...")
+            is_valid = self._is_valid_branch_name(monday_base_branch)
+            logger.info(f"🔍 DEBUG: '{monday_base_branch}' est valide ? {is_valid}")
+            
+            if is_valid:
+                logger.info(f"🎯 Base branch depuis Monday.com: {monday_base_branch}")
+                return self._sanitize_branch_name(monday_base_branch)
+            else:
+                logger.warning(f"⚠️ base_branch de Monday.com '{monday_base_branch}' rejetée (invalide)")
+        else:
+            logger.info(f"ℹ️  Aucune base_branch depuis Monday.com, passage aux niveaux suivants")
         
         # ==========================================
         # NIVEAU 2: Configuration par repository
@@ -198,6 +210,9 @@ class BaseBranchResolver:
         """
         content = f"{title} {description}".lower()
         
+        # 🔍 DEBUG: Log le contenu analysé
+        logger.info(f"🔍 DEBUG _advanced_branch_inference: Analyse du contenu (100 premiers car): '{content[:100]}'")
+        
         branch_mention_patterns = [
             r'base[:\s]+(\w+)',
             r'vers[:\s]+(\w+)',
@@ -210,9 +225,15 @@ class BaseBranchResolver:
             match = re.search(pattern, content)
             if match:
                 branch = match.group(1)
+                logger.info(f"🔍 DEBUG: Pattern '{pattern}' a matché: '{branch}'")
+                
                 if self._is_valid_branch_name(branch):
+                    logger.info(f"✅ Branche '{branch}' validée par inférence avancée")
                     return branch
+                else:
+                    logger.info(f"❌ Branche '{branch}' rejetée (invalide ou code langue)")
         
+        logger.info(f"ℹ️  Aucune branche détectée par inférence avancée")
         return None
     
     def _is_valid_branch_name(self, branch_name: str) -> bool:
@@ -242,11 +263,21 @@ class BaseBranchResolver:
             if branch_lower.startswith(f"{valid}/"):
                 return True
         
+        # ⚠️ IMPORTANT: Inclure les codes ISO 639-1 pour éviter confusion langue/branche
+        language_codes = {
+            'fr', 'en', 'es', 'de', 'it', 'pt', 'zh', 'ja', 'ru', 'ar',
+            'nl', 'pl', 'tr', 'ko', 'hi', 'sv', 'no', 'da', 'fi', 'cs',
+            'el', 'he', 'id', 'ms', 'th', 'vi', 'uk', 'ro', 'bg', 'sk'
+        }
+        
         invalid_words = {
             'les', 'des', 'une', 'the', 'and', 'or', 'but', 'for', 'with',
             'sur', 'dans', 'pour', 'avec', 'par', 'cette', 'nouveau',
             'ajoute', 'uniformisez', 'états', 'vides', 'loaders', 'messages'
         }
+        
+        # Combiner codes langues et mots invalides
+        invalid_words = invalid_words.union(language_codes)
         
         if branch_lower in invalid_words:
             return False
