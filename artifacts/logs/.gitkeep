@@ -1,0 +1,3 @@
+# Ce fichier permet de garder ce dossier dans Git même s'il est vide
+# Les logs sont ignorés par .gitignore mais la structure du dossier est préservée
+
