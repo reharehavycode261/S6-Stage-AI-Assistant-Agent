@@ -332,15 +332,23 @@ class DatabasePersistenceService:
             return step_id
 
     def _clean_for_json_serialization(self, data: Any) -> Any:
+        """
+        Nettoie les données pour la sérialisation JSON et PostgreSQL.
+        Supprime les caractères null Unicode (\u0000) qui causent des erreurs PostgreSQL.
+        """
         if data is None:
             return None
-        elif isinstance(data, (str, int, float, bool)):
+        elif isinstance(data, str):
+            # ⚠️ CRITIQUE: Supprimer les caractères null Unicode incompatibles avec PostgreSQL
+            # PostgreSQL n'accepte pas \u0000 dans les colonnes text/varchar
+            return data.replace('\x00', '').replace('\u0000', '')
+        elif isinstance(data, (int, float, bool)):
             return data
         elif isinstance(data, (list, tuple)):
             return [self._clean_for_json_serialization(item) for item in data]
         elif isinstance(data, dict):
             return {
-                str(key): self._clean_for_json_serialization(value)
+                str(key).replace('\x00', '').replace('\u0000', ''): self._clean_for_json_serialization(value)
                 for key, value in data.items()
             }
         elif hasattr(data, 'dict') and callable(getattr(data, 'dict')):
@@ -350,7 +358,8 @@ class DatabasePersistenceService:
         elif hasattr(data, '_asdict') and callable(getattr(data, '_asdict')):
             return self._clean_for_json_serialization(data._asdict())
         else:
-            return str(data)
+            # Convertir en string et nettoyer les caractères null
+            return str(data).replace('\x00', '').replace('\u0000', '')
 
     def _get_data_structure_info(self, data: Any) -> str:
         """
