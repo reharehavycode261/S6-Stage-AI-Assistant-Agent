@@ -1,0 +1,86 @@
+# ================================
+# CONFIGURATION AI-AGENT
+# ================================
+# Copiez ce fichier vers .env et renseignez les valeurs
+
+# ================================
+# API KEYS - IA PROVIDERS
+# ================================
+ANTHROPIC_API_KEY=sk-ant-your-key-here
+OPENAI_API_KEY=sk-your-openai-key-here
+
+# ================================
+# GITHUB CONFIGURATION
+# ================================
+GITHUB_TOKEN=ghp_your-github-token-here
+# Configuration Git
+GIT_USER_NAME=AI-Agent
+GIT_USER_EMAIL=ai-agent@smartelia.com
+DEFAULT_BASE_BRANCH=main
+
+# ================================
+# MONDAY.COM CONFIGURATION
+# ================================
+MONDAY_API_TOKEN=your-monday-api-token-here
+MONDAY_CLIENT_ID=your-monday-client-id
+MONDAY_CLIENT_KEY=your-monday-client-key
+MONDAY_APP_ID=your-monday-app-id
+MONDAY_BOARD_ID=5084415062
+MONDAY_TASK_COLUMN_ID=your-task-column-id
+
+# ================================
+# WEBHOOK CONFIGURATION
+# ================================
+WEBHOOK_SECRET=your-webhook-secret-here
+ALLOWED_ORIGINS=*
+
+# ================================
+# SECURITY
+# ================================
+SECRET_KEY=your-super-secret-key-for-jwt-signing
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+# ================================
+# DATABASE CONFIGURATION
+# ================================
+DATABASE_URL=postgresql://admin:password@localhost:5432/ai_agent_admin
+REDIS_URL=redis://localhost:6379/0
+
+# ================================
+# RABBITMQ CONFIGURATION
+# ================================
+RABBITMQ_HOST=localhost
+RABBITMQ_PORT=5672
+RABBITMQ_VHOST=ai_agent
+RABBITMQ_USER=ai_agent_user
+RABBITMQ_PASSWORD=secure_password_123
+RABBITMQ_MANAGEMENT_PORT=15672
+RABBITMQ_ENABLE_MANAGEMENT=true
+
+# ================================
+# AI ENGINE CONFIGURATION
+# ================================
+DEFAULT_AI_PROVIDER=openai
+AI_MODEL_TEMPERATURE=0.1
+AI_MAX_TOKENS=4000
+
+# ================================
+# TESTING CONFIGURATION
+# ================================
+ENABLE_SMOKE_TESTS=true
+TEST_COVERAGE_THRESHOLD=80
+MAX_TEST_RETRIES=3
+
+# ================================
+# LANGSMITH TRACING (Optional)
+# ================================
+LANGSMITH_API_KEY=your-langsmith-key-here
+LANGSMITH_PROJECT=ai-agent-production
+LANGSMITH_TRACING=true
+LANGSMITH_ENDPOINT=https://api.smith.langchain.com
+
+# ================================
+# APPLICATION CONFIGURATION
+# ================================
+DEBUG=false
+LOG_LEVEL=INFO 

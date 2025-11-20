@@ -53,27 +53,53 @@ graph TD
     J --> K[END]
 ```
 
+## 📁 Structure du Projet
+
+Le projet est organisé en trois dossiers principaux :
+
+- **`backend/`** : Code backend (API FastAPI, services, IA, etc.)
+- **`frontend/`** : Application React (interface d'administration)
+- **`artifacts/`** : Scripts, migrations SQL, sauvegardes, logs
+
+Pour plus de détails, consultez le [Guide de Migration](MIGRATION_GUIDE.md) et [README_STRUCTURE.md](README_STRUCTURE.md).
+
 ## 🚀 Installation et Configuration
 
-### 1. Installation des dépendances
+### 1. Démarrage Rapide avec Docker (Recommandé)
 
 ```bash
 # Cloner le repository
 git clone <repo-url>
-cd ai-dev-automation
+cd S6-Stage-AI-Assistant-Agent
 
-# Installer les dépendances
-pip install -r requirements.txt
+# Créer le fichier .env à partir du template
+cp artifacts/env_template.txt .env
+
+# Éditer le fichier .env avec vos clés API
+nano .env
+
+# Démarrer tous les services
+chmod +x start.sh
+./start.sh
 ```
 
-### 2. Configuration des variables d'environnement
+### 2. Développement Local (Sans Docker)
 
 ```bash
-# Copier le fichier d'exemple
-cp .env.example .env
+# Créer le fichier .env
+cp artifacts/env_template.txt .env
 
-# Éditer le fichier .env avec vos clés
+# Éditer le fichier .env
+nano .env
+
+# Lancer en mode développement
+chmod +x start-dev.sh
+./start-dev.sh
 ```
+
+### 3. Configuration des variables d'environnement
+
+Le fichier `.env` doit être créé à la racine du projet :
 
 **Variables requises :**
 ```env
@@ -124,12 +150,26 @@ MONDAY_STATUS_COLUMN_ID=status
 ### Démarrage du service
 
 ```bash
-# Démarrage en développement
+# Option 1: Avec Docker (tous les services)
+./start.sh
+
+# Option 2: Mode développement (backend uniquement)
+./start-dev.sh
+
+# Option 3: Démarrage manuel du backend
+cd backend
 python main.py
 
 # Ou avec uvicorn
+cd backend
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
+
+**Accès aux services :**
+- API Backend: http://localhost:8000
+- Documentation API: http://localhost:8000/docs
+- RabbitMQ Management: http://localhost:15672
+- Flower (Celery): http://localhost:5555
 
 ### Workflow automatique
 

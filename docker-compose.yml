@@ -1,0 +1,269 @@
+version: '3.8'
+
+# ========================================================
+# Docker Compose Principal - Nouvelle Structure
+# ========================================================
+# Ce fichier pointe vers le backend réorganisé
+# Pour plus de détails, voir backend/docker-compose.rabbitmq.yml
+# ========================================================
+
+services:
+  # ================================
+  # MESSAGE BROKER - RabbitMQ
+  # ================================
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: ai_agent_rabbitmq
+    hostname: ai-agent-rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ai_agent_user
+      RABBITMQ_DEFAULT_PASS: secure_password_123
+      RABBITMQ_DEFAULT_VHOST: ai_agent
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbit log_levels [{connection,info}]
+      RABBITMQ_MANAGEMENT_ALLOW_WEB_ACCESS: "true"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_logs:/var/log/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  # ================================
+  # DATABASE - PostgreSQL
+  # ================================
+  postgres:
+    build:
+      context: ./artifacts/docker/postgres
+      dockerfile: Dockerfile
+    image: ai_agent_postgres:pg_partman
+    container_name: ai_agent_postgres
+    hostname: ai-agent-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ai_agent_admin
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./artifacts/docker/postgres/init-scripts/01-enable-pg-partman.sql:/docker-entrypoint-initdb.d/01-enable-pg-partman.sql:ro
+      - ./backend/config/init-db.sql:/docker-entrypoint-initdb.d/02-init-db.sql:ro
+      - ./artifacts/docker/postgres/init-scripts/02-configure-webhook-events-partman.sql:/docker-entrypoint-initdb.d/03-configure-webhook-events-partman.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d ai_agent_admin"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  # ================================
+  # CACHE - Redis
+  # ================================
+  redis:
+    image: redis:7-alpine
+    container_name: ai_agent_redis
+    hostname: ai-agent-redis
+    ports:
+      - "6379:6379"
+    command: >
+      redis-server
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --appendonly yes
+      --appendfsync everysec
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  # ================================
+  # APPLICATION - FastAPI Backend
+  # ================================
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_agent_app
+    hostname: ai-agent-api
+    ports:
+      - "8000:8000"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: ai_agent
+      RABBITMQ_USER: ai_agent_user
+      RABBITMQ_PASSWORD: secure_password_123
+      DATABASE_URL: postgresql://admin:password@postgres:5432/ai_agent_admin
+      REDIS_URL: redis://redis:6379/0
+      DEBUG: "false"
+      LOG_LEVEL: INFO
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      MONDAY_API_KEY: ${MONDAY_API_KEY}
+      WEBHOOK_SECRET: ${WEBHOOK_SECRET}
+      SECRET_KEY: ${SECRET_KEY}
+      MONDAY_BOARD_ID: ${MONDAY_BOARD_ID}
+      MONDAY_TASK_COLUMN_ID: ${MONDAY_TASK_COLUMN_ID}
+      MONDAY_STATUS_COLUMN_ID: ${MONDAY_STATUS_COLUMN_ID}
+      DEFAULT_REPO_URL: ${DEFAULT_REPO_URL}
+      GIT_USER_NAME: ${GIT_USER_NAME:-AI-Agent}
+      GIT_USER_EMAIL: ${GIT_USER_EMAIL:-ai-agent@example.com}
+    volumes:
+      - ./artifacts/logs:/app/logs
+      - /tmp/ai_agent_workspaces:/tmp/workspaces
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  # ================================
+  # CELERY WORKERS
+  # ================================
+  celery-worker-webhooks:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_agent_worker_webhooks
+    hostname: worker-webhooks
+    command: celery -A services.celery_app worker --loglevel=info --queues=webhooks --concurrency=4 --hostname=webhooks@%h
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: ai_agent
+      RABBITMQ_USER: ai_agent_user
+      RABBITMQ_PASSWORD: secure_password_123
+      DATABASE_URL: postgresql://admin:password@postgres:5432/ai_agent_admin
+      REDIS_URL: redis://redis:6379/0
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      MONDAY_API_KEY: ${MONDAY_API_KEY}
+      MONDAY_BOARD_ID: ${MONDAY_BOARD_ID}
+      DEFAULT_REPO_URL: ${DEFAULT_REPO_URL}
+      LOG_LEVEL: INFO
+    volumes:
+      - ./artifacts/logs:/app/logs
+      - /tmp/ai_agent_workspaces:/tmp/workspaces
+    depends_on:
+      - rabbitmq
+      - postgres
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  celery-worker-workflows:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_agent_worker_workflows
+    hostname: worker-workflows
+    command: celery -A services.celery_app worker --loglevel=info --queues=workflows --concurrency=2 --hostname=workflows@%h
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: ai_agent
+      RABBITMQ_USER: ai_agent_user
+      RABBITMQ_PASSWORD: secure_password_123
+      DATABASE_URL: postgresql://admin:password@postgres:5432/ai_agent_admin
+      REDIS_URL: redis://redis:6379/0
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      MONDAY_API_KEY: ${MONDAY_API_KEY}
+      MONDAY_BOARD_ID: ${MONDAY_BOARD_ID}
+      DEFAULT_REPO_URL: ${DEFAULT_REPO_URL}
+      GIT_USER_NAME: ${GIT_USER_NAME:-AI-Agent}
+      GIT_USER_EMAIL: ${GIT_USER_EMAIL:-ai-agent@example.com}
+      LOG_LEVEL: INFO
+    volumes:
+      - ./artifacts/logs:/app/logs
+      - /tmp/ai_agent_workspaces:/tmp/workspaces
+      - ~/.ssh:/root/.ssh:ro
+    depends_on:
+      - rabbitmq
+      - postgres
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  # ================================
+  # MONITORING - Flower
+  # ================================
+  flower:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_agent_flower
+    hostname: flower-monitor
+    command: celery -A services.celery_app flower --port=5555 --basic-auth=${FLOWER_USER:-admin}:${FLOWER_PASSWORD:-flower123}
+    ports:
+      - "5555:5555"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: ai_agent
+      RABBITMQ_USER: ai_agent_user
+      RABBITMQ_PASSWORD: secure_password_123
+      DATABASE_URL: postgresql://admin:password@postgres:5432/ai_agent_admin
+      REDIS_URL: redis://redis:6379/0
+      FLOWER_BASIC_AUTH: ${FLOWER_USER:-admin}:${FLOWER_PASSWORD:-flower123}
+      FLOWER_URL_PREFIX: ${FLOWER_URL_PREFIX:-}
+    depends_on:
+      - rabbitmq
+      - postgres
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+# ================================
+# VOLUMES
+# ================================
+volumes:
+  rabbitmq_data:
+    driver: local
+    name: ai_agent_rabbitmq_data
+  rabbitmq_logs:
+    driver: local
+    name: ai_agent_rabbitmq_logs
+  postgres_data:
+    driver: local
+    name: ai_agent_postgres_data
+  redis_data:
+    driver: local
+    name: ai_agent_redis_data
+
+# ================================
+# NETWORK
+# ================================
+networks:
+  ai_agent_network:
+    driver: bridge
+    name: ai_agent_network
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+

@@ -1,0 +1,377 @@
+eval_id,timestamp,test_id,monday_update_id,agent_output,llm_score,llm_reasoning,human_validation_status,human_score,human_feedback,final_score,status,duration_seconds,error_message,input_reference,output_reference,passed,error,analyses_count,pr_count
+EVAL_20251106_103045,2025-11-06T10:30:45,GS_A001,updateMday1,"Le fichier main.py contient une API FastAPI avec plusieurs endpoints clés : /health pour vérifier l'état, /process pour traiter les requêtes, /status pour le statut, et /evaluation/run pour lancer les évaluations. L'agent VyData est initialisé avec LangGraph et intègre Monday.com et GitHub.",85.0,Good accuracy and completeness. The response correctly identifies main endpoints and mentions VyData agent integration. Minor issue: missing /evaluation/report endpoint. Clarity is excellent with well-structured explanation.,validated,88.0,"Très bonne analyse, juste l'endpoint /evaluation/report manquant",86.5,PASS,2.3,,,,,,,
+EVAL_20251106_103512,2025-11-06T10:35:12,GS_P001,updateMday2,"PR #156 créée avec succès ! Branche: feat/login-form. Fichiers créés: LoginForm.tsx (composant React avec useState pour email/password), validation avec regex pour email et contraintes password (8 caractères min), LoginForm.css (design moderne), LoginForm.test.tsx (tests Jest). Documentation mise à jour.",65.0,"Implementation is present but incomplete. Missing detailed validation rules (uppercase, digit, special char requirements). Test coverage percentage not specified. Good structure and clarity. Code quality appears adequate but lacks some expected details.",pending,,,65.0,FAIL,5.8,,,,,,,
+EVAL_20251106_104033,2025-11-06T10:40:33,GS_A002,updateMday3,"Le projet est organisé en modules bien définis : services/ contient la logique métier (agent_service, workflow_service, human_validation_service, reactivation_service), models/ les schémas Pydantic, api/ les routes FastAPI, utils/ les outils (logger, formatters), tools/ les intégrations (monday_tool, github_tool), nodes/ les nœuds de workflow (analyze_node, update_node, validation_node), et data/ pour les données.",92.0,Excellent completeness and accuracy. All major directories are mentioned with specific file examples. Clear hierarchical structure. Good data quality with accurate file names. Very actionable description of project organization.,validated,95.0,"Parfait, très complet et précis",93.5,PASS,1.9,,,,,,,
+EVAL_20251106_104521,2025-11-06T10:45:21,GS_A003,hello,"Bonjour ! Je suis VyData, votre assistant IA. Je peux vous aider avec l'analyse de code, la création de Pull Requests, répondre à vos questions techniques et bien plus. Comment puis-je vous assister ?",90.0,Clear and friendly greeting. Mentions key capabilities. Good actionability with question prompt. Minor: missing some specific capabilities like bug fixing and feature implementation. Overall excellent response for a greeting.,validated,90.0,Parfait pour une salutation,90.0,PASS,0.8,,,,,,,
+EVAL_20251106_105234,2025-11-06T10:52:34,GS_P002,updateMday4,"PR #157 créée sur feat/users-endpoint avec : routes/users.js (endpoint GET /users acceptant limit et offset en query params), controllers/userController.js (logique avec pagination), validation middleware, gestion erreurs 404/500, tests d'intégration test_users_endpoint.js (6 tests), Swagger mis à jour avec documentation complète de l'endpoint.",78.0,Good implementation with most required elements. Pagination is present with correct parameters. Error handling mentioned. Tests are included but only 6 scenarios vs expected 8. Missing explicit mention of caching. Clarity and structure are good.,validated,80.0,"Bonne implémentation, manque juste le cache",79.0,PASS,4.2,,,,,,,
+EVAL_20251106_110156,2025-11-06T11:01:56,GS_A004,updateMday5,"Le service de validation humaine permet de demander l'avis d'un humain pendant le workflow. Il crée une demande stockée en base de données, notifie sur Monday.com, attend la réponse (approve/reject), puis reprend le workflow. Il y a un système de timeout si pas de réponse.",72.0,"Adequate explanation covering main functionality. Mentions database storage, Monday notification, and workflow pause. However, missing important details about locks to prevent conflicts and timeout duration. Completeness could be improved.",to_review,,,72.0,PASS,2.1,,,,,,,
+EVAL_20251106_111423,2025-11-06T11:14:23,GS_A005,updateMday6,"L'agent a accès à plusieurs outils : monday_tool pour interagir avec Monday.com (lecture/écriture updates, gestion colonnes), github_tool pour GitHub (branches, PRs, commits, analyse), search_tool pour la recherche de code, file_tool pour les fichiers, et sql_tool pour les requêtes base de données.",88.0,Excellent accuracy listing all major tools. Good completeness with specific capabilities for each tool. Clear and well-structured. Minor: could provide more details on search_tool capabilities. Overall very good response.,validated,90.0,"Très complet, bien structuré",89.0,PASS,1.7,,,,,,,
+EVAL_20251106_112845,2025-11-06T11:28:45,GS_P003,updateMday7,"PR #158 créée pour fix/user-error-handling : Ajout de try-catch dans controllers/userController.js fonction getUserById, retour HTTP 404 avec message 'User not found' si l'utilisateur n'existe pas, retour 500 avec logging en cas d'erreur base de données, tests d'erreurs ajoutés dans test_user_errors.js (5 tests), régression check OK.",82.0,"Good bug fix implementation with proper error handling. HTTP codes are correct (404, 500). Error messages are present. Tests are added. Minor: expected more comprehensive tests and explicit mention of logging details. Good overall quality.",validated,85.0,"Bon travail, correction solide",83.5,PASS,3.4,,,,,,,
+EVAL_20251106_113612,2025-11-06T11:36:12,GS_A006,updateMday8,Le dernier commit sur main est 'feat: Add Excel support for golden datasets' par Jean Dupont le 2025-11-05. SHA: abc123. Fichiers modifiés : services/evaluation/excel_golden_dataset_service.py et README.md. Ce commit ajoute la gestion de datasets Excel.,76.0,"Good accuracy with commit message and author. Date and files are mentioned. Missing exact time (14:30) and line changes details (+150, +20). Clarity is good. Data quality adequate but could be more precise.",validated,75.0,Correct mais manque quelques détails précis,75.5,PASS,2.8,,,,,,,
+EVAL_20251106_114328,2025-11-06T11:43:28,GS_P004,updateMday9,"PR #159 créée sur test/user-service : Fichier tests/services/test_user_service.js avec tests complets pour UserService. Tests CRUD (createUser, getUser, updateUser, deleteUser), tests d'erreur (validation, DB), mocks DB dans tests/mocks/db_mock.js. Couverture 92%. 15 tests, tous passent en 2.3s.",95.0,Excellent implementation. All CRUD operations tested. Error cases covered. Mocks properly implemented. Coverage is excellent (92%). Test count matches (15). Execution time specified. Very complete and accurate response.,validated,98.0,"Excellent travail, très complet",96.5,PASS,3.9,,,,,,,
+EVAL_20251106_115541,2025-11-06T11:55:41,GS_A007,updateMday10,"Le workflow de l'agent fonctionne ainsi : 1) Update Monday reçu, 2) Analyse de la requête, 3) Décision via router, 4) Validation humaine optionnelle, 5) Exécution (PR ou analyse), 6) Update Monday avec résultats, 7) Sauvegarde en DB. Le tout géré par LangGraph.",87.0,Very good completeness covering all workflow steps. Clear sequential structure. Mentions LangGraph orchestration. Accuracy is good with all key stages. Minor: could provide more details on state management. Overall excellent explanation.,validated,88.0,Très bonne explication du workflow,87.5,PASS,1.5,,,,,,,
+EVAL_20251106_120234,2025-11-06T12:02:34,GS_P005,updateMday11,"PR #160 créée sur docs/readme avec README.md complet : titre et description, badges (build, coverage), installation (prérequis Node.js/Python, commandes npm install et pip install), utilisation avec exemples, architecture avec description des modules, variables d'environnement (.env.example), contribution guidelines, licence MIT.",93.0,"Excellent documentation PR. All required sections present: title, badges, installation, usage, architecture, environment variables, contribution, license. Examples mentioned. Very complete and well-structured. Minor: could mention specific prerequisite versions.",validated,95.0,Documentation parfaite,94.0,PASS,2.6,,,,,,,
+EVAL_20251106_121456,2025-11-06T12:14:56,GS_A008,updateMday12,"Les principales dépendances sont : FastAPI (API web), LangChain/LangGraph (agent IA), Anthropic et OpenAI (LLMs), SQLAlchemy (base de données), Pydantic (validation), httpx (HTTP), pandas et openpyxl (Excel), pytest (tests), uvicorn (serveur). Voir requirements.txt pour versions.",90.0,Excellent accuracy listing all major dependencies. Good clarity with purpose for each. Mentions requirements.txt for versions. Completeness is very good. Minor: could specify Python version requirement. Overall very comprehensive.,validated,92.0,Très complet,91.0,PASS,1.6,,,,,,,
+EVAL_20251106_122312,2025-11-06T12:23:12,GS_A009,updateMday13,"L'agent gère les erreurs avec : try-catch dans chaque node, logging avec niveaux (ERROR, WARNING, INFO), sauvegarde erreurs en DB, notification Monday en cas d'échec, retry automatique (max 3 fois, backoff exponentiel), fallback vers validation humaine si critique, métriques d'erreurs.",94.0,"Excellent comprehensive explanation of error handling. All mechanisms mentioned: try-catch, logging, DB storage, Monday notifications, retry with backoff, fallback to human validation, metrics. Very complete and accurate. Clear structure.",validated,96.0,Explication parfaite et complète,95.0,PASS,2.1,,,,,,,
+EVAL_20251106_123145,2025-11-06T12:31:45,GS_A010,updateMday14,"Le système de validation humaine fonctionne en créant une HumanValidationRequest stockée en DB avec statut pending, notification Monday avec boutons d'action, pause du workflow avec lock, attente de la réponse (polling), récupération de la décision (approved/rejected + feedback), reprise du workflow. Timeout de 24h par défaut.",97.0,"Excellent completeness covering entire validation flow. Mentions all key components: request creation, DB storage, Monday notification with buttons, workflow pause with locks, polling, decision retrieval with feedback, timeout (24h). Very accurate and actionable. Outstanding response.",validated,98.0,"Parfait, rien à redire",97.5,PASS,1.8,,,,,,,
+,2025-11-10T15:10:56.529789,,,"Le fichier main.py contient l'API FastAPI principale avec 5 endpoints : /health, /process, /status, /evaluation/run, /evaluation/report. Il initialise l'agent VyData avec LangGraph.",0.0,"Erreur lors de l'évaluation: 1 validation error for ChatAnthropic
+model_name
+  none is not an allowed value (type=type_error.none.not_allowed)",,,,,,,,Analyse le fichier main.py et explique sa structure,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,"1 validation error for ChatAnthropic
+model_name
+  none is not an allowed value (type=type_error.none.not_allowed)",,
+,2025-11-10T15:10:56.638796,,,"PR #123 créée avec succès sur la branche feat/login-form. Fichiers: LoginForm.tsx, validation.ts, LoginForm.test.tsx",0.0,"Erreur lors de l'évaluation: 1 validation error for ChatAnthropic
+model_name
+  none is not an allowed value (type=type_error.none.not_allowed)",,,,,,,,Crée un formulaire de login avec validation,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,"1 validation error for ChatAnthropic
+model_name
+  none is not an allowed value (type=type_error.none.not_allowed)",,
+,2025-11-10T15:10:56.733248,,,"🔍 D'après l'analyse du projet et les informations disponibles, il n'y a pas de mention claire de l'existence de fonctionnalités de confirmation telles que des pop-ups ou des toasts après des actions importantes comme la suppression, la sauvegarde ou l'envoi. 
+
+L'analyse des commits récents et des pull requests ne montre pas d'ajouts ou de modifications spécifiques concernant ce type de fonctionnalité. Par exemple, le dernier commit porte sur l'ajout d'un bouton de copie rapide, et le dernier pull request concerne l'ajout d'un indicateur de chargement.
+
+Cependant, sans un examen plus approfondi du code source, il n'est pas possible de confirmer avec certitude. 
+
+Je vous suggère de vérifier directement dans le code source ou de contacter l'équipe de développement pour obtenir une confirmation.
+
+N'hésitez pas si vous avez besoin d'aide supplémentaire ou si vous avez d'autres questions sur le projet.",0.0,"Erreur lors de l'évaluation: 1 validation error for ChatAnthropic
+model_name
+  none is not an allowed value (type=type_error.none.not_allowed)",,,,,,,,"Est ce que cette fonctionnalite existe dans le projet : Messages de confirmation Pop-ups ou toasts de confirmation après les actions importantes (suppression, sauvegarde, envoi) pour rassurer l'utilisateur que l'action a bien été effectuée ?","Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,"1 validation error for ChatAnthropic
+model_name
+  none is not an allowed value (type=type_error.none.not_allowed)",,
+,2025-11-10T15:10:56.828365,,,"🔍 D'après l'analyse du projet et la structure des fichiers fournie, il n'est pas explicitement clair si la fonctionnalité ""Tableau de bord administrateur personnalisé"" est implémentée dans le projet. Voici quelques points clés de l'analyse :
+
+- Le projet est principalement écrit en JavaScript et Python
+- Il semble comprendre des modèles dans le dossier `model_creation`
+- Il y a un fichier `admin.py` dans le dossier `number`, qui pourrait potentiellement être lié à un tableau de bord administrateur
+- Le dernier commit sur la branche principale a été effectué par reharehavycode261 avec pour message ""h"" le 2025-11-10
+
+Cependant, sans une analyse plus approfondie du code ou des fonctionnalités spécifiques du projet, il n'est pas possible de confirmer avec certitude l'existence de la fonctionnalité demandée. 
+
+💡 Il serait utile de vérifier le contenu du fichier `admin.py` ou de demander des clarifications supplémentaires au développeur du projet.",0.0,"Erreur lors de l'évaluation: 1 validation error for ChatAnthropic
+model_name
+  none is not an allowed value (type=type_error.none.not_allowed)",,,,,,,,Est ce que cette fonctionnalite est implemente dans le projet : Tableau de bord administrateur personnalisé ?,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,"1 validation error for ChatAnthropic
+model_name
+  none is not an allowed value (type=type_error.none.not_allowed)",,
+,2025-11-10T15:10:56.927598,,,"🔍 Selon l'analyse du projet, il existe bien une application Django nommée 'number' dans la structure du projet. Voici quelques fichiers clés qui font partie de cette application :
+
+- `number/__init__.py`
+- `number/admin.py`
+- `number/apps.py`
+
+Pour plus d'informations sur l'application 'number' ou pour toute autre question, n'hésitez pas à demander.",0.0,"Erreur lors de l'évaluation: 1 validation error for ChatAnthropic
+model_name
+  none is not an allowed value (type=type_error.none.not_allowed)",,,,,,,,Est ce que il y a cette fonctionnalite Application Django 'number' dans le projet ?,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,"1 validation error for ChatAnthropic
+model_name
+  none is not an allowed value (type=type_error.none.not_allowed)",,
+,2025-11-10T15:11:24.315888,,,"Le fichier main.py contient l'API FastAPI principale avec 5 endpoints : /health, /process, /status, /evaluation/run, /evaluation/report. Il initialise l'agent VyData avec LangGraph.",50.0,"ADAM's response provides a brief overview of the main.py file, mentioning the presence of an API with 5 endpoints and the initialization of an agent. However, it lacks detail and completeness. The response does not explain the structure of the file, such as how the endpoints are defined, what each endpoint does, or how the initialization of the agent is structured within the file. Additionally, it does not provide any actionable insights or next steps for the user. The response is clear but not sufficiently detailed to fully address the user's question about the structure of the file.",,,,,,,,Analyse le fichier main.py et explique sa structure,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,,,
+,2025-11-10T15:11:28.577819,,,"PR #123 créée avec succès sur la branche feat/login-form. Fichiers: LoginForm.tsx, validation.ts, LoginForm.test.tsx",30.0,"ADAM's response does not adequately address the user's request to create a login form with validation. The response mentions a pull request and files related to a login form, but it lacks any explanation or details about the form's creation process, validation logic, or how to implement it. There is no information on the structure or functionality of the login form, nor any guidance on how to use or test it. The response is not actionable for someone looking to understand or create a login form with validation. It fails in terms of completeness, clarity, and actionability, though it does hint at some related work being done, which is why it does not score lower.",,,,,,,,Crée un formulaire de login avec validation,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,,,
+,2025-11-10T15:11:48.625993,,,"Le fichier main.py contient l'API FastAPI principale avec 5 endpoints : /health, /process, /status, /evaluation/run, /evaluation/report. Il initialise l'agent VyData avec LangGraph.",50.0,"ADAM's response provides a brief overview of the main.py file, mentioning the presence of an API with 5 endpoints and the initialization of an agent. However, it lacks detail and completeness. The response does not explain the structure of the file, such as how the endpoints are defined, what each endpoint does, or how the initialization of the agent is structured within the file. Additionally, it does not provide any actionable insights or next steps for the user. The response is clear but not sufficiently detailed to fully address the user's question about the structure of the file.",,,,,,,,Analyse le fichier main.py et explique sa structure,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,,,
+,2025-11-10T15:11:52.540773,,,"PR #123 créée avec succès sur la branche feat/login-form. Fichiers: LoginForm.tsx, validation.ts, LoginForm.test.tsx",30.0,"ADAM's response does not adequately address the user's request to create a login form with validation. The response mentions a pull request and files related to a login form, but it lacks any explanation or details about the form's creation process, validation logic, or how to implement it. There is no information on the structure of the form, the validation rules, or any actionable steps for the user to follow. The response is not clear or complete, and it fails to provide useful insights or guidance on creating a login form with validation. Therefore, it scores poorly in accuracy, completeness, clarity, and actionability.",,,,,,,,Crée un formulaire de login avec validation,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,,,
+,2025-11-10T15:11:56.492136,,,"🔍 D'après l'analyse du projet et les informations disponibles, il n'y a pas de mention claire de l'existence de fonctionnalités de confirmation telles que des pop-ups ou des toasts après des actions importantes comme la suppression, la sauvegarde ou l'envoi. 
+
+L'analyse des commits récents et des pull requests ne montre pas d'ajouts ou de modifications spécifiques concernant ce type de fonctionnalité. Par exemple, le dernier commit porte sur l'ajout d'un bouton de copie rapide, et le dernier pull request concerne l'ajout d'un indicateur de chargement.
+
+Cependant, sans un examen plus approfondi du code source, il n'est pas possible de confirmer avec certitude. 
+
+Je vous suggère de vérifier directement dans le code source ou de contacter l'équipe de développement pour obtenir une confirmation.
+
+N'hésitez pas si vous avez besoin d'aide supplémentaire ou si vous avez d'autres questions sur le projet.",85.0,"ADAM's response is generally accurate and provides a clear answer to the user's question about the existence of confirmation messages in the project. It correctly states that there is no clear mention of such features in the available project information and suggests checking the code or contacting the development team for confirmation. The response is well-structured and offers actionable advice. However, it could be improved by explicitly stating that the absence of evidence in the commits and pull requests does not necessarily mean the feature is absent, as it might be implemented but not documented in recent changes. Additionally, providing more context on how to check the code or contact the team could enhance actionability.",,,,,,,,"Est ce que cette fonctionnalite existe dans le projet : Messages de confirmation Pop-ups ou toasts de confirmation après les actions importantes (suppression, sauvegarde, envoi) pour rassurer l'utilisateur que l'action a bien été effectuée ?","Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",True,,,
+,2025-11-10T15:12:02.965144,,,"🔍 D'après l'analyse du projet et la structure des fichiers fournie, il n'est pas explicitement clair si la fonctionnalité ""Tableau de bord administrateur personnalisé"" est implémentée dans le projet. Voici quelques points clés de l'analyse :
+
+- Le projet est principalement écrit en JavaScript et Python
+- Il semble comprendre des modèles dans le dossier `model_creation`
+- Il y a un fichier `admin.py` dans le dossier `number`, qui pourrait potentiellement être lié à un tableau de bord administrateur
+- Le dernier commit sur la branche principale a été effectué par reharehavycode261 avec pour message ""h"" le 2025-11-10
+
+Cependant, sans une analyse plus approfondie du code ou des fonctionnalités spécifiques du projet, il n'est pas possible de confirmer avec certitude l'existence de la fonctionnalité demandée. 
+
+💡 Il serait utile de vérifier le contenu du fichier `admin.py` ou de demander des clarifications supplémentaires au développeur du projet.",85.0,"ADAM's response is generally good, as it provides a detailed analysis of the project structure and suggests potential areas where the functionality might be implemented. It accurately identifies relevant files and offers a logical next step by recommending further investigation of the `admin.py` file or consulting the developer. However, the response could be improved by being more direct in addressing the user's question about the implementation status. While it mentions the lack of explicit clarity, it could have been more concise in stating that the current information does not confirm the implementation. Additionally, the response could benefit from a clearer structure, such as bullet points or numbered steps, to enhance readability and clarity.",,,,,,,,Est ce que cette fonctionnalite est implemente dans le projet : Tableau de bord administrateur personnalisé ?,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",True,,,
+,2025-11-10T15:12:07.703633,,,"🔍 Selon l'analyse du projet, il existe bien une application Django nommée 'number' dans la structure du projet. Voici quelques fichiers clés qui font partie de cette application :
+
+- `number/__init__.py`
+- `number/admin.py`
+- `number/apps.py`
+
+Pour plus d'informations sur l'application 'number' ou pour toute autre question, n'hésitez pas à demander.",95.0,"ADAM's response is accurate and directly addresses the user's question by confirming the existence of the 'number' application in the Django project. It provides a list of key files associated with the application, which adds to the completeness of the response. The response is clear and well-structured, making it easy for the user to understand. Additionally, it offers an invitation for further questions, enhancing its actionability. The only minor improvement could be to include a brief explanation of what these files typically contain or their purpose, but this does not significantly detract from the overall quality of the response.",,,,,,,,Est ce que il y a cette fonctionnalite Application Django 'number' dans le projet ?,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",True,,,
+,2025-11-10T15:21:43.393218,,,"Le fichier main.py contient l'API FastAPI principale avec 5 endpoints : /health, /process, /status, /evaluation/run, /evaluation/report. Il initialise l'agent VyData avec LangGraph.",50.0,"ADAM's response provides a brief overview of the main.py file, mentioning the presence of an API with 5 endpoints and the initialization of an agent. However, it lacks detail and completeness. The response does not explain the structure of the file, such as how the endpoints are defined, what each endpoint does, or how the initialization of the agent is structured. Additionally, it does not provide any actionable insights or next steps for the user. The response is clear but too concise to be fully useful, missing key information that would make it comprehensive.",,,,,,,,Analyse le fichier main.py et explique sa structure,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,,,
+,2025-11-10T15:21:46.671272,,,"PR #123 créée avec succès sur la branche feat/login-form. Fichiers: LoginForm.tsx, validation.ts, LoginForm.test.tsx",30.0,"ADAM's response does not adequately address the user's request to create a login form with validation. The response mentions a pull request and files related to a login form, but it lacks any explanation or details about the form's creation or the validation process. There is no information on how the login form is structured, what validation rules are applied, or how the user can implement or use this form. The response is not clear or actionable for someone looking to understand or create a login form with validation. It fails to meet the criteria of accuracy, completeness, and clarity, providing only a vague reference to a pull request without context or guidance.",,,,,,,,Crée un formulaire de login avec validation,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",False,,,
+,2025-11-10T15:21:50.319683,,,"🔍 D'après l'analyse du projet et les informations disponibles, il n'y a pas de mention claire de l'existence de fonctionnalités de confirmation telles que des pop-ups ou des toasts après des actions importantes comme la suppression, la sauvegarde ou l'envoi. 
+
+L'analyse des commits récents et des pull requests ne montre pas d'ajouts ou de modifications spécifiques concernant ce type de fonctionnalité. Par exemple, le dernier commit porte sur l'ajout d'un bouton de copie rapide, et le dernier pull request concerne l'ajout d'un indicateur de chargement.
+
+Cependant, sans un examen plus approfondi du code source, il n'est pas possible de confirmer avec certitude. 
+
+Je vous suggère de vérifier directement dans le code source ou de contacter l'équipe de développement pour obtenir une confirmation.
+
+N'hésitez pas si vous avez besoin d'aide supplémentaire ou si vous avez d'autres questions sur le projet.",85.0,"ADAM's response is generally accurate and provides a clear answer to the user's question about the existence of confirmation messages in the project. It correctly identifies that there is no clear mention of such features in the available project documentation or recent updates. The response is well-structured and suggests actionable next steps, such as checking the code source or contacting the development team for confirmation. However, it could be improved by providing more specific guidance on how to examine the code or who to contact, which would enhance its actionability. Additionally, while the response is clear, it could benefit from a more detailed explanation of why the current analysis methods (commits and pull requests) might not fully capture the existence of these features.",,,,,,,,"Est ce que cette fonctionnalite existe dans le projet : Messages de confirmation Pop-ups ou toasts de confirmation après les actions importantes (suppression, sauvegarde, envoi) pour rassurer l'utilisateur que l'action a bien été effectuée ?","Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",True,,,
+,2025-11-10T15:21:53.998352,,,"🔍 D'après l'analyse du projet et la structure des fichiers fournie, il n'est pas explicitement clair si la fonctionnalité ""Tableau de bord administrateur personnalisé"" est implémentée dans le projet. Voici quelques points clés de l'analyse :
+
+- Le projet est principalement écrit en JavaScript et Python
+- Il semble comprendre des modèles dans le dossier `model_creation`
+- Il y a un fichier `admin.py` dans le dossier `number`, qui pourrait potentiellement être lié à un tableau de bord administrateur
+- Le dernier commit sur la branche principale a été effectué par reharehavycode261 avec pour message ""h"" le 2025-11-10
+
+Cependant, sans une analyse plus approfondie du code ou des fonctionnalités spécifiques du projet, il n'est pas possible de confirmer avec certitude l'existence de la fonctionnalité demandée. 
+
+💡 Il serait utile de vérifier le contenu du fichier `admin.py` ou de demander des clarifications supplémentaires au développeur du projet.",85.0,"ADAM's response is generally good, as it addresses the user's question by analyzing the project structure and providing insights into the potential presence of the requested feature. The response is clear and well-structured, listing relevant files and their possible connections to the feature in question. However, it lacks completeness because it does not provide a definitive answer or a more thorough analysis of the codebase, which would have been more actionable. The suggestion to check the `admin.py` file or consult the developer is useful, but the response could have been improved by offering more specific guidance on how to verify the feature's implementation. Overall, the response is informative but could benefit from deeper analysis or more direct action steps.",,,,,,,,Est ce que cette fonctionnalite est implemente dans le projet : Tableau de bord administrateur personnalisé ?,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",True,,,
+,2025-11-10T15:21:56.833751,,,"🔍 Selon l'analyse du projet, il existe bien une application Django nommée 'number' dans la structure du projet. Voici quelques fichiers clés qui font partie de cette application :
+
+- `number/__init__.py`
+- `number/admin.py`
+- `number/apps.py`
+
+Pour plus d'informations sur l'application 'number' ou pour toute autre question, n'hésitez pas à demander.",95.0,"ADAM's response is highly accurate and directly addresses the user's question by confirming the existence of the 'number' application in the Django project. The response is complete as it provides additional context by listing key files associated with the application, which adds value and clarity. The structure of the response is clear and easy to understand. It also offers actionability by inviting the user to ask further questions if needed. The only minor improvement could be to include a brief explanation of what these files typically contain or their purpose, but this is not critical. Overall, the response is excellent.",,,,,,,,Est ce que il y a cette fonctionnalite Application Django 'number' dans le projet ?,"Une réponse complète, précise et actionnnable qui répond correctement à la question de l'utilisateur.",True,,,
+,2025-11-10T15:26:16.553912,,,Performance globale de l'agent,85.0,"ADAM's response demonstrates a good level of accuracy and completeness across the five interactions. The agent provides detailed and relevant information in most cases, such as listing specific files and endpoints, which indicates a thorough analysis of the project. The responses are generally clear and well-structured, making them easy to understand. However, there are minor issues with completeness, as some responses could benefit from additional context or examples to enhance clarity and actionability. Overall, the agent's performance is strong, but there is room for improvement in providing more comprehensive insights and next steps.",,,,,,,,Évaluation globale de 5 interactions,"Évalue la qualité GLOBALE de l'agent sur ces 5 interactions.
+
+Donne UN SEUL score global /100 qui représente:
+- La cohérence générale des réponses
+- Le niveau de détail moyen
+- La précision des informations
+- L'utilité des réponses
+- La clarté de communication
+
+Le score doit refléter la performance GLOBALE de l'agent, pas chaque réponse individuellement.",True,,,
+,2025-11-10T16:01:03.298046,,,"Performance globale (5 analyses, 1 PR)",60.0,"1. **Exactitude (40 pts)**: The agent's outputs for the analysis interactions are mostly accurate and match the golden outputs in terms of content. However, the PR interaction lacks the required JSON structure, which is a significant deviation from the expected format. This results in a loss of points in this category. 
+
+2. **Complétude (30 pts)**: The agent's outputs for the analysis interactions cover the key elements of the golden outputs. However, the PR interaction is incomplete as it does not provide the JSON structure, which is crucial for completeness. 
+
+3. **Cohérence (20 pts)**: The outputs are generally coherent within each interaction type, but the inconsistency in format between the analysis and PR interactions affects the overall coherence. 
+
+4. **Qualité (10 pts)**: The presentation and clarity of the analysis outputs are good, but the lack of JSON structure in the PR output affects the overall quality. 
+
+Overall, the agent performs adequately in reproducing the analysis outputs but fails to meet the requirements for the PR interaction, leading to a score of 60.",,,,,,,,Évaluation Golden Set: 6 interactions,"Évalue la performance GLOBALE de l'agent sur ces 6 interactions (5 analyses + 1 PR).
+
+Donne UN SEUL score global /100 qui évalue:
+
+1. **Exactitude** (40 pts): Les outputs agent correspondent-ils aux golden outputs ?
+   - Pour les analyses : Le contenu est-il similaire ?
+   - Pour les PR : La structure JSON est-elle respectée ? Les infos clés sont-elles présentes ?
+
+2. **Complétude** (30 pts): Les outputs agent couvrent-ils tous les éléments du golden set ?
+
+3. **Cohérence** (20 pts): Les outputs sont-ils cohérents entre eux ?
+
+4. **Qualité** (10 pts): La présentation et la clarté sont-elles bonnes ?
+
+Le score doit refléter la capacité de l'agent à REPRODUIRE les outputs de référence.",False,,5.0,1.0
+,2025-11-10T16:05:17.826158,,,"Performance globale (5 analyses, 1 PR)",85.0,"ADAM's performance across the 6 interactions is generally strong, with a high degree of accuracy and completeness in most cases. 
+
+1. **Exactitude (40 pts)**: ADAM's outputs match the golden outputs almost perfectly in 4 out of 6 interactions, with identical content and key information present, such as endpoint details and PR information. However, in interactions #4 and #5, the outputs deviate significantly from the golden set, discussing different functionalities. This results in a deduction, scoring 30/40.
+
+2. **Complétude (30 pts)**: The agent's outputs cover all elements of the golden set in 4 interactions, but the deviations in interactions #4 and #5 indicate missing elements, leading to a score of 20/30.
+
+3. **Cohérence (20 pts)**: The outputs are consistent within themselves and with the golden set where they match, but the inconsistencies in interactions #4 and #5 affect overall coherence, scoring 15/20.
+
+4. **Qualité (10 pts)**: The presentation and clarity of the outputs are excellent, with well-structured and clear responses, scoring 10/10.
+
+Overall, ADAM demonstrates a strong ability to reproduce the reference outputs, with minor issues in specific interactions affecting the score.",,,,,,,,Évaluation Golden Set: 6 interactions,"Évalue la performance GLOBALE de l'agent sur ces 6 interactions (5 analyses + 1 PR).
+
+Donne UN SEUL score global /100 qui évalue:
+
+1. **Exactitude** (40 pts): Les outputs agent correspondent-ils aux golden outputs ?
+   - Le contenu des réponses est-il similaire ou identique ?
+   - Les informations clés sont-elles présentes (numéros de PR, branches, fichiers, etc.) ?
+
+2. **Complétude** (30 pts): Les outputs agent couvrent-ils tous les éléments du golden set ?
+
+3. **Cohérence** (20 pts): Les outputs sont-ils cohérents entre eux ?
+
+4. **Qualité** (10 pts): La présentation et la clarté sont-elles bonnes ?
+
+Le score doit refléter la capacité de l'agent à REPRODUIRE fidèlement les outputs de référence.",True,,5.0,1.0
+,2025-11-10T16:28:43.614829,,,Correspondance sémantique intelligente,75.0,"1. Correspondance Sémantique (30/40): Les réponses de l'agent montrent une certaine correspondance sémantique avec le Golden Set, mais elles ne sont pas toujours alignées avec les exemples parfaits. Par exemple, la réponse sur le fichier main.py est proche de l'exemple Golden #2, mais manque de détails sur l'initialisation de l'agent VyData. Les autres réponses manquent de correspondance directe avec les exemples Golden.
+
+2. Qualité du Contenu (20/30): Les réponses fournies par l'agent sont généralement précises, mais elles manquent de détails et de profondeur par rapport aux exemples Golden. Par exemple, la réponse sur le formulaire de login ne fournit pas de détails sur la validation, contrairement à l'exemple Golden #8.
+
+3. Style et Format (15/20): Le style des réponses est clair et professionnel, mais il manque parfois de structure détaillée comme des listes ou des étapes, ce qui est souvent présent dans le Golden Set.
+
+4. Couverture des Connaissances (10/10): L'agent démontre une bonne couverture des connaissances, abordant divers aspects techniques similaires à ceux du Golden Set, bien que de manière moins détaillée.
+
+Globalement, l'agent montre une bonne compréhension des sujets abordés, mais il pourrait améliorer la précision et la profondeur de ses réponses pour mieux correspondre aux exemples Golden.",,,,,,,,Évaluation sémantique: 6 réponses vs 91 exemples,"Évalue la qualité GLOBALE de l'agent en comparant ses 6 réponses avec la base Golden Set de 91 exemples.
+
+MÉTHODOLOGIE D'ÉVALUATION :
+
+1. **Correspondance Sémantique** (40 pts):
+   - Pour chaque réponse agent, cherche si une réponse similaire existe dans le Golden Set
+   - Évalue si le contenu et la structure correspondent
+   - Une réponse agent peut correspondre à plusieurs exemples Golden
+   - Compte le nombre de correspondances trouvées
+
+2. **Qualité du Contenu** (30 pts):
+   - Les réponses sont-elles complètes et précises ?
+   - Le niveau de détail est-il comparable au Golden Set ?
+   - Les informations sont-elles correctes ?
+
+3. **Style et Format** (20 pts):
+   - Le style de réponse est-il cohérent avec le Golden Set ?
+   - La structure est-elle claire et professionnelle ?
+   - Le format (listes, étapes, exemples) est-il approprié ?
+
+4. **Couverture des Connaissances** (10 pts):
+   - L'agent démontre-t-il une connaissance comparable au Golden Set ?
+   - Les réponses couvrent-elles les domaines représentés dans le Golden Set ?
+
+IMPORTANT:
+- Ne cherche PAS de correspondance exacte (input ID)
+- Cherche des correspondances SÉMANTIQUES (contenu similaire)
+- Une réponse agent peut correspondre partiellement à plusieurs exemples Golden
+- Évalue la qualité globale, pas chaque réponse individuellement
+
+Donne UN SEUL score global /100.",True,,,
+,2025-11-10T16:42:57.586353,,,Correspondance sémantique intelligente,75.0,"1. Correspondance Sémantique (30/40): Les réponses de l'agent montrent une certaine correspondance sémantique avec le Golden Set, notamment la réponse #1 qui est proche de l'exemple Golden #2. Cependant, certaines réponses manquent de détails ou de clarté pour établir une correspondance forte avec les exemples Golden.
+
+2. Qualité du Contenu (20/30): Les réponses fournies par l'agent sont généralement précises mais manquent parfois de détails et de profondeur comparables au Golden Set. Par exemple, la réponse #2 ne fournit pas de détails sur la validation du formulaire de login, contrairement à l'exemple Golden #8.
+
+3. Style et Format (15/20): Le style des réponses est généralement clair et professionnel, mais certaines réponses pourraient bénéficier d'une structure plus détaillée et d'exemples concrets pour améliorer la lisibilité et la compréhension.
+
+4. Couverture des Connaissances (10/10): L'agent démontre une bonne couverture des connaissances, abordant divers aspects techniques et fonctionnels du projet, ce qui est en ligne avec la diversité des sujets couverts dans le Golden Set.
+
+En résumé, l'agent fournit des réponses globalement bonnes mais pourrait améliorer la précision et la profondeur pour atteindre le niveau d'excellence du Golden Set.",,,,,,,,Évaluation sémantique: 6 réponses vs 91 exemples,"Évalue la qualité GLOBALE de l'agent en comparant ses 6 réponses avec la base Golden Set de 91 exemples.
+
+MÉTHODOLOGIE D'ÉVALUATION :
+
+1. **Correspondance Sémantique** (40 pts):
+   - Pour chaque réponse agent, cherche si une réponse similaire existe dans le Golden Set
+   - Évalue si le contenu et la structure correspondent
+   - Une réponse agent peut correspondre à plusieurs exemples Golden
+   - Compte le nombre de correspondances trouvées
+
+2. **Qualité du Contenu** (30 pts):
+   - Les réponses sont-elles complètes et précises ?
+   - Le niveau de détail est-il comparable au Golden Set ?
+   - Les informations sont-elles correctes ?
+
+3. **Style et Format** (20 pts):
+   - Le style de réponse est-il cohérent avec le Golden Set ?
+   - La structure est-elle claire et professionnelle ?
+   - Le format (listes, étapes, exemples) est-il approprié ?
+
+4. **Couverture des Connaissances** (10 pts):
+   - L'agent démontre-t-il une connaissance comparable au Golden Set ?
+   - Les réponses couvrent-elles les domaines représentés dans le Golden Set ?
+
+IMPORTANT:
+- Ne cherche PAS de correspondance exacte (input ID)
+- Cherche des correspondances SÉMANTIQUES (contenu similaire)
+- Une réponse agent peut correspondre partiellement à plusieurs exemples Golden
+- Évalue la qualité globale, pas chaque réponse individuellement
+
+Donne UN SEUL score global /100.",True,,,
+,2025-11-10T16:45:00.998530,,,Correspondance sémantique intelligente,75.0,"1. Correspondance Sémantique (30/40): Les réponses de l'agent montrent une certaine correspondance sémantique avec le Golden Set, mais elles ne sont pas toujours alignées avec les exemples parfaits. Par exemple, la réponse sur le fichier main.py est proche de l'exemple Golden #2, mais manque de détails sur l'initialisation de l'agent VyData. Les autres réponses manquent de correspondance directe avec les exemples Golden.
+
+2. Qualité du Contenu (20/30): Les réponses fournies par l'agent sont généralement précises, mais elles manquent souvent de détails et de profondeur par rapport aux exemples Golden. Par exemple, la réponse sur le formulaire de login ne fournit pas de détails sur la validation, contrairement à l'exemple Golden #8.
+
+3. Style et Format (15/20): Le style des réponses est généralement clair et professionnel, mais certaines réponses pourraient bénéficier d'une structure plus détaillée, comme l'utilisation de listes ou d'étapes pour améliorer la lisibilité.
+
+4. Couverture des Connaissances (10/10): L'agent démontre une bonne couverture des connaissances, abordant divers aspects techniques similaires à ceux du Golden Set, bien que parfois de manière moins détaillée.
+
+Globalement, l'agent fournit des réponses correctes et bien structurées, mais elles manquent souvent de la profondeur et de la précision des exemples Golden, ce qui affecte le score global.",,,,,,,,Évaluation sémantique: 6 réponses vs 201 exemples,"Évalue la qualité GLOBALE de l'agent en comparant ses 6 réponses avec la base Golden Set de 201 exemples.
+
+MÉTHODOLOGIE D'ÉVALUATION :
+
+1. **Correspondance Sémantique** (40 pts):
+   - Pour chaque réponse agent, cherche si une réponse similaire existe dans le Golden Set
+   - Évalue si le contenu et la structure correspondent
+   - Une réponse agent peut correspondre à plusieurs exemples Golden
+   - Compte le nombre de correspondances trouvées
+
+2. **Qualité du Contenu** (30 pts):
+   - Les réponses sont-elles complètes et précises ?
+   - Le niveau de détail est-il comparable au Golden Set ?
+   - Les informations sont-elles correctes ?
+
+3. **Style et Format** (20 pts):
+   - Le style de réponse est-il cohérent avec le Golden Set ?
+   - La structure est-elle claire et professionnelle ?
+   - Le format (listes, étapes, exemples) est-il approprié ?
+
+4. **Couverture des Connaissances** (10 pts):
+   - L'agent démontre-t-il une connaissance comparable au Golden Set ?
+   - Les réponses couvrent-elles les domaines représentés dans le Golden Set ?
+
+IMPORTANT:
+- Ne cherche PAS de correspondance exacte (input ID)
+- Cherche des correspondances SÉMANTIQUES (contenu similaire)
+- Une réponse agent peut correspondre partiellement à plusieurs exemples Golden
+- Évalue la qualité globale, pas chaque réponse individuellement
+
+Donne UN SEUL score global /100.",True,,,
+,2025-11-10T17:02:00.597960,,,Correspondance sémantique intelligente,75.0,"1. Correspondance Sémantique (30/40): Les réponses de l'agent montrent une certaine correspondance sémantique avec le Golden Set, mais elles ne sont pas toujours alignées avec les exemples parfaits. Par exemple, la réponse sur le fichier main.py est proche de l'exemple Golden #2, mais manque de détails sur l'initialisation de l'agent VyData. Les autres réponses manquent souvent de détails ou de clarté pour correspondre pleinement aux exemples Golden.
+
+2. Qualité du Contenu (20/30): Les réponses sont généralement précises mais manquent de profondeur et de détails comparables au Golden Set. Par exemple, la réponse sur le formulaire de login ne fournit pas de détails sur la validation, contrairement à l'exemple Golden #8.
+
+3. Style et Format (15/20): Le style est généralement clair et professionnel, mais certaines réponses pourraient bénéficier d'une meilleure structuration, comme l'utilisation de listes ou d'étapes pour améliorer la lisibilité.
+
+4. Couverture des Connaissances (10/10): L'agent démontre une bonne couverture des connaissances, abordant divers aspects techniques et fonctionnels du projet, ce qui est en ligne avec le Golden Set.
+
+Globalement, l'agent fournit des réponses utiles et pertinentes, mais il y a des lacunes en termes de détails et de structure par rapport aux exemples parfaits du Golden Set.",,,,,,,,Évaluation sémantique: 7 réponses vs 201 exemples,"Évalue la qualité GLOBALE de l'agent en comparant ses 7 réponses avec la base Golden Set de 201 exemples.
+
+MÉTHODOLOGIE D'ÉVALUATION :
+
+1. **Correspondance Sémantique** (40 pts):
+   - Pour chaque réponse agent, cherche si une réponse similaire existe dans le Golden Set
+   - Évalue si le contenu et la structure correspondent
+   - Une réponse agent peut correspondre à plusieurs exemples Golden
+   - Compte le nombre de correspondances trouvées
+
+2. **Qualité du Contenu** (30 pts):
+   - Les réponses sont-elles complètes et précises ?
+   - Le niveau de détail est-il comparable au Golden Set ?
+   - Les informations sont-elles correctes ?
+
+3. **Style et Format** (20 pts):
+   - Le style de réponse est-il cohérent avec le Golden Set ?
+   - La structure est-elle claire et professionnelle ?
+   - Le format (listes, étapes, exemples) est-il approprié ?
+
+4. **Couverture des Connaissances** (10 pts):
+   - L'agent démontre-t-il une connaissance comparable au Golden Set ?
+   - Les réponses couvrent-elles les domaines représentés dans le Golden Set ?
+
+IMPORTANT:
+- Ne cherche PAS de correspondance exacte (input ID)
+- Cherche des correspondances SÉMANTIQUES (contenu similaire)
+- Une réponse agent peut correspondre partiellement à plusieurs exemples Golden
+- Évalue la qualité globale, pas chaque réponse individuellement
+
+Donne UN SEUL score global /100.",True,,,
+,2025-11-10T17:03:28.089829,,,Correspondance sémantique intelligente,75.0,"The evaluation of ADAM's responses against the Golden Set reveals a mixed performance. 
+
+1. **Correspondance Sémantique (40 pts):** ADAM's responses show some semantic alignment with the Golden Set, particularly in the structure and content of the responses. However, not all responses have clear counterparts in the Golden Set, leading to partial matches. This results in a score of around 25/40.
+
+2. **Qualité du Contenu (30 pts):** The content of ADAM's responses is generally accurate and relevant, but there are instances where the level of detail is not as comprehensive as the Golden Set. This results in a score of 20/30.
+
+3. **Style et Format (20 pts):** The style and format of ADAM's responses are mostly clear and professional, similar to the Golden Set. However, some responses could benefit from more structured formatting, such as lists or steps, which are prevalent in the Golden Set. This results in a score of 15/20.
+
+4. **Couverture des Connaissances (10 pts):** ADAM demonstrates a reasonable breadth of knowledge, covering various domains represented in the Golden Set. However, there are gaps in certain areas, leading to a score of 5/10.
+
+Overall, ADAM's responses are good but have room for improvement in terms of semantic alignment and content detail.",,,,,,,,Évaluation sémantique: 7 réponses vs 201 exemples,"Évalue la qualité GLOBALE de l'agent en comparant ses 7 réponses avec la base Golden Set de 201 exemples.
+
+MÉTHODOLOGIE D'ÉVALUATION :
+
+1. **Correspondance Sémantique** (40 pts):
+   - Pour chaque réponse agent, cherche si une réponse similaire existe dans le Golden Set
+   - Évalue si le contenu et la structure correspondent
+   - Une réponse agent peut correspondre à plusieurs exemples Golden
+   - Compte le nombre de correspondances trouvées
+
+2. **Qualité du Contenu** (30 pts):
+   - Les réponses sont-elles complètes et précises ?
+   - Le niveau de détail est-il comparable au Golden Set ?
+   - Les informations sont-elles correctes ?
+
+3. **Style et Format** (20 pts):
+   - Le style de réponse est-il cohérent avec le Golden Set ?
+   - La structure est-elle claire et professionnelle ?
+   - Le format (listes, étapes, exemples) est-il approprié ?
+
+4. **Couverture des Connaissances** (10 pts):
+   - L'agent démontre-t-il une connaissance comparable au Golden Set ?
+   - Les réponses couvrent-elles les domaines représentés dans le Golden Set ?
+
+IMPORTANT:
+- Ne cherche PAS de correspondance exacte (input ID)
+- Cherche des correspondances SÉMANTIQUES (contenu similaire)
+- Une réponse agent peut correspondre partiellement à plusieurs exemples Golden
+- Évalue la qualité globale, pas chaque réponse individuellement
+
+Donne UN SEUL score global /100.",True,,,

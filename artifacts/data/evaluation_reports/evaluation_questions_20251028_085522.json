@@ -1,0 +1,134 @@
+{
+  "report_id": "f905f121-44ee-41bb-9493-0a3670ebcae5",
+  "dataset_name": "Golden Dataset - Questions",
+  "dataset_type": "questions",
+  "results": [
+    {
+      "item_id": "q001_hello",
+      "item_type": "questions",
+      "agent_output": "Bonjour ! 👋 Je suis **VyData**, votre assistant de développement IA.\n\nJe peux vous aider à:\n\n💬 **Répondre à vos questions** sur votre projet\n- Expliquer le code et l'architecture\n- Analyser les choix technologiques\n- Fournir des informations sur l'historique Git\n\n🔍 **Analyser le code** en profondeur\n- Structure du projet\n- Dépendances et technologies utilisées\n- Commits, branches et pull requests\n\n🛠️ **Implémenter de nouvelles fonctionnalités**\n- Ajouter des features complètes\n- Créer des composants et services\n- Suivre les meilleures pratiques\n\n🐛 **Corriger des bugs**\n- Identifier et résoudre les problèmes\n- Optimiser les performances\n- Améliorer la qualité du code\n\n📋 **Créer des Pull Requests** automatiquement\n- Code propre et testé\n- Documentation complète\n- Prêt pour la revue de code\n\nComment puis-je vous aider aujourd'hui ? 😊",
+      "agent_output_metadata": {
+        "test_type": "question",
+        "repository_url": "https://github.com/reharehavycode261/S2-GenericDAO"
+      },
+      "expected_output": "Bonjour ! 👋 Je suis VyData, votre assistant de développement IA. Je peux vous aider à:\n\n- 💬 Répondre à vos questions sur votre projet\n- 🔍 Analyser le code et l'architecture\n- 🛠️ Implémenter de nouvelles fonctionnalités\n- 🐛 Corriger des bugs\n- 📋 Créer des Pull Requests\n\nComment puis-je vous aider aujourd'hui ?",
+      "score": 95.0,
+      "reasoning": "L'output généré par l'agent est très proche de l'output attendu. Il présente un ton amical et poli, ce qui est conforme aux attentes. La présentation des capacités de l'agent est claire et détaillée, avec des icônes pour chaque section, ce qui améliore la lisibilité et la structure du message. L'invitation à poser des questions est présente et bien formulée. La seule différence notable est que l'output généré est légèrement plus détaillé que l'output attendu, ce qui n'est pas nécessairement un problème, mais pourrait être perçu comme un peu verbeux.",
+      "criteria_scores": {
+        "Pertinence": 100.0,
+        "Précision technique": 100.0,
+        "Clarté": 90.0,
+        "Utilisation du contexte": 90.0
+      },
+      "passed": true,
+      "threshold": 70.0,
+      "evaluated_at": "2025-10-28T08:55:09.333486",
+      "evaluation_duration_seconds": 120.01,
+      "error": null
+    },
+    {
+      "item_id": "q002_project_technologies",
+      "item_type": "questions",
+      "agent_output": "💡 Le choix d'un langage de programmation pour un projet dépend de divers facteurs, tels que les exigences fonctionnelles, les compétences de l'équipe, la performance, la communauté de soutien, etc. Dans le cas de ce projet spécifique (reharehavycode261/S2-GenericDAO), le choix de Java pourrait être dû à plusieurs raisons :\n\n1. **Compatibilité avec les technologies utilisées** : Le projet utilise JDBC et DAO qui sont des technologies Java pour la manipulation des données en base de données. Utiliser Java permet d'intégrer efficacement ces technologies.\n2. **Performance** : Java est généralement plus rapide que Python, ce qui peut être un avantage pour certaines applications, en particulier celles qui nécessitent une grande quantité de calculs ou de traitement de données.\n3. **Compétences de l'équipe** : L'équipe de développement peut avoir une expertise plus poussée en Java qu'en Python.\n\nCela dit, sans plus de contexte ou de discussions directes avec l'équipe de développement, il est difficile de donner une réponse définitive. \n\nSi vous avez d'autres questions sur le projet ou si vous souhaitez des éclaircissements supplémentaires, n'hésitez pas à demander !",
+      "agent_output_metadata": {
+        "test_type": "question",
+        "repository_url": "https://github.com/reharehavycode261/S2-GenericDAO"
+      },
+      "expected_output": "D'après l'analyse du projet S2-GenericDAO, Java est utilisé pour les raisons suivantes:\n\n1. **Nature du projet**: Il s'agit d'un système de DAO (Data Access Object) générique, un pattern particulièrement adapté à Java avec sa forte orientation objet et son typage statique.\n\n2. **Écosystème base de données**: Le projet utilise JDBC pour interagir avec les bases de données (Oracle et PostgreSQL), et Java offre un support robuste et mature pour ces technologies.\n\n3. **Typage statique**: Pour un DAO générique qui manipule différents types d'objets, le système de types de Java (avec génériques) permet de garantir la sécurité des types à la compilation.\n\n4. **Performance**: Pour des opérations intensives sur base de données, Java offre d'excellentes performances avec la JVM.\n\n5. **Standard d'entreprise**: Les projets de gestion de bases de données en contexte entreprise privilégient souvent Java pour sa stabilité et son écosystème mature.\n\nPython pourrait être utilisé pour ce type de projet, mais Java est plus adapté ici pour la robustesse du typage et l'intégration avec les drivers JDBC.",
+      "score": 85.0,
+      "reasoning": "L'output généré par l'agent est globalement pertinent et bien structuré. Il mentionne des raisons valables pour lesquelles Java pourrait être préféré à Python dans le contexte du projet S2-GenericDAO. Cependant, il manque certaines précisions techniques présentes dans l'output attendu, comme l'importance du typage statique et l'orientation objet de Java pour un DAO générique. L'agent mentionne correctement JDBC et DAO, mais ne détaille pas suffisamment l'importance du typage statique et de l'écosystème Java pour les bases de données. La clarté de l'explication est bonne, et l'agent utilise bien le contexte du projet, bien qu'il puisse approfondir certains aspects techniques pour une réponse plus complète.",
+      "criteria_scores": {
+        "Pertinence": 90.0,
+        "Précision technique": 80.0,
+        "Clarté": 85.0,
+        "Utilisation du contexte": 85.0
+      },
+      "passed": true,
+      "threshold": 70.0,
+      "evaluated_at": "2025-10-28T08:55:22.167314",
+      "evaluation_duration_seconds": 8.17,
+      "error": null
+    },
+    {
+      "item_id": "q003_github_last_commit",
+      "item_type": "questions",
+      "agent_output": "🔍 Le dernier commit sur la branche `main` du repository a le message \"v\". Il a été réalisé par l'auteur `reharehavycode261` à la date du `2025-10-28T07:35:40+00:00`. Son identifiant SHA est `79a7f9b`.\n\nN'hésitez pas si vous avez d'autres questions sur ce projet !",
+      "agent_output_metadata": {
+        "test_type": "question",
+        "repository_url": "https://github.com/reharehavycode261/S2-GenericDAO"
+      },
+      "expected_output": "Le message du dernier commit sur la branche `main` est: **\"[Message du commit]\"**\n\nCe commit a été effectué par [Auteur] le [Date] à [Heure].\n\n[Détails additionnels si pertinents: fichiers modifiés, SHA du commit, etc.]",
+      "score": 85.0,
+      "reasoning": "L'output généré par l'agent est globalement correct et répond bien à la question posée. L'agent a réussi à récupérer le message du dernier commit, l'auteur, la date et le SHA, ce qui montre une bonne utilisation de l'API GitHub. Cependant, le message du commit est simplement \"v\", ce qui semble incomplet ou incorrect par rapport à ce qui pourrait être attendu. Le format est clair et lisible, mais il manque une mise en forme plus détaillée comme dans l'output attendu, qui pourrait inclure des informations supplémentaires sur les fichiers modifiés, par exemple.",
+      "criteria_scores": {
+        "Pertinence": 90.0,
+        "Précision technique": 80.0,
+        "Clarté": 90.0,
+        "Utilisation du contexte": 80.0
+      },
+      "passed": true,
+      "threshold": 70.0,
+      "evaluated_at": "2025-10-28T08:55:12.757667",
+      "evaluation_duration_seconds": 6.8,
+      "error": null
+    },
+    {
+      "item_id": "q004_project_structure",
+      "item_type": "questions",
+      "agent_output": "📂 La structure du projet n'a pas pu être déterminée car aucun fichier n'a été détecté dans l'analyse de ce projet. \n\nCependant, d'après les informations fournies, le projet semble être un projet Java utilisant JDBC et DAO. Cela suggère une structure typique de projet Java avec des fichiers sources organisés en packages.\n\nPour plus de détails, il serait utile de consulter le code du projet directement. Vous pouvez le faire en visitant le dépôt du projet à l'adresse suivante : [https://github.com/reharehavycode261/S2-GenericDAO](https://github.com/reharehavycode261/S2-GenericDAO)\n\nN'hésitez pas si vous avez d'autres questions !",
+      "agent_output_metadata": {
+        "test_type": "question",
+        "repository_url": "https://github.com/reharehavycode261/S2-GenericDAO"
+      },
+      "expected_output": "Le projet S2-GenericDAO est structuré comme suit:\n\n📁 **Structure principale:**\n```\nsrc/\n  ├── database/\n  │   ├── core/           # Classes principales du DAO\n  │   │   ├── GenericDAO.java\n  │   │   ├── Database.java\n  │   │   ├── DBConnection.java\n  │   │   └── ...\n  │   ├── exception/      # Gestion des exceptions\n  │   │   ├── SQL/\n  │   │   └── object/\n  │   └── provider/       # Providers spécifiques aux DB\n  │       ├── Oracle.java\n  │       └── PostgreSQL.java\n  └── test/              # Classes de test\n      └── ...\n```\n\n**Composants clés:**\n- `GenericDAO.java`: Classe générique pour les opérations CRUD\n- `Database.java`: Gestion de la connexion à la base de données\n- Providers: Support pour Oracle et PostgreSQL\n- Système d'exceptions personnalisées pour la gestion d'erreurs\n\n**Technologie:** Java avec JDBC pour l'accès aux bases de données.",
+      "score": 45.0,
+      "reasoning": "L'output généré par l'agent ne répond pas adéquatement à la question posée concernant la structure principale du projet. L'agent indique qu'il n'a pas pu déterminer la structure du projet, ce qui est insuffisant par rapport à l'output attendu qui fournit une description détaillée de la structure du projet, y compris les dossiers et fichiers clés. L'agent mentionne que le projet semble être un projet Java utilisant JDBC et DAO, mais cela reste très général et ne fournit pas d'informations spécifiques sur la structure réelle du projet. De plus, l'agent ne fait pas d'effort pour expliquer le rôle des composants, ce qui est une partie importante de l'output attendu.",
+      "criteria_scores": {
+        "Pertinence": 20.0,
+        "Précision technique": 40.0,
+        "Clarté": 50.0,
+        "Utilisation du contexte": 70.0
+      },
+      "passed": false,
+      "threshold": 70.0,
+      "evaluated_at": "2025-10-28T08:55:16.522132",
+      "evaluation_duration_seconds": 7.75,
+      "error": null
+    },
+    {
+      "item_id": "q005_github_last_pr",
+      "item_type": "questions",
+      "agent_output": "🔍 Le dernier pull request sur le projet reharehavycode261/S2-GenericDAO porte le numéro #69 avec le titre : \"feat: [Réactivation 3] Ajoute un fichier readme dans ce projet\". Il a été fermé et fusionné le 27 octobre 2025. Cependant, aucune description n'a été fournie pour ce pull request.\n\nAu cours de ce pull request, 2 fichiers ont été modifiés avec un total de 8 lignes ajoutées et 17 lignes supprimées.\n\nSi vous avez besoin de plus d'informations sur ce pull request ou d'autres aspects du projet, n'hésitez pas à demander.",
+      "agent_output_metadata": {
+        "test_type": "question",
+        "repository_url": "https://github.com/reharehavycode261/S2-GenericDAO"
+      },
+      "expected_output": "Le dernier Pull Request (#[Number]) est intitulé: **\"[Titre du PR]\"**\n\n📋 **Détails:**\n- **Auteur:** [Nom]\n- **État:** [open/closed/merged]\n- **Date de création:** [Date]\n- **Branches:** [source] → [target]\n\n📝 **Description:**\n[Résumé de la description du PR]\n\n📁 **Fichiers modifiés:** [Nombre] fichiers\n[Liste des principaux fichiers si pertinent]\n\n[Note: Si aucun PR n'existe, indiquer clairement qu'il n'y a pas de Pull Request dans ce repository]",
+      "score": 60.0,
+      "reasoning": "L'output généré par l'agent fournit des informations sur le dernier pull request, mais il manque plusieurs détails importants par rapport à l'output attendu. L'agent mentionne le numéro du PR, le titre, et les modifications de fichiers, mais omet des informations cruciales telles que l'auteur du PR, l'état (bien que \"fermé et fusionné\" soit mentionné, cela pourrait être plus clair), la date de création, et les branches concernées. De plus, l'agent ne gère pas explicitement le cas où il n'y aurait pas de PR, ce qui est une exigence de l'output attendu. Enfin, la date mentionnée (27 octobre 2025) semble incorrecte, ce qui soulève des questions sur la précision des données récupérées.",
+      "criteria_scores": {
+        "Pertinence": 70.0,
+        "Précision technique": 50.0,
+        "Clarté": 60.0,
+        "Utilisation du contexte": 60.0
+      },
+      "passed": false,
+      "threshold": 70.0,
+      "evaluated_at": "2025-10-28T08:55:18.917562",
+      "evaluation_duration_seconds": 8.82,
+      "error": null
+    }
+  ],
+  "total_tests": 5,
+  "tests_passed": 3,
+  "tests_failed": 2,
+  "average_score": 74.0,
+  "reliability_score": 65.6,
+  "reliability_status": "needs_improvement",
+  "evaluation_started_at": "2025-10-28T08:53:09.320872",
+  "evaluation_completed_at": "2025-10-28T08:55:22.167625",
+  "total_duration_seconds": 132.85,
+  "recommendations": [
+    "🔍 2/5 tests échoués. Analyser les critères non satisfaits."
+  ]
+}

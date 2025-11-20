@@ -1,6 +1,0 @@
-Usage: celery [OPTIONS] COMMAND [ARGS]...
-Try 'celery --help' for help.
-
-Error: Invalid value for '-A' / '--app': 
-Unable to load celery application.
-The module ai_agent_background was not found.

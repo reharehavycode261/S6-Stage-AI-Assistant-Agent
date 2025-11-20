@@ -4,12 +4,16 @@
   "description": "Agent d'Automatisation IA avec LangGraph et Monday.com",
   "main": "main.py",
   "scripts": {
-    "start": "python3 main.py",
-    "test": "python3 -m pytest tests/",
-    "test:simple": "python3 tests/test_simple_validation.py",
-    "lint": "flake8 .",
-    "format": "black .",
-    "dev": "python3 main.py --dev"
+    "start": "cd backend && python3 main.py",
+    "test": "cd backend && python3 -m pytest tests/",
+    "test:simple": "cd backend && python3 tests/test_simple_validation.py",
+    "lint": "cd backend && flake8 .",
+    "format": "cd backend && black .",
+    "dev": "cd backend && python3 main.py --dev",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:rebuild": "docker-compose build --no-cache"
   },
   "keywords": [
     "ai",
@@ -36,7 +40,7 @@
     "chrome-devtools-mcp": "^0.10.1"
   },
   "directories": {
-    "test": "tests",
+    "test": "backend/tests",
     "doc": "docs"
   },
   "config": {

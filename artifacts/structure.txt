@@ -1,0 +1,122 @@
+ai-agent/
+├── main.py                           # Point d'entrée FastAPI avec webhooks Monday.com
+├── requirements.txt                  # Dépendances Python
+├── .env                             # Variables d'environnement (à créer depuis env_template.txt)
+├── env_template.txt                 # Template des variables d'environnement RabbitMQ
+├── docker-compose.rabbitmq.yml     # Configuration Docker RabbitMQ + PostgreSQL
+├── test_rabbitmq_integration.py    # Script de test intégration RabbitMQ
+├──
+├── config/
+│   ├── __init__.py
+│   ├── settings.py                  # Configuration centralisée RabbitMQ + PostgreSQL
+│   └── rabbitmq.conf               # Configuration RabbitMQ optimisée
+├──
+├── models/
+│   ├── __init__.py                 # Exports WorkflowState, TaskRequest, WebhookPayload
+│   └── schemas.py                  # Schémas Pydantic (WorkflowState, WebhookPayload, etc.)
+├──
+├── tools/
+│   ├── __init__.py
+│   ├── base_tool.py               # Classe de base pour tous les outils
+│   ├── ai_engine_hub.py           # Hub multi-provider (Claude + OpenAI) avec ANALYSIS
+│   ├── claude_code_tool.py        # Outil Claude Code SDK
+│   ├── github_tool.py             # Outil GitHub API (PR creation)
+│   ├── monday_tool.py             # Outil Monday.com API (status update)
+│   └── testing_engine.py          # Moteur de tests avancé (pytest, coverage)
+├──
+├── nodes/                          # Nœuds LangGraph conformes à la conception
+│   ├── __init__.py                # Export des 8 nœuds
+│   ├── prepare_node.py            # prepare_environment (clone repo, setup)
+│   ├── analyze_node.py            # analyze_requirements (AI analysis) ✨ NOUVEAU
+│   ├── implement_node.py          # implement_task_multi_provider (AI Hub)
+│   ├── test_node.py              # run_comprehensive_tests (pytest + coverage)
+│   ├── debug_node.py             # debug_with_ai_assistance (AI debugging)
+│   ├── qa_node.py                # quality_assurance_automation (linters) ✨ NOUVEAU
+│   ├── finalize_node.py          # finalize_with_monitoring (GitHub PR)
+│   └── update_node.py            # update_monday (status + comment)
+├──
+├── graph/
+│   ├── __init__.py
+│   └── workflow_graph.py          # LangGraph workflow avec 8 nœuds complets
+├──
+├── services/                       # Services backend RabbitMQ
+│   ├── __init__.py
+│   ├── celery_app.py              # Configuration Celery + RabbitMQ + Dead Letter Queue
+│   ├── webhook_service.py         # Service traitement webhooks Monday.com
+│   └── monitoring_service.py      # Dashboard monitoring temps réel
+├──
+├── admin/                          # Interface administration
+│   ├── backend/
+│   │   └── main.py               # Backend admin FastAPI
+│   └── monitoring_endpoints.py    # Dashboard RabbitMQ + AI-Agent monitoring
+├──
+├── utils/
+│   ├── __init__.py
+│   ├── logger.py                 # Configuration logging structuré
+│   ├── helpers.py                # Fonctions utilitaires
+│   └── custom_monitoring.py      # Métriques personnalisées
+├──
+├── docs/                          # Documentation technique
+│   ├── RABBITMQ_INTEGRATION.md   # Guide intégration RabbitMQ ✨ NOUVEAU
+│   ├── CHANGEMENTS_SUITE_COMMENTAIRES.md
+│   ├── FUNCTIONS_LIST.md
+│   ├── GUIDE_DECLENCHEMENT.md
+│   ├── GUIDE_ITEM_TRACKING.md
+│   ├── GUIDE_NGROK.md
+│   ├── INFRASTRUCTURE_V2.md
+│   ├── LOCAL_ARCHITECTURE.md
+│   ├── PERFORMANCE_OPTIMIZATIONS.md
+│   ├── SECURITY_ARCHITECTURE.md
+│   └── WEBHOOK_PAYLOAD_FORMAT.md
+└──
+└── venv/                          # Environnement virtuel Python
+
+🏗️ ARCHITECTURE MISE À JOUR :
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    FLUX COMPLET AI-AGENT                        │
+├─────────────────────────────────────────────────────────────────┤
+│ 1. DÉCLENCHEMENT                                               │
+│    📋 Monday.com → Webhook sécurisé → FastAPI                  │
+│                                                                 │
+│ 2. RÉCEPTION & TRANSMISSION                                    │
+│    🚀 FastAPI → Validation → RabbitMQ → PostgreSQL             │
+│                                                                 │
+│ 3. ORCHESTRATION LANGGRAPH (8 nœuds)                          │
+│    🔧 prepare_environment                                       │
+│    🔍 analyze_requirements (IA analysis) ✨ NOUVEAU            │
+│    💻 implement_task (AI Hub multi-provider)                   │
+│    🧪 run_tests (pytest + coverage)                           │
+│    🔍 debug_code (AI debugging loop)                          │
+│    🔍 quality_assurance (linters + security) ✨ NOUVEAU       │
+│    📝 finalize_pr (GitHub API)                                │
+│    📋 update_monday (status + comment)                        │
+│                                                                 │
+│ 4. FINALISATION                                                │
+│    🐙 GitHub PR + 📋 Monday update + 🗄️ PostgreSQL logs       │
+│                                                                 │
+│ 5. MONITORING                                                  │
+│    📊 Dashboard + 🐰 RabbitMQ UI + ☁️ Cloud monitoring        │
+└─────────────────────────────────────────────────────────────────┘
+
+🔧 TECHNOLOGIES INTÉGRÉES :
+- 🐰 RabbitMQ (Message broker)
+- ⚙️ Celery (Background processing)
+- 🗄️ PostgreSQL (Results backend + logs)
+- 🧠 LangGraph (Workflow orchestration)
+- 🤖 AI Hub (Claude + OpenAI multi-provider)
+- 🧪 Testing Engine (pytest + coverage + security)
+- 📊 Monitoring (Real-time dashboard + metrics)
+- 🔒 Security (Webhook signatures + linting)
+
+✨ NOUVEAUTÉS v2.0 :
+- analyze_requirements : Analyse IA structurée des spécifications
+- quality_assurance : Linters automatisés (pylint, flake8, black, bandit)
+- RabbitMQ : Architecture message queuing robuste
+- Dead Letter Queue : Gestion des échecs
+- Dashboard intégré : Monitoring RabbitMQ + AI-Agent
+- Métriques enrichies : QA scores, complexity analysis
+
+🎯 CONFORMITÉ : 100% avec la conception demandée
+📦 NŒUDS LANGGRAPH : 8/8 implémentés
+🏗️ ARCHITECTURE : Production-ready avec RabbitMQ
