@@ -645,6 +645,8 @@ class WebhookService:
             # ✅ AMÉLIORATION CRITIQUE: TOUJOURS récupérer les updates/commentaires Monday.com
             # pour enrichir la description avec les précisions de l'utilisateur
             additional_context = []
+            vydata_update_creator_name = None  # ✅ NOUVEAU: Capturer le vrai créateur de l'update @vydata
+            vydata_update_creator_id = None
             logger.info("🔍 Récupération des updates Monday.com pour enrichir le contexte...")
             try:
                 # ✅ CORRECTION: Vérifier la configuration Monday.com avant l'appel
@@ -666,7 +668,15 @@ class WebhookService:
                                 clean_body = re.sub(r'<[^>]+>', '', update_body).strip()
                                 if clean_body and len(clean_body) > 15:
                                     # Ajouter le créateur si disponible
-                                    creator_name = update.get("creator", {}).get("name", "Utilisateur")
+                                    update_creator = update.get("creator", {})
+                                    creator_name = update_creator.get("name", "Utilisateur")
+                                    
+                                    # ✅ NOUVEAU: Capturer le créateur de l'update @vydata
+                                    if "@vydata" in clean_body.lower() and vydata_update_creator_name is None:
+                                        vydata_update_creator_name = creator_name
+                                        vydata_update_creator_id = update_creator.get("id")
+                                        logger.info(f"👤 ✅ CRÉATEUR UPDATE @VYDATA IDENTIFIÉ: {creator_name} (ID: {vydata_update_creator_id})")
+                                    
                                     additional_context.append(f"[{creator_name}]: {clean_body}")
                                     logger.info(f"📝 Update récupérée de {creator_name}: {clean_body[:80]}...")
                         
@@ -711,13 +721,23 @@ class WebhookService:
             assignee = self._extract_column_value(item_data, "personne", "name")
             priority = self._extract_column_value(item_data, "priorite", "text", "medium")
             
-            # ✅ NOUVEAU: Récupérer le créateur du ticket Monday.com (pour tagging)
-            creator_name = item_data.get("creator_name")
-            creator_id = item_data.get("creator_id")
-            if creator_name:
-                logger.info(f"👤 Créateur du ticket: {creator_name} (ID: {creator_id})")
+            # ✅ CORRECTION MAJEURE: Utiliser le créateur de l'update @vydata, PAS le créateur de l'item
+            creator_name = None
+            creator_id = None
+            
+            if vydata_update_creator_name:
+                # ✅ PRIORITÉ 1: Créateur de l'update @vydata (le vrai utilisateur qui demande la tâche)
+                creator_name = vydata_update_creator_name
+                creator_id = vydata_update_creator_id
+                logger.info(f"👤 ✅ Créateur identifié (update @vydata): {creator_name} (ID: {creator_id})")
             else:
-                logger.debug("ℹ️  Créateur du ticket non disponible")
+                # ❌ FALLBACK: Créateur de l'item (owner du board, moins précis)
+                creator_name = item_data.get("creator_name")
+                creator_id = item_data.get("creator_id")
+                if creator_name:
+                    logger.warning(f"⚠️ Fallback - Créateur depuis item (owner): {creator_name} (ID: {creator_id})")
+                else:
+                    logger.debug("ℹ️  Créateur non disponible")
             
             # ✅ NOUVEAU: Récupérer base_branch depuis Monday.com (si spécifiée)
             monday_base_branch = item_data.get("base_branch")

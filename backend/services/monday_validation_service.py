@@ -412,6 +412,9 @@ class MondayValidationService:
         """
         Vérifie les replies humaines sur l'update de validation.
         
+        🔐 SÉCURITÉ: Seul l'utilisateur qui a créé l'update peut répondre.
+        Les réponses des autres utilisateurs seront ignorées.
+        
         Args:
             update_id: ID de l'update à surveiller
             timeout_minutes: Timeout en minutes
@@ -420,6 +423,8 @@ class MondayValidationService:
             Réponse de validation ou None si timeout
         """
         update_key = str(update_id)
+        
+        logger.info(f"🔐 Protection activée: Seul le créateur de l'update {update_id} pourra répondre")
         
         if update_key not in self.pending_validations:
             logger.warning(f"⚠️ Update {update_id} non trouvée dans pending_validations - tentative de récupération")
@@ -480,7 +485,12 @@ class MondayValidationService:
             try:
                 initial_check = await self._get_item_updates(item_id)
                 if initial_check:
-                    immediate_reply = self._find_human_reply(update_id, initial_check, created_at)
+                    immediate_reply, unauthorized_attempts = await self._find_human_reply(update_id, initial_check, created_at, item_id, validation_data.get("task_title"))
+                    
+                    # 🚨 Si des tentatives non autorisées sont détectées, notifier immédiatement
+                    if unauthorized_attempts:
+                        await self._notify_unauthorized_attempts(item_id, unauthorized_attempts, validation_data.get("task_title", "cette tâche"))
+                    
                     if immediate_reply:
                         logger.info(f"⚡ Réponse humaine trouvée après {check_delay}s!")
                         validation_context = self._prepare_analysis_context(validation_data)
@@ -515,7 +525,11 @@ class MondayValidationService:
                             created_at = datetime.now()
                     else:
                         created_at = datetime.now()
-                    human_reply = self._find_human_reply(update_id, recent_updates, created_at)
+                    human_reply, unauthorized_attempts = await self._find_human_reply(update_id, recent_updates, created_at, item_id, validation_data.get("task_title"))
+                    
+                    # 🚨 Notifier si des tentatives non autorisées
+                    if unauthorized_attempts:
+                        await self._notify_unauthorized_attempts(item_id, unauthorized_attempts, validation_data.get("task_title", "cette tâche"))
                     
                     if human_reply:
                         validation_context = self._prepare_analysis_context(validation_data)
@@ -543,7 +557,12 @@ class MondayValidationService:
                             created_at = datetime.now()
                     else:
                         created_at = datetime.now()
-                    final_check = self._find_human_reply(update_id, recent_updates, created_at)
+                    final_check, unauthorized_attempts = await self._find_human_reply(update_id, recent_updates, created_at, item_id, validation_data.get("task_title"))
+                    
+                    # 🚨 Notifier même lors de la vérification finale
+                    if unauthorized_attempts:
+                        await self._notify_unauthorized_attempts(item_id, unauthorized_attempts, validation_data.get("task_title", "cette tâche"))
+                    
                     if final_check:
                         logger.info("🔍 Reply trouvée lors de la vérification finale")
                         validation_context = self._prepare_analysis_context(validation_data)
@@ -693,8 +712,13 @@ class MondayValidationService:
             logger.error(f"❌ Erreur récupération updates: {e}")
             return []
     
-    def _find_human_reply(self, original_update_id: str, updates: List[Dict[str, Any]], since: datetime) -> Optional[Dict[str, Any]]:
-        """Trouve une reply humaine à notre update de validation."""
+    async def _find_human_reply(self, original_update_id: str, updates: List[Dict[str, Any]], since: datetime, item_id: Optional[str] = None, task_title: Optional[str] = None) -> tuple[Optional[Dict[str, Any]], List[Dict[str, Any]]]:
+        """
+        Trouve une reply humaine à notre update de validation.
+        
+        Returns:
+            tuple: (reply_valide, liste_tentatives_non_autorisees)
+        """
         
         if not isinstance(updates, list):
             logger.warning(f"⚠️ Updates n'est pas une liste (type {type(updates)}), conversion en liste vide")
@@ -704,7 +728,12 @@ class MondayValidationService:
         if since.tzinfo is None:
             since = since.replace(tzinfo=timezone.utc)
         
+        # 🔐 ÉTAPE 1: Récupérer le créateur de l'update de validation original
         validation_update_timestamp = None
+        original_creator_id = None
+        original_creator_email = None
+        original_creator_name = "inconnu"
+        
         for update in updates:
             if str(update.get("id")) == str(original_update_id):
                 timestamp_str = update.get("created_at")
@@ -712,12 +741,28 @@ class MondayValidationService:
                     try:
                         validation_update_timestamp = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
                         logger.info(f"📅 Timestamp de l'update de validation trouvé: {validation_update_timestamp.isoformat()}")
-                        break
                     except Exception as e:
                         logger.warning(f"⚠️ Erreur parsing timestamp update validation: {e}")
+                
+                # Récupérer le créateur de l'update original
+                creator = update.get("creator", {})
+                if isinstance(creator, dict):
+                    original_creator_id = creator.get("id")
+                    original_creator_email = creator.get("email")
+                    original_creator_name = creator.get("name", "inconnu")
+                    
+                    logger.info(f"👤 Créateur de l'update de validation: {original_creator_name} (ID: {original_creator_id}, Email: {original_creator_email})")
+                    logger.info(f"🔐 Seul cet utilisateur pourra répondre à cette validation")
+                break
+        
+        if not original_creator_id and not original_creator_email:
+            logger.warning(f"⚠️ Impossible d'identifier le créateur de l'update {original_update_id} - validation ouverte à tous")
         
         reference_time = validation_update_timestamp if validation_update_timestamp else since
         logger.info(f"🕐 Timestamp de référence pour recherche: {reference_time.isoformat()}")
+        
+        # Liste pour stocker les tentatives non autorisées
+        unauthorized_attempts = []
         
         candidate_replies = []
         
@@ -753,6 +798,56 @@ class MondayValidationService:
             reply_to_id = update.get("reply_to_id") or update.get("parent_id")
             update_type = update.get("type", "update")
             
+            # 🔐 ÉTAPE 2: Vérifier que la réponse vient du créateur autorisé
+            reply_creator = update.get("creator", {})
+            reply_creator_id = reply_creator.get("id") if isinstance(reply_creator, dict) else None
+            reply_creator_email = reply_creator.get("email") if isinstance(reply_creator, dict) else None
+            reply_creator_name = reply_creator.get("name", "inconnu") if isinstance(reply_creator, dict) else "inconnu"
+            
+            # Si on a identifié un créateur original, vérifier que la réponse vient de lui
+            if original_creator_id or original_creator_email:
+                is_authorized = False
+                
+                if original_creator_id and reply_creator_id:
+                    is_authorized = str(original_creator_id) == str(reply_creator_id)
+                elif original_creator_email and reply_creator_email:
+                    is_authorized = original_creator_email.lower() == reply_creator_email.lower()
+                
+                if not is_authorized:
+                    logger.warning(f"🚫 Réponse ignorée - Utilisateur non autorisé: {reply_creator_name} (ID: {reply_creator_id}, Email: {reply_creator_email})")
+                    logger.warning(f"   Créateur attendu: {original_creator_name} (ID: {original_creator_id}, Email: {original_creator_email})")
+                    
+                    # 🚨 NOTIFICATION: Stocker la tentative non autorisée
+                    unauthorized_attempts.append({
+                        "intruder_id": reply_creator_id,
+                        "intruder_email": reply_creator_email,
+                        "intruder_name": reply_creator_name,
+                        "legitimate_creator_id": original_creator_id,
+                        "legitimate_creator_email": original_creator_email,
+                        "legitimate_creator_name": original_creator_name,
+                        "update": update,
+                        "timestamp": update_time_str
+                    })
+                    
+                    # 📢 POSTER IMMÉDIATEMENT UNE NOTIFICATION DANS MONDAY.COM
+                    if item_id and task_title:
+                        try:
+                            logger.info(f"📢 Envoi notification tentative non autorisée sur item {item_id}")
+                            await self._post_unauthorized_reply_notification(
+                                item_id=item_id,
+                                original_creator_name=original_creator_name,
+                                original_creator_email=original_creator_email,
+                                unauthorized_replier_name=reply_creator_name,
+                                unauthorized_replier_email=reply_creator_email,
+                                task_title=task_title
+                            )
+                        except Exception as e:
+                            logger.error(f"❌ Erreur envoi notification non autorisée: {e}", exc_info=True)
+                    
+                    continue
+                else:
+                    logger.info(f"✅ Réponse autorisée de {reply_creator_name} (ID: {reply_creator_id})")
+            
             logger.info(f"📝 Update {idx}: id={update_id}, type={update_type}, reply_to={reply_to_id}, créé={update_time_str}, body='{body[:50]}'...")
             
             if not body:
@@ -772,7 +867,7 @@ class MondayValidationService:
             
             if ids_match and self._is_validation_reply(body):
                 logger.info(f"💬 Reply directe trouvée: '{body[:50]}'")
-                return update
+                return update, unauthorized_attempts
             elif ids_match:
                 candidate_replies.append(("direct_reply", update, body))
             
@@ -801,10 +896,10 @@ class MondayValidationService:
             
             best_match = candidate_replies[0]
             logger.info(f"💬 Meilleure reply trouvée ({best_match[0]}): '{best_match[2][:50]}'")
-            return best_match[1]
+            return best_match[1], unauthorized_attempts
         
         logger.warning(f"⚠️ Aucune reply valide trouvée parmi {len(updates)} updates")
-        return None
+        return None, unauthorized_attempts
     
     def _looks_like_validation_response(self, text: str) -> bool:
         """Vérifie si un texte ressemble à une réponse de validation."""
@@ -826,6 +921,123 @@ class MondayValidationService:
                 return True
         
         return False
+    
+    async def _post_unauthorized_reply_notification(
+        self,
+        item_id: str,
+        original_creator_name: str,
+        original_creator_email: str,
+        unauthorized_replier_name: str,
+        unauthorized_replier_email: str,
+        task_title: str
+    ):
+        """
+        Poste une notification dans Monday.com lorsqu'un utilisateur non autorisé tente de répondre.
+        
+        Args:
+            item_id: ID de l'item Monday.com
+            original_creator_name: Nom du créateur autorisé
+            original_creator_email: Email du créateur autorisé
+            unauthorized_replier_name: Nom de l'utilisateur non autorisé
+            unauthorized_replier_email: Email de l'utilisateur non autorisé
+            task_title: Titre de la tâche
+        """
+        logger.warning(f"🚫 Notification: Tentative de réponse non autorisée sur item {item_id}")
+        
+        # Tenter de récupérer les Monday IDs pour les mentions
+        original_creator_monday_id = await self.monday_tool.get_user_id_by_email(original_creator_email)
+        unauthorized_replier_monday_id = await self.monday_tool.get_user_id_by_email(unauthorized_replier_email)
+        
+        # Construire les tags
+        original_tag = f"@{original_creator_name}"
+        if original_creator_monday_id:
+            original_tag = f"{{{{Person: {original_creator_monday_id}}}}}"
+        
+        unauthorized_tag = f"@{unauthorized_replier_name}"
+        if unauthorized_replier_monday_id:
+            unauthorized_tag = f"{{{{Person: {unauthorized_replier_monday_id}}}}}"
+        
+        # Construire le message
+        message = (
+            f"{original_tag} ⚠️ Il y a un autre utilisateur qui essaie de répondre à votre place pour \"{task_title}\".\n\n"
+            f"{unauthorized_tag} ❌ Vous ne pouvez pas répondre à ce commentaire car vous n'êtes pas le créateur de la demande de validation.\n\n"
+            f"🔐 Pour des raisons de sécurité, seul le créateur de la validation peut y répondre."
+        )
+        
+        # Poster le message
+        await self.monday_tool.execute_action(
+            action="add_comment",
+            item_id=item_id,
+            comment=message
+        )
+        logger.info(f"✅ Notification de tentative non autorisée postée sur Monday.com pour item {item_id}")
+    
+    async def _notify_unauthorized_attempts(self, item_id: str, unauthorized_attempts: List[Dict[str, Any]], task_title: str):
+        """
+        Poste un nouvel update dans Monday.com pour notifier une tentative non autorisée.
+        
+        Args:
+            item_id: ID de l'item Monday.com
+            unauthorized_attempts: Liste des tentatives non autorisées
+            task_title: Titre de la tâche
+        """
+        if not unauthorized_attempts:
+            return
+        
+        logger.warning(f"🚨 {len(unauthorized_attempts)} tentative(s) non autorisée(s) détectée(s) pour item {item_id}")
+        
+        for attempt in unauthorized_attempts:
+            try:
+                legitimate_creator_id = attempt.get("legitimate_creator_id")
+                legitimate_creator_name = attempt.get("legitimate_creator_name", "l'utilisateur autorisé")
+                intruder_id = attempt.get("intruder_id")
+                intruder_name = attempt.get("intruder_name", "un autre utilisateur")
+                
+                # Construire le message avec mentions
+                message_parts = []
+                
+                # Mention du créateur légitime
+                if legitimate_creator_id:
+                    message_parts.append(f'<a href="https://monday.com/users/{legitimate_creator_id}">@{legitimate_creator_name}</a>')
+                else:
+                    message_parts.append(f"@{legitimate_creator_name}")
+                
+                message_parts.append(f" ⚠️ Il y a un autre utilisateur qui essaie de répondre à votre place pour")
+                message_parts.append(f' <strong>"{task_title}"</strong>.')
+                
+                message_parts.append("<br><br>")
+                
+                # Mention de l'intrus
+                if intruder_id:
+                    message_parts.append(f'<a href="https://monday.com/users/{intruder_id}">@{intruder_name}</a>')
+                else:
+                    message_parts.append(f"@{intruder_name}")
+                
+                message_parts.append(" ❌ Vous ne pouvez pas répondre à ce commentaire car vous n'êtes pas le créateur de la demande de validation.")
+                
+                message_parts.append("<br><br>")
+                message_parts.append("🔐 <em>Pour des raisons de sécurité, seul le créateur de la validation peut y répondre.</em>")
+                
+                notification_message = "".join(message_parts)
+                
+                logger.info(f"📨 Envoi notification tentative non autorisée: {intruder_name} → {legitimate_creator_name}")
+                
+                # Poster le message dans Monday.com
+                result = await self.monday_tool.execute_action(
+                    action="add_comment",
+                    item_id=item_id,
+                    comment=notification_message
+                )
+                
+                if result and isinstance(result, dict) and result.get("success"):
+                    logger.info(f"✅ Notification postée dans Monday.com pour item {item_id}")
+                else:
+                    logger.error(f"❌ Échec notification Monday.com: {result}")
+                    
+            except Exception as e:
+                logger.error(f"❌ Erreur lors de la notification de tentative non autorisée: {e}")
+                import traceback
+                traceback.print_exc()
     
     def _is_validation_reply(self, reply_text: str) -> bool:
         """Vérifie si un texte est une réponse de validation valide."""

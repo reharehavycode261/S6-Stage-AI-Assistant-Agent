@@ -6298,3 +6298,24 @@ billiard.exceptions.WorkerLostError: Could not start worker processes
 [2025-11-20 09:48:26] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T06:48:26.439398Z"}
 [2025-11-20 09:48:26] INFO     celery@MBP130-SMARTELIA-2.local ready.
 [2025-11-20 09:49:35] INFO     Task ai_agent_background.execute_workflow[abda42d2-3d79-45cc-8af6-1a3cd68acf10] received
+[2025-11-20 13:43:01] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T13:43:01.584172Z"}
+[2025-11-20 13:43:01] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T13:43:01.586682Z"}
+[2025-11-20 13:43:01] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T13:43:01.587529Z"}
+[2025-11-20 13:43:01] INFO     webhooks@worker-webhooks ready.
+[2025-11-20 13:43:07] INFO     sync with celery@MBP130-SMARTELIA-2.local
+[2025-11-20 13:43:07] INFO     sync with workflows@worker-workflows
+[2025-11-20 13:43:08] WARNING  Substantial drift from celery@MBP130-SMARTELIA-2.local may mean clocks are out of sync.  Current drift is 10800 seconds.  [orig: 2025-11-20 13:43:08.510890 recv: 2025-11-20 16:43:08.511659]
+[2025-11-20 13:43:08] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T13:43:08.547736Z"}
+[2025-11-20 13:43:08] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T13:43:08.549144Z"}
+[2025-11-20 13:43:08] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T13:43:08.550379Z"}
+[2025-11-20 13:43:08] INFO     workflows@worker-workflows ready.
+[2025-11-20 13:44:28] INFO     missed heartbeat from celery@MBP130-SMARTELIA-2.local
+[2025-11-20 13:44:31] INFO     missed heartbeat from celery@MBP130-SMARTELIA-2.local
+[2025-11-20 14:12:22] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T14:12:22.899229Z"}
+[2025-11-20 14:12:22] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T14:12:22.904616Z"}
+[2025-11-20 14:12:22] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T14:12:22.909482Z"}
+[2025-11-20 14:12:22] INFO     workflows@worker-workflows ready.
+[2025-11-20 14:12:23] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T14:12:23.898863Z"}
+[2025-11-20 14:12:23] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T14:12:23.904576Z"}
+[2025-11-20 14:12:23] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T14:12:23.907541Z"}
+[2025-11-20 14:12:23] INFO     webhooks@worker-webhooks ready.
