@@ -509,14 +509,37 @@ class ReactivationService:
             
             creator_name = None
             try:
-                item_info = await self.monday_tool._arun(
-                    action="get_item_info",
+                # ✅ CORRECTION: Récupérer le créateur de l'update de réactivation, pas du ticket
+                updates_result = await self.monday_tool._arun(
+                    action="get_item_updates",
                     item_id=monday_item_id
                 )
-                if item_info and item_info.get("success"):
-                    creator_name = item_info.get("creator_name")
-                    if creator_name:
-                        logger.debug(f"👤 Créateur du ticket récupéré: {creator_name}")
+                
+                if updates_result.get("success") and updates_result.get("updates"):
+                    import re
+                    # Chercher l'update qui contient le texte de réactivation
+                    for update in updates_result["updates"]:
+                        body = update.get("body", "").strip()
+                        clean_body = re.sub(r'<[^>]+>', '', body).strip()
+                        
+                        # Si c'est l'update de réactivation (contient @vydata ou des mots-clés de réactivation)
+                        if "@vydata" in clean_body.lower() or any(keyword in clean_body.lower() for keyword in ["réactivation", "reactivation"]):
+                            creator = update.get("creator", {})
+                            creator_name = creator.get("name")
+                            if creator_name:
+                                logger.info(f"👤 ✅ Créateur update réactivation identifié: {creator_name}")
+                                break
+                
+                # Fallback si pas trouvé
+                if not creator_name:
+                    item_info = await self.monday_tool._arun(
+                        action="get_item_info",
+                        item_id=monday_item_id
+                    )
+                    if item_info and item_info.get("success"):
+                        creator_name = item_info.get("creator_name")
+                        if creator_name:
+                            logger.warning(f"⚠️ Fallback - Créateur depuis item: {creator_name}")
             except Exception as e:
                 logger.debug(f"⚠️ Impossible de récupérer le créateur: {e}")
             

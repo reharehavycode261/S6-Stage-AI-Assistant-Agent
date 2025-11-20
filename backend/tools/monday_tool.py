@@ -203,6 +203,42 @@ class MondayTool(BaseTool):
                 "error_type": "unexpected_error"
             }
 
+    async def get_user_id_by_email(self, email: str) -> Optional[str]:
+        """
+        Récupère l'ID Monday.com d'un utilisateur par son email.
+        
+        Args:
+            email: Email de l'utilisateur
+            
+        Returns:
+            ID Monday.com de l'utilisateur ou None si non trouvé
+        """
+        query = """
+        query ($email: String!) {
+            users(emails: [$email]) {
+                id
+                name
+                email
+            }
+        }
+        """
+        variables = {"email": email}
+        
+        try:
+            result = await self._make_request(query, variables)
+            if result and result.get("data", {}).get("users"):
+                users = result["data"]["users"]
+                if users and len(users) > 0:
+                    user_id = users[0].get("id")
+                    self.logger.info(f"✅ ID Monday.com trouvé pour {email}: {user_id}")
+                    return str(user_id)
+            
+            self.logger.warning(f"⚠️ Aucun utilisateur Monday.com trouvé pour l'email: {email}")
+            return None
+        except Exception as e:
+            self.logger.error(f"❌ Erreur récupération ID utilisateur Monday.com pour {email}: {e}")
+            return None
+
     async def execute_action(self, action: str, **kwargs) -> Dict[str, Any]:
         """Exécute une action spécifique via l'interface _arun."""
         self.logger.info(f"Déclenchement de l'action MondayTool: {action} avec kwargs: {kwargs}")

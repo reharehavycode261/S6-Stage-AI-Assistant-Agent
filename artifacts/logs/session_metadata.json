@@ -1,12 +1,12 @@
 {
-  "session_start": "2025-11-20T09:48:26.434655",
-  "worker_pid": 38726,
+  "session_start": "2025-11-20T14:12:23.733077",
+  "worker_pid": 1,
   "environment": "development",
   "is_production": false,
   "logs_directory": "logs",
-  "broker": "amqp://ai_agent_user:secure_password_123@localhost:5672/ai_agent",
-  "backend": "db+postgresql://admin:password@localhost:5432/ai_agent_admin",
-  "python_version": "3.12.10 (v3.12.10:0cc81280367, Apr  8 2025, 08:47:00) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "broker": "amqp://ai_agent_user:secure_password_123@rabbitmq:5672/ai_agent",
+  "backend": "db+postgresql://admin:password@postgres:5432/ai_agent_admin",
+  "python_version": "3.12.12 (main, Nov 18 2025, 05:56:04) [GCC 14.2.0]",
   "handlers_created": [
     "celery",
     "error",

@@ -132,12 +132,12 @@ async def _wait_for_validation_with_reminder(
 async def _get_user_email_from_monday(
     monday_item_id: str,
     monday_tool: MondayTool
-) -> Optional[str]:
+) -> tuple[Optional[str], Optional[str]]:
     """
-    Récupère l'email de l'utilisateur qui a posté le dernier commentaire @vydata.
+    Récupère l'email ET le nom de l'utilisateur qui a posté le dernier commentaire @vydata.
     
     Cette fonction cherche l'update la plus récente contenant '@vydata' et 
-    récupère l'email de son créateur. C'est cet utilisateur qui recevra 
+    récupère l'email ET le nom de son créateur. C'est cet utilisateur qui recevra 
     l'email de notification en cas de timeout de validation.
     
     Args:
@@ -145,7 +145,7 @@ async def _get_user_email_from_monday(
         monday_tool: Instance de MondayTool
         
     Returns:
-        Email de l'utilisateur qui a posté @vydata, ou None si non trouvé
+        tuple(email, nom) de l'utilisateur qui a posté @vydata, ou (None, None) si non trouvé
     """
     try:
         logger.info(f"🔍 Récupération email utilisateur pour item {monday_item_id}...")
@@ -191,16 +191,17 @@ async def _get_user_email_from_monday(
                         name = creator.get("name", "Unknown")
                         
                         if email:
-                            logger.info(f"✅ Email trouvé du créateur de l'update @vydata: {email} ({name})")
-                            return email
+                            logger.info(f"✅ Email ET nom trouvés du créateur de l'update @vydata: {email} ({name})")
+                            return email, name
                         else:
                             logger.warning(f"⚠️ Update @vydata trouvée mais sans email pour {name}")
                 
                 item_creator = item.get("creator", {})
                 if item_creator.get("email"):
                     email = item_creator["email"]
-                    logger.info(f"ℹ️  Fallback 1: Email du créateur de l'item: {email}")
-                    return email
+                    name = item_creator.get("name", "Unknown")
+                    logger.info(f"ℹ️  Fallback 1: Email et nom du créateur de l'item: {email} ({name})")
+                    return email, name
                 
                 logger.info(f"🔍 Fallback 2: Récupération des subscribers de l'item")
                 subscribers = item.get("subscribers", [])
@@ -208,9 +209,10 @@ async def _get_user_email_from_monday(
                     logger.info(f"📋 {len(subscribers)} subscriber(s) trouvé(s)")
                     for subscriber in subscribers:
                         sub_email = subscriber.get("email")
+                        sub_name = subscriber.get("name", "Unknown")
                         if sub_email:
-                            logger.info(f"✅ Email subscriber trouvé: {sub_email}")
-                            return sub_email
+                            logger.info(f"✅ Email et nom subscriber trouvés: {sub_email} ({sub_name})")
+                            return sub_email, sub_name
                 
                 logger.warning(f"⚠️ Aucune update @vydata, créateur ni subscriber avec email")
         else:
@@ -239,38 +241,40 @@ async def _get_user_email_from_monday(
                     
                     creator = item.get("creator", {})
                     if creator.get("email"):
-                        logger.info(f"✅ Email créateur via query enrichie: {creator['email']}")
-                        return creator["email"]
+                        name = creator.get("name", "Unknown")
+                        logger.info(f"✅ Email et nom créateur via query enrichie: {creator['email']} ({name})")
+                        return creator["email"], name
                     
                     subscribers = item.get("subscribers", [])
                     for sub in subscribers:
                         if sub.get("email"):
-                            logger.info(f"✅ Email subscriber via query enrichie: {sub['email']}")
-                            return sub["email"]
+                            name = sub.get("name", "Unknown")
+                            logger.info(f"✅ Email et nom subscriber via query enrichie: {sub['email']} ({name})")
+                            return sub["email"], name
                             
             except Exception as fallback_err:
                 logger.warning(f"⚠️ Erreur fallback query enrichie: {fallback_err}")
         
-        logger.warning(f"⚠️ Aucun email trouvé pour l'item {monday_item_id}")
-        return None
+        logger.warning(f"⚠️ Aucun email ni nom trouvés pour l'item {monday_item_id}")
+        return None, None
         
     except Exception as e:
-        logger.error(f"❌ Erreur récupération email utilisateur: {e}", exc_info=True)
-        return None
+        logger.error(f"❌ Erreur récupération email et nom utilisateur: {e}", exc_info=True)
+        return None, None
 
 
 async def _get_user_slack_id_from_monday(
     monday_item_id: str,
     monday_tool: MondayTool,
     slack_notification_service
-) -> tuple[Optional[str], Optional[str]]:
+) -> tuple[Optional[str], Optional[str], Optional[str]]:
     """
-    Récupère l'ID Slack et l'email de l'utilisateur qui a posté le dernier commentaire @vydata.
+    Récupère l'ID Slack, l'email ET le nom de l'utilisateur qui a posté le dernier commentaire @vydata.
     
     Stratégie:
-    1. Récupère l'email depuis Monday.com
+    1. Récupère l'email et le nom depuis Monday.com
     2. Utilise l'API Slack pour trouver l'utilisateur par email
-    3. Retourne (slack_id, email)
+    3. Retourne (slack_id, email, name)
     
     Args:
         monday_item_id: ID de l'item Monday.com
@@ -278,28 +282,28 @@ async def _get_user_slack_id_from_monday(
         slack_notification_service: Service Slack pour lookup
         
     Returns:
-        Tuple (slack_user_id, email) ou (None, None) si non trouvé
+        Tuple (slack_user_id, email, name) ou (None, None, None) si non trouvé
     """
     try:
-        user_email = await _get_user_email_from_monday(monday_item_id, monday_tool)
+        user_email, user_name = await _get_user_email_from_monday(monday_item_id, monday_tool)
         
         if not user_email:
             logger.warning(f"⚠️ Aucun email trouvé pour item {monday_item_id}")
-            return None, None
+            return None, None, None
         
         logger.info(f"🔍 Recherche ID Slack pour email: {user_email}")
         slack_user_id = await slack_notification_service.get_user_id_by_email(user_email)
         
         if slack_user_id:
             logger.info(f"✅ ID Slack trouvé: {slack_user_id} pour {user_email}")
-            return slack_user_id, user_email
+            return slack_user_id, user_email, user_name
         else:
             logger.warning(f"⚠️ Aucun utilisateur Slack trouvé pour {user_email}")
-            return None, user_email
+            return None, user_email, user_name
         
     except Exception as e:
         logger.error(f"❌ Erreur récupération ID Slack: {e}", exc_info=True)
-        return None, None
+        return None, None, None
 
 
 def _convert_test_results_to_dict(test_results) -> Optional[Dict[str, Any]]:
@@ -504,23 +508,26 @@ async def monday_human_validation(state: GraphState) -> GraphState:
         monday_item_id = str(state["task"].monday_item_id) if state["task"].monday_item_id else state["task"].task_id
         logger.info(f"📝 Posting update de validation pour item Monday.com {monday_item_id}")
         
+        # Récupération du vrai créateur de l'update @vydata (pas le owner du board)
         creator_name = None
-        task = state["task"]
-        if hasattr(task, 'creator_name') and task.creator_name:
-            creator_name = task.creator_name
-            logger.info(f"👤 Creator_name trouvé dans task: {creator_name}")
-        else:
-            logger.info(f"🔍 Creator_name absent du task, récupération depuis Monday.com...")
-            try:
-                monday_tool = MondayTool()
-                item_info = await monday_tool._arun(action="get_item_info", item_id=monday_item_id)
-                if item_info and isinstance(item_info, dict) and item_info.get("success") and item_info.get("creator_name"):
-                    creator_name = item_info.get("creator_name")
-                    logger.info(f"✅ Creator_name récupéré depuis Monday.com: {creator_name}")
-                else:
-                    logger.debug("ℹ️  Creator_name non disponible dans Monday.com")
-            except Exception as e:
-                logger.warning(f"⚠️ Erreur lors de la récupération du creator_name: {e}")
+        logger.info(f"🔍 Récupération du créateur de l'update @vydata depuis Monday.com...")
+        try:
+            monday_tool = MondayTool()
+            _, creator_name = await _get_user_email_from_monday(monday_item_id, monday_tool)
+            if creator_name:
+                logger.info(f"✅ Creator_name récupéré (créateur update @vydata): {creator_name}")
+            else:
+                logger.warning("⚠️ Creator_name non trouvé, utilisation fallback depuis task")
+                task = state["task"]
+                if hasattr(task, 'creator_name') and task.creator_name:
+                    creator_name = task.creator_name
+                    logger.info(f"👤 Fallback - Creator_name depuis task: {creator_name}")
+        except Exception as e:
+            logger.warning(f"⚠️ Erreur lors de la récupération du creator_name: {e}")
+            task = state["task"]
+            if hasattr(task, 'creator_name') and task.creator_name:
+                creator_name = task.creator_name
+                logger.info(f"👤 Fallback exception - Creator_name depuis task: {creator_name}")
         
         user_language = state.get("user_language")
         
@@ -633,15 +640,16 @@ async def monday_human_validation(state: GraphState) -> GraphState:
         
         user_slack_id = None
         user_email = None
+        user_creator_name = None
         if is_command or is_reactivation:
             try:
-                user_slack_id, user_email = await _get_user_slack_id_from_monday(
+                user_slack_id, user_email, user_creator_name = await _get_user_slack_id_from_monday(
                     monday_item_id=str(monday_item_id),
                     monday_tool=monday_validation_service.monday_tool,
                     slack_notification_service=slack_notification_service
                 )
                 if user_slack_id:
-                    logger.info(f"💬 ID Slack utilisateur récupéré: {user_slack_id} ({user_email})")
+                    logger.info(f"💬 ID Slack utilisateur récupéré: {user_slack_id} ({user_email} - {user_creator_name})")
                 elif user_email:
                     logger.warning(f"⚠️ Email trouvé ({user_email}) mais pas de compte Slack - pas de notification")
                 else:

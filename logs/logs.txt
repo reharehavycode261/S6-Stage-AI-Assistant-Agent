@@ -14,3 +14,109 @@
 [2025-11-20 12:31:37] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T09:31:37.893532Z"}
 [2025-11-20 12:31:37] INFO     celery@MBP130-SMARTELIA-2.local ready.
 [2025-11-20 12:33:37] INFO     Task ai_agent_background.execute_workflow[4abc891b-6eda-44d9-99cf-703a5c5043b8] received
+[2025-11-20 14:08:36] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T11:08:36.173575Z"}
+[2025-11-20 14:08:36] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T11:08:36.174859Z"}
+[2025-11-20 14:08:36] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T11:08:36.175216Z"}
+[2025-11-20 14:08:36] INFO     celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 14:11:31] INFO     Task ai_agent_background.execute_workflow[9cecd981-b75c-4c79-a9d4-5400c482e004] received
+[2025-11-20 14:34:27] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T11:34:27.461572Z"}
+[2025-11-20 14:34:27] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T11:34:27.462643Z"}
+[2025-11-20 14:34:27] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T11:34:27.462877Z"}
+[2025-11-20 14:34:27] INFO     celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 14:37:45] INFO     Task ai_agent_background.execute_workflow[300f5bd9-080a-4585-a1e8-b758e35546ca] received
+[2025-11-20 15:29:07] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T12:29:07.092272Z"}
+[2025-11-20 15:29:07] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T12:29:07.095471Z"}
+[2025-11-20 15:29:07] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T12:29:07.095937Z"}
+[2025-11-20 15:29:07] INFO     celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 15:34:05] INFO     Task ai_agent_background.execute_workflow[679d7c9d-ac67-437d-9f45-6401df7cd3d3] received
+[2025-11-20 15:48:03] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T12:48:03.452997Z"}
+[2025-11-20 15:48:03] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T12:48:03.454587Z"}
+[2025-11-20 15:48:03] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T12:48:03.455034Z"}
+[2025-11-20 15:48:03] INFO     celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 15:52:11] INFO     Task ai_agent_background.execute_workflow[df10567b-4359-41ac-89cd-e71a36991843] received
+[2025-11-20 16:07:36] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T13:07:36.746711Z"}
+[2025-11-20 16:07:36] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T13:07:36.748366Z"}
+[2025-11-20 16:07:36] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T13:07:36.748551Z"}
+[2025-11-20 16:07:36] INFO     celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 16:12:20] INFO     Task ai_agent_background.execute_workflow[de6aa3fb-8d93-4b2d-8788-50e6f00d8c74] received
+[2025-11-20 16:25:59] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T13:25:59.032896Z"}
+[2025-11-20 16:25:59] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T13:25:59.033979Z"}
+[2025-11-20 16:25:59] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T13:25:59.034151Z"}
+[2025-11-20 16:25:59] INFO     celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 16:27:10] INFO     Task ai_agent_background.execute_workflow[b5f13911-7042-46d6-89ec-0f6c4bab1e18] received
+[2025-11-20 16:41:35] WARNING  consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/celery/worker/consumer/consumer.py", line 742, in start
+    c.loop(*c.loop_args())
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/kombu/asynchronous/hub.py", line 373, in create_loop
+    cb(*cbargs)
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/kombu/transport/base.py", line 248, in on_readable
+    reader(loop)
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/kombu/transport/base.py", line 230, in _read
+    drain_events(timeout=0)
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/amqp/connection.py", line 526, in drain_events
+    while not self.blocking_read(timeout):
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/amqp/connection.py", line 531, in blocking_read
+    frame = self.transport.read_frame()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/amqp/transport.py", line 294, in read_frame
+    frame_header = read(7, True)
+                   ^^^^^^^^^^^^^
+  File "/Users/stagiaire_vycode/Stage Smartelia/AI-Agent /venv/lib/python3.12/site-packages/amqp/transport.py", line 637, in _read
+    raise OSError('Server unexpectedly closed connection')
+OSError: Server unexpectedly closed connection
+[2025-11-20 16:41:36] ERROR    consumer: Cannot connect to amqp://ai_agent_user:**@127.0.0.1:5672/ai_agent: Server unexpectedly closed connection.
+Trying again in 2.00 seconds... (1/10)
+
+[2025-11-20 16:41:38] ERROR    consumer: Cannot connect to amqp://ai_agent_user:**@127.0.0.1:5672/ai_agent: Server unexpectedly closed connection.
+Trying again in 4.00 seconds... (2/10)
+
+[2025-11-20 16:41:42] ERROR    consumer: Cannot connect to amqp://ai_agent_user:**@127.0.0.1:5672/ai_agent: [Errno 61] Connection refused.
+Trying again in 6.00 seconds... (3/10)
+
+[2025-11-20 16:41:48] ERROR    consumer: Cannot connect to amqp://ai_agent_user:**@127.0.0.1:5672/ai_agent: [Errno 61] Connection refused.
+Trying again in 8.00 seconds... (4/10)
+
+[2025-11-20 16:41:56] ERROR    consumer: Cannot connect to amqp://ai_agent_user:**@127.0.0.1:5672/ai_agent: [Errno 61] Connection refused.
+Trying again in 10.00 seconds... (5/10)
+
+[2025-11-20 16:42:06] ERROR    consumer: Cannot connect to amqp://ai_agent_user:**@127.0.0.1:5672/ai_agent: Server unexpectedly closed connection.
+Trying again in 12.00 seconds... (6/10)
+
+[2025-11-20 16:42:18] ERROR    consumer: Cannot connect to amqp://ai_agent_user:**@127.0.0.1:5672/ai_agent: Server unexpectedly closed connection.
+Trying again in 14.00 seconds... (7/10)
+
+[2025-11-20 16:42:32] ERROR    consumer: Cannot connect to amqp://ai_agent_user:**@127.0.0.1:5672/ai_agent: Server unexpectedly closed connection.
+Trying again in 16.00 seconds... (8/10)
+
+[2025-11-20 16:42:48] ERROR    consumer: Cannot connect to amqp://ai_agent_user:**@127.0.0.1:5672/ai_agent: Server unexpectedly closed connection.
+Trying again in 18.00 seconds... (9/10)
+
+[2025-11-20 16:43:07] INFO     Connected to amqp://ai_agent_user:**@127.0.0.1:5672/ai_agent
+[2025-11-20 16:43:07] INFO     mingle: searching for neighbors
+[2025-11-20 16:43:08] INFO     mingle: sync with 1 nodes
+[2025-11-20 16:43:08] INFO     mingle: sync complete
+[2025-11-20 16:43:08] WARNING  Substantial drift from workflows@worker-workflows may mean clocks are out of sync.  Current drift is 10800 seconds.  [orig: 2025-11-20 16:43:08.534188 recv: 2025-11-20 13:43:08.509333]
+[2025-11-20 16:43:09] WARNING  Substantial drift from webhooks@worker-webhooks may mean clocks are out of sync.  Current drift is 10800 seconds.  [orig: 2025-11-20 16:43:09.553508 recv: 2025-11-20 13:43:09.547595]
+[2025-11-20 17:19:48] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T14:19:48.864533Z"}
+[2025-11-20 17:19:48] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T14:19:48.865850Z"}
+[2025-11-20 17:19:48] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T14:19:48.866606Z"}
+[2025-11-20 17:19:48] INFO     celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 17:21:36] INFO     Task ai_agent_background.execute_workflow[c19967a0-04a9-4c4c-9245-20a6d054f1c3] received
+[2025-11-20 17:34:30] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T14:34:30.069289Z"}
+[2025-11-20 17:34:30] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T14:34:30.072758Z"}
+[2025-11-20 17:34:30] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T14:34:30.073099Z"}
+[2025-11-20 17:34:30] INFO     celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 17:35:52] INFO     Task ai_agent_background.execute_workflow[4f71e127-c146-47b9-83e7-7090b72019f9] received
+[2025-11-20 17:44:25] WARNING  {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T14:44:25.670507Z"}
+[2025-11-20 17:44:25] WARNING  {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T14:44:25.671237Z"}
+[2025-11-20 17:44:25] WARNING  {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T14:44:25.671394Z"}
+[2025-11-20 17:44:25] INFO     celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 17:45:34] INFO     Task ai_agent_background.execute_workflow[cfc1edb4-9968-4b97-ada8-2924158e7003] received
