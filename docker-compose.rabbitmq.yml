@@ -1,0 +1,469 @@
+version: '3.8'
+
+services:
+  # ================================
+  # MESSAGE BROKER - RabbitMQ
+  # ================================
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: ai_agent_rabbitmq
+    hostname: ai-agent-rabbit
+    ports:
+      - "5672:5672"     # AMQP protocol port
+      - "15672:15672"   # Management UI port
+    environment:
+      # Authentification
+      RABBITMQ_DEFAULT_USER: ai_agent_user
+      RABBITMQ_DEFAULT_PASS: secure_password_123
+      RABBITMQ_DEFAULT_VHOST: ai_agent
+      
+      # Configuration optimisée pour AI-Agent
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbit log_levels [{connection,info}]
+      RABBITMQ_MANAGEMENT_ALLOW_WEB_ACCESS: "true"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_logs:/var/log/rabbitmq
+      # - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro  # disabled to fix startup
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    labels:
+      - "com.aiagent.service=message-broker"
+      - "com.aiagent.environment=development"
+
+  # ================================
+  # DATABASE - PostgreSQL with pg_partman
+  # ================================
+  postgres:
+    build:
+      context: ./docker/postgres
+      dockerfile: Dockerfile
+    image: ai_agent_postgres:pg_partman
+    container_name: ai_agent_postgres
+    hostname: ai-agent-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ai_agent_admin
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Scripts d'initialisation (exécutés dans l'ordre alphabétique)
+      - ./docker/postgres/init-scripts/01-enable-pg-partman.sql:/docker-entrypoint-initdb.d/01-enable-pg-partman.sql:ro
+      - ./config/init-db.sql:/docker-entrypoint-initdb.d/02-init-db.sql:ro
+      - ./docker/postgres/init-scripts/02-configure-webhook-events-partman.sql:/docker-entrypoint-initdb.d/03-configure-webhook-events-partman.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d ai_agent_admin"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    labels:
+      - "com.aiagent.service=database"
+      - "com.aiagent.feature=pg_partman"
+
+  # ================================
+  # CACHE - Redis
+  # ================================
+  redis:
+    image: redis:7-alpine
+    container_name: ai_agent_redis
+    hostname: ai-agent-redis
+    ports:
+      - "6379:6379"
+    command: >
+      redis-server
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --appendonly yes
+      --appendfsync everysec
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    labels:
+      - "com.aiagent.service=cache"
+      - "com.aiagent.component=redis"
+      - "com.aiagent.feature=webhook-idempotence"
+
+  # ================================
+  # APPLICATION - FastAPI
+  # ================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_agent_app
+    hostname: ai-agent-api
+    ports:
+      - "8000:8000"
+    environment:
+      # RabbitMQ configuration
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: ai_agent
+      RABBITMQ_USER: ai_agent_user
+      RABBITMQ_PASSWORD: secure_password_123
+      
+      # Database configuration
+      DATABASE_URL: postgresql://admin:password@postgres:5432/ai_agent_admin
+      
+      # Redis configuration
+      REDIS_URL: redis://redis:6379/0
+      
+      # Application settings
+      DEBUG: "false"
+      LOG_LEVEL: INFO
+      
+      # External APIs (à remplir via .env)
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      MONDAY_API_KEY: ${MONDAY_API_KEY}
+      WEBHOOK_SECRET: ${WEBHOOK_SECRET}
+      SECRET_KEY: ${SECRET_KEY}
+      
+      # Monday.com configuration
+      MONDAY_BOARD_ID: ${MONDAY_BOARD_ID}
+      MONDAY_TASK_COLUMN_ID: ${MONDAY_TASK_COLUMN_ID}
+      MONDAY_STATUS_COLUMN_ID: ${MONDAY_STATUS_COLUMN_ID}
+      
+      # Git configuration
+      DEFAULT_REPO_URL: ${DEFAULT_REPO_URL}
+      GIT_USER_NAME: ${GIT_USER_NAME:-AI-Agent}
+      GIT_USER_EMAIL: ${GIT_USER_EMAIL:-ai-agent@example.com}
+    volumes:
+      - ./logs:/app/logs
+      - /tmp/ai_agent_workspaces:/tmp/workspaces
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    labels:
+      - "com.aiagent.service=api"
+      - "com.aiagent.component=webhook-receiver"
+
+  # ================================
+  # CELERY WORKERS - Background Processing
+  # ================================
+  celery-worker-webhooks:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_agent_worker_webhooks
+    hostname: worker-webhooks
+    command: celery -A services.celery_app worker --loglevel=info --queues=webhooks --concurrency=4 --hostname=webhooks@%h
+    environment:
+      # RabbitMQ configuration (même que l'app)
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: ai_agent
+      RABBITMQ_USER: ai_agent_user
+      RABBITMQ_PASSWORD: secure_password_123
+      
+      DATABASE_URL: postgresql://admin:password@postgres:5432/ai_agent_admin
+      
+      # Redis configuration
+      REDIS_URL: redis://redis:6379/0
+      
+      # APIs
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      MONDAY_API_KEY: ${MONDAY_API_KEY}
+      
+      # Configuration
+      MONDAY_BOARD_ID: ${MONDAY_BOARD_ID}
+      DEFAULT_REPO_URL: ${DEFAULT_REPO_URL}
+      LOG_LEVEL: INFO
+    volumes:
+      - ./logs:/app/logs
+      - /tmp/ai_agent_workspaces:/tmp/workspaces
+    depends_on:
+      - rabbitmq
+      - postgres
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    labels:
+      - "com.aiagent.service=worker"
+      - "com.aiagent.component=webhook-processor"
+
+  celery-worker-workflows:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_agent_worker_workflows
+    hostname: worker-workflows
+    command: celery -A services.celery_app worker --loglevel=info --queues=workflows --concurrency=2 --hostname=workflows@%h
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: ai_agent
+      RABBITMQ_USER: ai_agent_user
+      RABBITMQ_PASSWORD: secure_password_123
+      
+      DATABASE_URL: postgresql://admin:password@postgres:5432/ai_agent_admin
+      
+      # Redis configuration
+      REDIS_URL: redis://redis:6379/0
+      
+      # APIs externes
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      MONDAY_API_KEY: ${MONDAY_API_KEY}
+      
+      # Configuration métier
+      MONDAY_BOARD_ID: ${MONDAY_BOARD_ID}
+      DEFAULT_REPO_URL: ${DEFAULT_REPO_URL}
+      GIT_USER_NAME: ${GIT_USER_NAME:-AI-Agent}
+      GIT_USER_EMAIL: ${GIT_USER_EMAIL:-ai-agent@example.com}
+      
+      LOG_LEVEL: INFO
+    volumes:
+      - ./logs:/app/logs
+      - /tmp/ai_agent_workspaces:/tmp/workspaces
+      - ~/.ssh:/root/.ssh:ro  # Clés SSH pour Git si nécessaire
+    depends_on:
+      - rabbitmq
+      - postgres
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    labels:
+      - "com.aiagent.service=worker"
+      - "com.aiagent.component=workflow-executor"
+
+  celery-worker-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_agent_worker_ai
+    hostname: worker-ai
+    command: celery -A services.celery_app worker --loglevel=info --queues=ai_generation --concurrency=3 --hostname=ai@%h
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: ai_agent
+      RABBITMQ_USER: ai_agent_user
+      RABBITMQ_PASSWORD: secure_password_123
+      
+      DATABASE_URL: postgresql://admin:password@postgres:5432/ai_agent_admin
+      
+      # Redis configuration
+      REDIS_URL: redis://redis:6379/0
+      
+      # Providers IA
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      DEFAULT_AI_PROVIDER: ${DEFAULT_AI_PROVIDER:-claude}
+      AI_MODEL_TEMPERATURE: ${AI_MODEL_TEMPERATURE:-0.1}
+      AI_MAX_TOKENS: ${AI_MAX_TOKENS:-4000}
+      
+      LOG_LEVEL: INFO
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - rabbitmq
+      - postgres
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    labels:
+      - "com.aiagent.service=worker"
+      - "com.aiagent.component=ai-generator"
+
+  celery-worker-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_agent_worker_tests
+    hostname: worker-tests
+    command: celery -A services.celery_app worker --loglevel=info --queues=tests,dlq --concurrency=2 --hostname=tests@%h
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: ai_agent
+      RABBITMQ_USER: ai_agent_user
+      RABBITMQ_PASSWORD: secure_password_123
+      
+      DATABASE_URL: postgresql://admin:password@postgres:5432/ai_agent_admin
+      
+      # Redis configuration
+      REDIS_URL: redis://redis:6379/0
+      
+      # Configuration tests
+      ENABLE_SMOKE_TESTS: ${ENABLE_SMOKE_TESTS:-true}
+      TEST_COVERAGE_THRESHOLD: ${TEST_COVERAGE_THRESHOLD:-80}
+      MAX_TEST_RETRIES: ${MAX_TEST_RETRIES:-3}
+      TEST_TIMEOUT: ${TEST_TIMEOUT:-300}
+      
+      LOG_LEVEL: INFO
+    volumes:
+      - ./logs:/app/logs
+      - /tmp/ai_agent_workspaces:/tmp/workspaces
+    depends_on:
+      - rabbitmq
+      - postgres
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    labels:
+      - "com.aiagent.service=worker"
+      - "com.aiagent.component=test-runner"
+
+  # ================================
+  # MONITORING - Flower
+  # ================================
+  flower:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_agent_flower
+    hostname: flower-monitor
+    command: celery -A services.celery_app flower --port=5555 --basic-auth=${FLOWER_USER:-admin}:${FLOWER_PASSWORD:-flower123}
+    ports:
+      - "5555:5555"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: ai_agent
+      RABBITMQ_USER: ai_agent_user
+      RABBITMQ_PASSWORD: secure_password_123
+      
+      DATABASE_URL: postgresql://admin:password@postgres:5432/ai_agent_admin
+      
+      # Redis configuration
+      REDIS_URL: redis://redis:6379/0
+      
+      # Configuration Flower
+      FLOWER_BASIC_AUTH: ${FLOWER_USER:-admin}:${FLOWER_PASSWORD:-flower123}
+      FLOWER_URL_PREFIX: ${FLOWER_URL_PREFIX:-}
+    depends_on:
+      - rabbitmq
+      - postgres
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    labels:
+      - "com.aiagent.service=monitoring"
+      - "com.aiagent.component=celery-flower"
+
+  # ================================
+  # MONITORING - Prometheus (optionnel)
+  # ================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ai_agent_prometheus
+    hostname: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    labels:
+      - "com.aiagent.service=monitoring"
+      - "com.aiagent.component=metrics"
+    profiles:
+      - monitoring
+
+# ================================
+# VOLUMES PERSISTANTS
+# ================================
+volumes:
+  # RabbitMQ data
+  rabbitmq_data:
+    driver: local
+    name: ai_agent_rabbitmq_data
+  
+  rabbitmq_logs:
+    driver: local
+    name: ai_agent_rabbitmq_logs
+  
+  # PostgreSQL data
+  postgres_data:
+    driver: local
+    name: ai_agent_postgres_data
+  
+  # Redis data
+  redis_data:
+    driver: local
+    name: ai_agent_redis_data
+  
+  # Prometheus data (monitoring)
+  prometheus_data:
+    driver: local
+    name: ai_agent_prometheus_data
+
+# ================================
+# NETWORK CONFIGURATION
+# ================================
+networks:
+  ai_agent_network:
+    driver: bridge
+    name: ai_agent_network
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# ================================
+# COMMANDES UTILES
+# ================================
+# 
+# Démarrer tous les services :
+# docker-compose -f docker-compose.rabbitmq.yml up -d
+#
+# Démarrer avec monitoring :
+# docker-compose -f docker-compose.rabbitmq.yml --profile monitoring up -d
+#
+# Voir les logs d'un service :
+# docker-compose -f docker-compose.rabbitmq.yml logs -f [service_name]
+#
+# Redémarrer les workers seulement :
+# docker-compose -f docker-compose.rabbitmq.yml restart celery-worker-webhooks celery-worker-workflows
+#
+# Monitoring URLs :
+# - RabbitMQ Management: http://localhost:15672 (ai_agent_user/secure_password_123)
+# - Flower (Celery): http://localhost:5555 (admin/flower123)
+# - Prometheus: http://localhost:9090
+# - API: http://localhost:8000
+#
+# Tests de connectivité :
+# docker exec ai_agent_rabbitmq rabbitmq-diagnostics ping
+# docker exec ai_agent_postgres pg_isready -U admin
+# docker exec ai_agent_redis redis-cli ping
+#
+# Purger les queues RabbitMQ :
+# docker exec ai_agent_rabbitmq rabbitmqctl purge_queue webhooks
+# docker exec ai_agent_rabbitmq rabbitmqctl list_queues 

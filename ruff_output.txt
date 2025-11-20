@@ -1,0 +1,4358 @@
+F401 [*] `fastapi.Depends` imported but unused
+ --> admin/backend/main.py:3:30
+  |
+1 | """Backend d'administration principal pour l'agent AI."""
+2 |
+3 | from fastapi import FastAPI, Depends, HTTPException, status
+  |                              ^^^^^^^
+4 | from fastapi.middleware.cors import CORSMiddleware
+5 | from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+  |
+help: Remove unused import: `fastapi.Depends`
+
+F401 [*] `fastapi.security.HTTPAuthorizationCredentials` imported but unused
+ --> admin/backend/main.py:5:42
+  |
+3 | from fastapi import FastAPI, Depends, HTTPException, status
+4 | from fastapi.middleware.cors import CORSMiddleware
+5 | from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+  |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+6 | from contextlib import asynccontextmanager
+7 | import uvicorn
+  |
+help: Remove unused import: `fastapi.security.HTTPAuthorizationCredentials`
+
+F811 Redefinition of unused `status` from line 3
+   --> admin/backend/main.py:114:11
+    |
+113 | @app.get("/api/status", response_model=dict)
+114 | async def status():
+    |           ^^^^^^ `status` redefined here
+115 |     """Statut détaillé du système."""
+116 |     from admin.backend.services.monitoring_service import get_detailed_status
+    |
+   ::: admin/backend/main.py:3:54
+    |
+  1 | """Backend d'administration principal pour l'agent AI."""
+  2 |
+  3 | from fastapi import FastAPI, Depends, HTTPException, status
+    |                                                      ------ previous definition of `status` here
+  4 | from fastapi.middleware.cors import CORSMiddleware
+  5 | from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+    |
+help: Remove definition: `status`
+
+F401 [*] `fastapi.Depends` imported but unused
+ --> admin/backend/routes/human_validation_router.py:5:55
+  |
+3 | from typing import List, Optional
+4 | from datetime import datetime
+5 | from fastapi import APIRouter, HTTPException, status, Depends, Query
+  |                                                       ^^^^^^^
+6 | from pydantic import BaseModel
+  |
+help: Remove unused import: `fastapi.Depends`
+
+F401 [*] `fastapi.Depends` imported but unused
+ --> admin/monitoring_endpoints.py:3:79
+  |
+1 | """Endpoints FastAPI pour le monitoring AI-Agent optimisé RabbitMQ."""
+2 |
+3 | from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Depends
+  |                                                                               ^^^^^^^
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+  |
+help: Remove unused import: `fastapi.Depends`
+
+F401 [*] `typing.Dict` imported but unused
+ --> admin/monitoring_endpoints.py:5:20
+  |
+3 | from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Depends
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+  |                    ^^^^
+6 | from datetime import datetime, timedelta
+7 | import json
+  |
+help: Remove unused import
+
+F401 [*] `typing.List` imported but unused
+ --> admin/monitoring_endpoints.py:5:26
+  |
+3 | from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Depends
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+  |                          ^^^^
+6 | from datetime import datetime, timedelta
+7 | import json
+  |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+ --> admin/monitoring_endpoints.py:5:32
+  |
+3 | from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Depends
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+  |                                ^^^
+6 | from datetime import datetime, timedelta
+7 | import json
+  |
+help: Remove unused import
+
+F401 [*] `typing.Optional` imported but unused
+ --> admin/monitoring_endpoints.py:5:37
+  |
+3 | from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Depends
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+  |                                     ^^^^^^^^
+6 | from datetime import datetime, timedelta
+7 | import json
+  |
+help: Remove unused import
+
+F401 [*] `datetime.timedelta` imported but unused
+ --> admin/monitoring_endpoints.py:6:32
+  |
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+6 | from datetime import datetime, timedelta
+  |                                ^^^^^^^^^
+7 | import json
+  |
+help: Remove unused import: `datetime.timedelta`
+
+F401 [*] `typing.List` imported but unused
+ --> config/settings.py:4:20
+  |
+3 | from functools import lru_cache
+4 | from typing import List, Optional
+  |                    ^^^^
+5 | from pydantic import Field
+6 | from pydantic_settings import BaseSettings
+  |
+help: Remove unused import: `typing.List`
+
+F401 [*] `datetime.datetime` imported but unused
+ --> cout_ia.py:7:22
+  |
+5 | import sys
+6 | import os
+7 | from datetime import datetime, timedelta
+  |                      ^^^^^^^^
+8 | from typing import Dict, Any, List
+  |
+help: Remove unused import
+
+F401 [*] `datetime.timedelta` imported but unused
+ --> cout_ia.py:7:32
+  |
+5 | import sys
+6 | import os
+7 | from datetime import datetime, timedelta
+  |                                ^^^^^^^^^
+8 | from typing import Dict, Any, List
+  |
+help: Remove unused import
+
+F401 [*] `typing.Dict` imported but unused
+  --> cout_ia.py:8:20
+   |
+ 6 | import os
+ 7 | from datetime import datetime, timedelta
+ 8 | from typing import Dict, Any, List
+   |                    ^^^^
+ 9 |
+10 | # Ajouter le répertoire parent au path pour les imports
+   |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+  --> cout_ia.py:8:26
+   |
+ 6 | import os
+ 7 | from datetime import datetime, timedelta
+ 8 | from typing import Dict, Any, List
+   |                          ^^^
+ 9 |
+10 | # Ajouter le répertoire parent au path pour les imports
+   |
+help: Remove unused import
+
+F401 [*] `typing.List` imported but unused
+  --> cout_ia.py:8:31
+   |
+ 6 | import os
+ 7 | from datetime import datetime, timedelta
+ 8 | from typing import Dict, Any, List
+   |                               ^^^^
+ 9 |
+10 | # Ajouter le répertoire parent au path pour les imports
+   |
+help: Remove unused import
+
+F401 [*] `asyncio` imported but unused
+ --> graph/workflow_graph.py:3:8
+  |
+1 | """Définition du graphe de workflow principal avec LangGraph."""
+2 |
+3 | import asyncio
+  |        ^^^^^^^
+4 | import json
+5 | import time  # ✅ DÉPLACÉ ICI pour éviter les erreurs de scope
+  |
+help: Remove unused import: `asyncio`
+
+F401 [*] `json` imported but unused
+ --> graph/workflow_graph.py:4:8
+  |
+3 | import asyncio
+4 | import json
+  |        ^^^^
+5 | import time  # ✅ DÉPLACÉ ICI pour éviter les erreurs de scope
+6 | import uuid
+  |
+help: Remove unused import: `json`
+
+F401 [*] `typing.List` imported but unused
+  --> graph/workflow_graph.py:8:41
+   |
+ 6 | import uuid
+ 7 | from datetime import datetime
+ 8 | from typing import Dict, Any, Optional, List, TypedDict
+   |                                         ^^^^
+ 9 |
+10 | from langgraph.graph import StateGraph, END
+   |
+help: Remove unused import
+
+F401 [*] `typing.TypedDict` imported but unused
+  --> graph/workflow_graph.py:8:47
+   |
+ 6 | import uuid
+ 7 | from datetime import datetime
+ 8 | from typing import Dict, Any, Optional, List, TypedDict
+   |                                               ^^^^^^^^^
+ 9 |
+10 | from langgraph.graph import StateGraph, END
+   |
+help: Remove unused import
+
+F401 [*] `utils.persistence_decorator.with_persistence` imported but unused
+  --> graph/workflow_graph.py:26:41
+   |
+24 | from nodes.finalize_node import finalize_pr
+25 | from utils.langsmith_tracing import workflow_tracer
+26 | from utils.persistence_decorator import with_persistence
+   |                                         ^^^^^^^^^^^^^^^^
+27 | from services.database_persistence_service import db_persistence
+28 | from config.langsmith_config import langsmith_config
+   |
+help: Remove unused import: `utils.persistence_decorator.with_persistence`
+
+F541 [*] f-string without any placeholders
+   --> graph/workflow_graph.py:282:21
+    |
+280 |     # LOGIQUE DE DÉCISION SIMPLIFIÉE ET ROBUSTE
+281 |     if tests_passed:
+282 |         logger.info(f"✅ Tests réussis - passage à l'assurance qualité")
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+283 |         return "continue"
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> graph/workflow_graph.py:594:29
+    |
+592 |                 )
+593 |                 
+594 |                 logger.info(f"💾 Données workflow sauvegardées en base")
+    |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+595 |             except Exception as e:
+596 |                 logger.warning(f"⚠️ Erreur sauvegarde finale: {e}")
+    |
+help: Remove extraneous `f` prefix
+
+F841 [*] Local variable `e` is assigned to but never used
+   --> graph/workflow_graph.py:601:25
+    |
+599 |         return workflow_result
+600 |
+601 |     except Exception as e:
+    |                         ^
+602 |         logger.error(f"❌ Erreur inattendue du workflow {workflow_id}: {workflow_error}", exc_info=True)
+    |
+help: Remove assignment to unused variable `e`
+
+E402 Module level import not at top of file
+ --> main.py:3:1
+  |
+1 | """Point d'entrée principal de l'Agent d'Automatisation IA."""
+2 | print("🔴 DEBUG: main.py est exécuté !")
+3 | import sys
+  | ^^^^^^^^^^
+4 | print(f"🔴 DEBUG: Python path: {sys.path}")
+5 | import asyncio
+  |
+
+E402 Module level import not at top of file
+ --> main.py:5:1
+  |
+3 | import sys
+4 | print(f"🔴 DEBUG: Python path: {sys.path}")
+5 | import asyncio
+  | ^^^^^^^^^^^^^^
+6 | from typing import Dict
+7 | from pydantic import BaseModel, Field, field_validator
+  |
+
+F401 [*] `asyncio` imported but unused
+ --> main.py:5:8
+  |
+3 | import sys
+4 | print(f"🔴 DEBUG: Python path: {sys.path}")
+5 | import asyncio
+  |        ^^^^^^^
+6 | from typing import Dict
+7 | from pydantic import BaseModel, Field, field_validator
+  |
+help: Remove unused import: `asyncio`
+
+E402 Module level import not at top of file
+ --> main.py:6:1
+  |
+4 | print(f"🔴 DEBUG: Python path: {sys.path}")
+5 | import asyncio
+6 | from typing import Dict
+  | ^^^^^^^^^^^^^^^^^^^^^^^
+7 | from pydantic import BaseModel, Field, field_validator
+8 | from models.schemas import MondayColumnValue
+  |
+
+E402 Module level import not at top of file
+ --> main.py:7:1
+  |
+5 | import asyncio
+6 | from typing import Dict
+7 | from pydantic import BaseModel, Field, field_validator
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+8 | from models.schemas import MondayColumnValue
+9 | from contextlib import asynccontextmanager
+  |
+
+E402 Module level import not at top of file
+  --> main.py:8:1
+   |
+ 6 | from typing import Dict
+ 7 | from pydantic import BaseModel, Field, field_validator
+ 8 | from models.schemas import MondayColumnValue
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 9 | from contextlib import asynccontextmanager
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+   |
+
+E402 Module level import not at top of file
+  --> main.py:9:1
+   |
+ 7 | from pydantic import BaseModel, Field, field_validator
+ 8 | from models.schemas import MondayColumnValue
+ 9 | from contextlib import asynccontextmanager
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+11 | from fastapi.middleware.cors import CORSMiddleware
+   |
+
+E402 Module level import not at top of file
+  --> main.py:10:1
+   |
+ 8 | from models.schemas import MondayColumnValue
+ 9 | from contextlib import asynccontextmanager
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+   |
+
+F401 [*] `fastapi.Depends` imported but unused
+  --> main.py:10:45
+   |
+ 8 | from models.schemas import MondayColumnValue
+ 9 | from contextlib import asynccontextmanager
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+   |                                             ^^^^^^^
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+   |
+help: Remove unused import: `fastapi.Depends`
+
+E402 Module level import not at top of file
+  --> main.py:11:1
+   |
+ 9 | from contextlib import asynccontextmanager
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+11 | from fastapi.middleware.cors import CORSMiddleware
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+   |
+
+E402 Module level import not at top of file
+  --> main.py:12:1
+   |
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from pydantic import BaseModel, Field, validator
+14 | from typing import Dict, Any, Optional, Union
+   |
+
+E402 Module level import not at top of file
+  --> main.py:13:1
+   |
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 | from typing import Dict, Any, Optional, Union
+   |
+
+F811 [*] Redefinition of unused `BaseModel` from line 7
+  --> main.py:13:22
+   |
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+   |                      ^^^^^^^^^ `BaseModel` redefined here
+14 | from typing import Dict, Any, Optional, Union
+   |
+  ::: main.py:7:22
+   |
+ 5 | import asyncio
+ 6 | from typing import Dict
+ 7 | from pydantic import BaseModel, Field, field_validator
+   |                      --------- previous definition of `BaseModel` here
+ 8 | from models.schemas import MondayColumnValue
+ 9 | from contextlib import asynccontextmanager
+   |
+help: Remove definition: `BaseModel`
+
+F811 [*] Redefinition of unused `Field` from line 7
+  --> main.py:13:33
+   |
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+   |                                 ^^^^^ `Field` redefined here
+14 | from typing import Dict, Any, Optional, Union
+   |
+  ::: main.py:7:33
+   |
+ 5 | import asyncio
+ 6 | from typing import Dict
+ 7 | from pydantic import BaseModel, Field, field_validator
+   |                                 ----- previous definition of `Field` here
+ 8 | from models.schemas import MondayColumnValue
+ 9 | from contextlib import asynccontextmanager
+   |
+help: Remove definition: `Field`
+
+F401 [*] `pydantic.validator` imported but unused
+  --> main.py:13:40
+   |
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+   |                                        ^^^^^^^^^
+14 | from typing import Dict, Any, Optional, Union
+   |
+help: Remove unused import: `pydantic.validator`
+
+E402 Module level import not at top of file
+  --> main.py:14:1
+   |
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+14 | from typing import Dict, Any, Optional, Union
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 |
+16 | from models.schemas import TaskRequest, WebhookPayload
+   |
+
+F811 [*] Redefinition of unused `Dict` from line 6
+  --> main.py:14:20
+   |
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+14 | from typing import Dict, Any, Optional, Union
+   |                    ^^^^ `Dict` redefined here
+15 |
+16 | from models.schemas import TaskRequest, WebhookPayload
+   |
+  ::: main.py:6:20
+   |
+ 4 | print(f"🔴 DEBUG: Python path: {sys.path}")
+ 5 | import asyncio
+ 6 | from typing import Dict
+   |                    ---- previous definition of `Dict` here
+ 7 | from pydantic import BaseModel, Field, field_validator
+ 8 | from models.schemas import MondayColumnValue
+   |
+help: Remove definition: `Dict`
+
+F401 [*] `typing.Any` imported but unused
+  --> main.py:14:26
+   |
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+14 | from typing import Dict, Any, Optional, Union
+   |                          ^^^
+15 |
+16 | from models.schemas import TaskRequest, WebhookPayload
+   |
+help: Remove unused import
+
+F401 [*] `typing.Union` imported but unused
+  --> main.py:14:41
+   |
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+14 | from typing import Dict, Any, Optional, Union
+   |                                         ^^^^^
+15 |
+16 | from models.schemas import TaskRequest, WebhookPayload
+   |
+help: Remove unused import
+
+E402 Module level import not at top of file
+  --> main.py:16:1
+   |
+14 | from typing import Dict, Any, Optional, Union
+15 |
+16 | from models.schemas import TaskRequest, WebhookPayload
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+17 | from services.webhook_service import WebhookService
+18 | from services.webhook_persistence_service import webhook_persistence
+   |
+
+E402 Module level import not at top of file
+  --> main.py:17:1
+   |
+16 | from models.schemas import TaskRequest, WebhookPayload
+17 | from services.webhook_service import WebhookService
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+18 | from services.webhook_persistence_service import webhook_persistence
+19 | from services.celery_app import celery_app, submit_task
+   |
+
+E402 Module level import not at top of file
+  --> main.py:18:1
+   |
+16 | from models.schemas import TaskRequest, WebhookPayload
+17 | from services.webhook_service import WebhookService
+18 | from services.webhook_persistence_service import webhook_persistence
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+19 | from services.celery_app import celery_app, submit_task
+20 | from config.settings import get_settings
+   |
+
+E402 Module level import not at top of file
+  --> main.py:19:1
+   |
+17 | from services.webhook_service import WebhookService
+18 | from services.webhook_persistence_service import webhook_persistence
+19 | from services.celery_app import celery_app, submit_task
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 | from config.settings import get_settings
+21 | from utils.logger import get_logger
+   |
+
+E402 Module level import not at top of file
+  --> main.py:20:1
+   |
+18 | from services.webhook_persistence_service import webhook_persistence
+19 | from services.celery_app import celery_app, submit_task
+20 | from config.settings import get_settings
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21 | from utils.logger import get_logger
+   |
+
+E402 Module level import not at top of file
+  --> main.py:21:1
+   |
+19 | from services.celery_app import celery_app, submit_task
+20 | from config.settings import get_settings
+21 | from utils.logger import get_logger
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+22 |
+23 | logger = get_logger(__name__)
+   |
+
+F541 [*] f-string without any placeholders
+   --> main.py:175:28
+    |
+173 |             webhook_payload = WebhookPayload(**payload_raw)
+174 |         except Exception as validation_error:
+175 |             logger.warning(f"⚠️ Payload webhook malformé", 
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+176 |                          error=str(validation_error),
+177 |                          payload_keys=list(payload_raw.keys()) if isinstance(payload_raw, dict) else "non-dict")
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> main.py:230:21
+    |
+229 |         # Logs détaillés du webhook reçu avec persistence
+230 |         logger.info(f"📨 Webhook Monday.com reçu et persisté", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+231 |                    pulse_id=webhook_payload.event.pulseId,
+232 |                    board_id=webhook_payload.event.boardId,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> main.py:256:21
+    |
+254 |         )
+255 |         
+256 |         logger.info(f"📨 Webhook envoyé à RabbitMQ", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+257 |                    task_id=task.id,
+258 |                    webhook_type=webhook_payload.type,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> main.py:292:22
+    |
+290 |         raise
+291 |     except Exception as e:
+292 |         logger.error(f"❌ Erreur lors de la reception du webhook", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+293 |                     error=str(e),
+294 |                     error_type=type(e).__name__,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> main.py:338:20
+    |
+336 |         raise HTTPException(
+337 |             status_code=500,
+338 |             detail=f"Erreur lors de la recuperation du statut de la tache"
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+339 |         )
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `typing.TypedDict` imported but unused
+ --> models/schemas.py:4:47
+  |
+3 | from datetime import datetime
+4 | from typing import Dict, Any, Optional, List, TypedDict
+  |                                               ^^^^^^^^^
+5 | from typing_extensions import Annotated
+6 | from pydantic import BaseModel, Field
+  |
+help: Remove unused import: `typing.TypedDict`
+
+F401 [*] `typing_extensions.Annotated` imported but unused
+ --> models/schemas.py:5:31
+  |
+3 | from datetime import datetime
+4 | from typing import Dict, Any, Optional, List, TypedDict
+5 | from typing_extensions import Annotated
+  |                               ^^^^^^^^^
+6 | from pydantic import BaseModel, Field
+7 | from enum import Enum
+  |
+help: Remove unused import: `typing_extensions.Annotated`
+
+F401 [*] `enum.Enum` imported but unused
+ --> models/state.py:6:18
+  |
+4 | from typing_extensions import Annotated, TypedDict
+5 | from datetime import datetime
+6 | from enum import Enum
+  |                  ^^^^
+7 |
+8 | from .schemas import TaskRequest, WorkflowStatus, add_to_list, merge_results
+  |
+help: Remove unused import: `enum.Enum`
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> nodes/analyze_node.py:4:28
+  |
+3 | from typing import Dict, Any
+4 | from models.schemas import WorkflowStatus
+  |                            ^^^^^^^^^^^^^^
+5 | from models.state import GraphState
+6 | from tools.ai_engine_hub import ai_hub, AIRequest, TaskType
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F541 [*] f-string without any placeholders
+   --> nodes/analyze_node.py:103:21
+    |
+101 |         risk_level = analysis_result.get("risk_level", "Medium")
+102 |         
+103 |         logger.info(f"✅ Analyse requirements terminée",
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+104 |                    estimated_effort=estimated_effort,
+105 |                    risk_level=risk_level,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> nodes/analyze_node.py:280:32
+    |
+278 |                 logger.info("✅ JSON trouvé par regex directe")
+279 |             else:
+280 |                 logger.warning(f"⚠️ Aucun JSON détecté - Génération analyse par défaut")
+    |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+281 |                 return _generate_analysis_from_text(response_content)
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> nodes/analyze_node.py:312:25
+    |
+310 |         except json.JSONDecodeError as e:
+311 |             logger.warning(f"⚠️ Erreur JSON parsing: {e}")
+312 |             logger.info(f"🔧 Tentative réparation du JSON...")
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+313 |             # Tentative de réparation automatique du JSON
+314 |             try:
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> nodes/debug_node.py:6:28
+  |
+4 | from models.state import GraphState
+5 |
+6 | from models.schemas import WorkflowStatus
+  |                            ^^^^^^^^^^^^^^
+7 | from tools.claude_code_tool import ClaudeCodeTool
+8 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+E722 Do not use bare `except`
+   --> nodes/debug_node.py:166:5
+    |
+164 |             if log_result["success"]:
+165 |                 analysis += f"\n### Contenu {log_file}:\n{log_result['content'][:300]}...\n"
+166 |     except:
+    |     ^^^^^^
+167 |         pass
+    |
+
+F841 Local variable `solution` is assigned to but never used
+   --> nodes/debug_node.py:294:17
+    |
+292 |                 problem = line.split(':', 1)[1].strip()
+293 |             elif line.startswith('solution:'):
+294 |                 solution = line.split(':', 1)[1].strip()
+    |                 ^^^^^^^^
+295 |             elif line.startswith('file_path:'):
+296 |                 file_path = line.split(':', 1)[1].strip()
+    |
+help: Remove assignment to unused variable `solution`
+
+F841 Local variable `old_content_result` is assigned to but never used
+   --> nodes/debug_node.py:304:13
+    |
+302 |         if file_path and content:
+303 |             # Sauvegarder l'ancien contenu pour rollback si nécessaire
+304 |             old_content_result = await claude_tool._arun(action="read_file", file_path=file_path)
+    |             ^^^^^^^^^^^^^^^^^^
+305 |             
+306 |             result = await claude_tool._arun(
+    |
+help: Remove assignment to unused variable `old_content_result`
+
+F841 Local variable `problem` is assigned to but never used
+   --> nodes/debug_node.py:343:17
+    |
+341 |         for line in lines:
+342 |             if line.startswith('problem:'):
+343 |                 problem = line.split(':', 1)[1].strip()
+    |                 ^^^^^^^
+344 |             elif line.startswith('command:'):
+345 |                 command = line.split(':', 1)[1].strip()
+    |
+help: Remove assignment to unused variable `problem`
+
+F841 Local variable `explanation` is assigned to but never used
+   --> nodes/debug_node.py:347:17
+    |
+345 |                 command = line.split(':', 1)[1].strip()
+346 |             elif line.startswith('explanation:'):
+347 |                 explanation = line.split(':', 1)[1].strip()
+    |                 ^^^^^^^^^^^
+348 |         
+349 |         if command:
+    |
+help: Remove assignment to unused variable `explanation`
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> nodes/finalize_node.py:6:28
+  |
+4 | from models.state import GraphState
+5 |
+6 | from models.schemas import WorkflowStatus, PullRequestInfo
+  |                            ^^^^^^^^^^^^^^
+7 | from tools.github_tool import GitHubTool
+8 | from utils.logger import get_logger
+  |
+help: Remove unused import
+
+F401 [*] `models.schemas.PullRequestInfo` imported but unused
+ --> nodes/finalize_node.py:6:44
+  |
+4 | from models.state import GraphState
+5 |
+6 | from models.schemas import WorkflowStatus, PullRequestInfo
+  |                                            ^^^^^^^^^^^^^^^
+7 | from tools.github_tool import GitHubTool
+8 | from utils.logger import get_logger
+  |
+help: Remove unused import
+
+F401 [*] `tools.github_tool.GitHubTool` imported but unused
+ --> nodes/finalize_node.py:7:31
+  |
+6 | from models.schemas import WorkflowStatus, PullRequestInfo
+7 | from tools.github_tool import GitHubTool
+  |                               ^^^^^^^^^^
+8 | from utils.logger import get_logger
+9 | from utils.persistence_decorator import with_persistence
+  |
+help: Remove unused import: `tools.github_tool.GitHubTool`
+
+F841 Local variable `working_directory` is assigned to but never used
+  --> nodes/finalize_node.py:38:9
+   |
+36 |     try:
+37 |         # Vérifier les prérequis
+38 |         working_directory = state["results"].get("working_directory")
+   |         ^^^^^^^^^^^^^^^^^
+39 |         task = state["task"]
+40 |         repo_url = task.repository_url or state["results"].get("repository_url")
+   |
+help: Remove assignment to unused variable `working_directory`
+
+F841 Local variable `repo_url` is assigned to but never used
+  --> nodes/finalize_node.py:40:9
+   |
+38 |         working_directory = state["results"].get("working_directory")
+39 |         task = state["task"]
+40 |         repo_url = task.repository_url or state["results"].get("repository_url")
+   |         ^^^^^^^^
+41 |         
+42 |         # Au lieu de push/PR maintenant, on attend la validation humaine
+   |
+help: Remove assignment to unused variable `repo_url`
+
+F401 [*] `asyncio` imported but unused
+ --> nodes/human_validation_node.py:4:8
+  |
+3 | import uuid
+4 | import asyncio
+  |        ^^^^^^^
+5 | from datetime import datetime, timedelta
+6 | from typing import Dict, Any, Optional, List
+  |
+help: Remove unused import: `asyncio`
+
+F401 [*] `typing.Any` imported but unused
+ --> nodes/human_validation_node.py:6:26
+  |
+4 | import asyncio
+5 | from datetime import datetime, timedelta
+6 | from typing import Dict, Any, Optional, List
+  |                          ^^^
+7 | from models.state import GraphState
+8 | from models.schemas import (
+  |
+help: Remove unused import: `typing.Any`
+
+F401 [*] `models.schemas.PullRequestInfo` imported but unused
+  --> nodes/human_validation_node.py:12:5
+   |
+10 |     HumanValidationResponse, 
+11 |     HumanValidationStatus,
+12 |     PullRequestInfo
+   |     ^^^^^^^^^^^^^^^
+13 | )
+14 | from services.human_validation_service import validation_service
+   |
+help: Remove unused import: `models.schemas.PullRequestInfo`
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> nodes/implement_node.py:6:28
+  |
+4 | from models.state import GraphState
+5 |
+6 | from models.schemas import WorkflowStatus
+  |                            ^^^^^^^^^^^^^^
+7 | from tools.claude_code_tool import ClaudeCodeTool
+8 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F401 [*] `tools.ai_engine_hub.AIProvider` imported but unused
+  --> nodes/implement_node.py:88:70
+   |
+87 |         # Initialiser le nouveau moteur IA multi-provider
+88 |         from tools.ai_engine_hub import ai_hub, AIRequest, TaskType, AIProvider
+   |                                                                      ^^^^^^^^^^
+89 |         
+90 |         claude_tool.working_directory = working_directory
+   |
+help: Remove unused import: `tools.ai_engine_hub.AIProvider`
+
+E722 Do not use bare `except`
+   --> nodes/implement_node.py:174:13
+    |
+172 |                     structure_info += f"\n\n=== {config_file} ===\n"
+173 |                     structure_info += config_result["content"][:500] + "..."
+174 |             except:
+    |             ^^^^^^
+175 |                 continue
+    |
+
+F841 Local variable `description` is assigned to but never used
+   --> nodes/implement_node.py:355:17
+    |
+353 |                 file_path = line.split(':', 1)[1].strip()
+354 |             elif line.startswith('description:'):
+355 |                 description = line.split(':', 1)[1].strip()
+    |                 ^^^^^^^^^^^
+356 |             elif line.startswith('content:'):
+357 |                 content_started = True
+    |
+help: Remove assignment to unused variable `description`
+
+F401 [*] `typing.Dict` imported but unused
+ --> nodes/merge_node.py:3:20
+  |
+1 | """Nœud de merge - effectue le merge de la PR après validation humaine."""
+2 |
+3 | from typing import Dict, Any
+  |                    ^^^^
+4 | from models.state import GraphState
+5 | from models.schemas import HumanValidationStatus
+  |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+ --> nodes/merge_node.py:3:26
+  |
+1 | """Nœud de merge - effectue le merge de la PR après validation humaine."""
+2 |
+3 | from typing import Dict, Any
+  |                          ^^^
+4 | from models.state import GraphState
+5 | from models.schemas import HumanValidationStatus
+  |
+help: Remove unused import
+
+F541 [*] f-string without any placeholders
+  --> nodes/monday_validation_node.py:93:29
+   |
+92 |             if validation_response.status.value == "approved":
+93 |                 logger.info(f"✅ Code approuvé par l'humain via Monday.com")
+   |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+94 |                 state["results"]["ai_messages"].append("✅ Code approuvé - Préparation du merge...")
+95 |                 state["results"]["should_merge"] = True
+   |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> nodes/monday_validation_node.py:99:29
+    |
+ 98 |             elif validation_response.status.value == "rejected":
+ 99 |                 logger.info(f"🔧 Debug demandé par l'humain via Monday.com")
+    |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+100 |                 state["results"]["ai_messages"].append(f"🔧 Debug demandé: {validation_response.comments}")
+101 |                 state["results"]["should_merge"] = False
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> nodes/monday_validation_node.py:106:32
+    |
+105 |             else:
+106 |                 logger.warning(f"⚠️ Validation expirée ou annulée")
+    |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+107 |                 state["results"]["ai_messages"].append("⚠️ Validation expirée - Workflow arrêté")
+108 |                 state["results"]["should_merge"] = False
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> nodes/monday_validation_node.py:113:26
+    |
+111 |         else:
+112 |             # Timeout ou erreur
+113 |             logger.error(f"❌ Échec de validation humaine via Monday.com")
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+114 |             state["results"]["ai_messages"].append("❌ Échec validation humaine")
+115 |             state["results"]["should_merge"] = False
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `typing.Dict` imported but unused
+ --> nodes/prepare_node.py:3:20
+  |
+1 | """Nœud de préparation de l'environnement de travail."""
+2 |
+3 | from typing import Dict, Any
+  |                    ^^^^
+4 | from models.state import GraphState
+  |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+ --> nodes/prepare_node.py:3:26
+  |
+1 | """Nœud de préparation de l'environnement de travail."""
+2 |
+3 | from typing import Dict, Any
+  |                          ^^^
+4 | from models.state import GraphState
+  |
+help: Remove unused import
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> nodes/prepare_node.py:6:48
+  |
+4 | from models.state import GraphState
+5 |
+6 | from models.schemas import GitOperationResult, WorkflowStatus
+  |                                                ^^^^^^^^^^^^^^
+7 | from tools.claude_code_tool import ClaudeCodeTool
+8 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F401 [*] `pathlib.Path` imported but unused
+ --> nodes/qa_node.py:7:21
+  |
+5 | import asyncio
+6 | from typing import Dict, Any, List, Tuple
+7 | from pathlib import Path
+  |                     ^^^^
+8 | from models.schemas import WorkflowStatus
+9 | from models.state import GraphState
+  |
+help: Remove unused import: `pathlib.Path`
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+  --> nodes/qa_node.py:8:28
+   |
+ 6 | from typing import Dict, Any, List, Tuple
+ 7 | from pathlib import Path
+ 8 | from models.schemas import WorkflowStatus
+   |                            ^^^^^^^^^^^^^^
+ 9 | from models.state import GraphState
+10 | from utils.logger import get_logger
+   |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F541 [*] f-string without any placeholders
+   --> nodes/qa_node.py:111:21
+    |
+110 |         # 7. Logs et métriques
+111 |         logger.info(f"✅ Assurance qualité terminée",
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+112 |                    overall_score=qa_summary["overall_score"],
+113 |                    passed_checks=qa_summary["passed_checks"],
+    |
+help: Remove extraneous `f` prefix
+
+E722 Do not use bare `except`
+   --> nodes/qa_node.py:198:13
+    |
+196 |                 if result.returncode == 0:
+197 |                     project_info["qa_tools_available"].append(tool)
+198 |             except:
+    |             ^^^^^^
+199 |                 continue
+    |
+
+E722 Do not use bare `except`
+   --> nodes/qa_node.py:315:5
+    |
+313 |             result["issues_count"] = len(issues)
+314 |             result["critical_issues"] = len([i for i in issues if i.get("type") in ["error", "fatal"]])
+315 |     except:
+    |     ^^^^^^
+316 |         pass
+    |
+
+E722 Do not use bare `except`
+   --> nodes/qa_node.py:406:5
+    |
+404 |             result["issues_count"] = len(issues)
+405 |             result["critical_issues"] = len([i for i in issues if i.get("issue_severity") in ["HIGH", "MEDIUM"]])
+406 |     except:
+    |     ^^^^^^
+407 |         pass
+    |
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> nodes/test_node.py:6:28
+  |
+4 | from models.state import GraphState
+5 |
+6 | from models.schemas import WorkflowStatus, TestResult
+  |                            ^^^^^^^^^^^^^^
+7 | from tools.claude_code_tool import ClaudeCodeTool
+8 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F401 [*] `tools.testing_engine.TestType` imported but unused
+  --> nodes/test_node.py:86:57
+   |
+85 |         # Initialiser le nouveau moteur de tests
+86 |         from tools.testing_engine import TestingEngine, TestType
+   |                                                         ^^^^^^^^
+87 |         
+88 |         testing_engine = TestingEngine()
+   |
+help: Remove unused import: `tools.testing_engine.TestType`
+
+F541 [*] f-string without any placeholders
+   --> nodes/test_node.py:168:30
+    |
+166 |                 state["results"]["current_status"] = "FAILED".lower()
+167 |                 state["results"]["ai_messages"].append(f"❌ Limite de tentatives de debug atteinte ({max_debug_attempts})")
+168 |                 logger.error(f"❌ Limite de debug atteinte - Arrêt du workflow")
+    |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+169 |         
+170 |     except Exception as e:
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `typing.Dict` imported but unused
+ --> nodes/update_node.py:4:20
+  |
+3 | from datetime import datetime
+4 | from typing import Dict, Any
+  |                    ^^^^
+5 | from models.schemas import WorkflowStatus  
+6 | from models.state import GraphState
+  |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+ --> nodes/update_node.py:4:26
+  |
+3 | from datetime import datetime
+4 | from typing import Dict, Any
+  |                          ^^^
+5 | from models.schemas import WorkflowStatus  
+6 | from models.state import GraphState
+  |
+help: Remove unused import
+
+F541 [*] f-string without any placeholders
+   --> scripts/check_realtime_data.py:209:19
+    |
+207 |                 print(f"\n⚠️ Système inactif - Dernière activité: {latest_activity.strftime('%Y-%m-%d %H:%M:%S')}")
+208 |         else:
+209 |             print(f"\n❌ Aucune activité détectée")
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+210 |         
+211 |         print("\n" + "="*60)
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `json` imported but unused
+ --> scripts/get_monday_column_ids.py:5:8
+  |
+4 | import asyncio
+5 | import json
+  |        ^^^^
+6 | import sys
+7 | import os
+  |
+help: Remove unused import: `json`
+
+F541 [*] f-string without any placeholders
+   --> scripts/get_monday_column_ids.py:199:15
+    |
+197 |             return False
+198 |         
+199 |         print(f"\n🎯 MAPPING IDENTIFIÉ:")
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+200 |         print("-" * 40)
+201 |         for key, value in column_mapping.items():
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+  --> scripts/simple_debug_test.py:46:15
+   |
+44 |     # LOGIQUE DE DÉCISION SIMPLIFIÉE
+45 |     if tests_passed:
+46 |         print(f"✅ Tests réussis - passage à l'assurance qualité")
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+47 |         return "continue"
+   |
+help: Remove extraneous `f` prefix
+
+F401 [*] `asyncio` imported but unused
+ --> scripts/verify_workflow_fixes.py:6:8
+  |
+4 | """
+5 |
+6 | import asyncio
+  |        ^^^^^^^
+7 | from datetime import datetime
+8 | from models.schemas import TaskRequest, TaskType
+  |
+help: Remove unused import: `asyncio`
+
+F401 [*] `models.schemas.TaskRequest` imported but unused
+  --> scripts/verify_workflow_fixes.py:8:28
+   |
+ 6 | import asyncio
+ 7 | from datetime import datetime
+ 8 | from models.schemas import TaskRequest, TaskType
+   |                            ^^^^^^^^^^^
+ 9 | from models.state import GraphState
+10 | from graph.workflow_graph import _should_debug
+   |
+help: Remove unused import
+
+F401 [*] `models.schemas.TaskType` imported but unused
+  --> scripts/verify_workflow_fixes.py:8:41
+   |
+ 6 | import asyncio
+ 7 | from datetime import datetime
+ 8 | from models.schemas import TaskRequest, TaskType
+   |                                         ^^^^^^^^
+ 9 | from models.state import GraphState
+10 | from graph.workflow_graph import _should_debug
+   |
+help: Remove unused import
+
+F401 [*] `models.state.GraphState` imported but unused
+  --> scripts/verify_workflow_fixes.py:9:26
+   |
+ 7 | from datetime import datetime
+ 8 | from models.schemas import TaskRequest, TaskType
+ 9 | from models.state import GraphState
+   |                          ^^^^^^^^^^
+10 | from graph.workflow_graph import _should_debug
+11 | from config.workflow_limits import WorkflowLimits
+   |
+help: Remove unused import: `models.state.GraphState`
+
+F541 [*] f-string without any placeholders
+   --> scripts/verify_workflow_fixes.py:144:11
+    |
+142 |     print("="*60)
+143 |     
+144 |     print(f"📊 Limites actuelles:")
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^
+145 |     print(f"   MAX_DEBUG_ATTEMPTS: {WorkflowLimits.MAX_DEBUG_ATTEMPTS}")
+146 |     print(f"   MAX_NODES_SAFETY_LIMIT: {WorkflowLimits.MAX_NODES_SAFETY_LIMIT}")
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `os` imported but unused
+  --> services/celery_app.py:8:8
+   |
+ 6 | from typing import Dict, Any, Optional
+ 7 | import asyncio
+ 8 | import os
+   |        ^^
+ 9 |
+10 | from config.settings import get_settings
+   |
+help: Remove unused import: `os`
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:180:21
+    |
+179 |     try:
+180 |         logger.info(f"🚀 Démarrage traitement webhook Celery", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+181 |                    task_id=task_id, 
+182 |                    queue="webhooks",
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:191:25
+    |
+189 |             )
+190 |             
+191 |             logger.info(f"✅ Webhook traité avec succès", 
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+192 |                        task_id=task_id, 
+193 |                        success=result.get('success', False))
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:204:26
+    |
+203 |         except Exception as exc:
+204 |             logger.error(f"❌ Erreur dans asyncio.run pour process_monday_webhook", error=str(exc))
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+205 |             raise
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:208:22
+    |
+207 |     except Exception as exc:
+208 |         logger.error(f"❌ Erreur traitement webhook", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+209 |                     task_id=task_id, 
+210 |                     error=str(exc), 
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:258:21
+    |
+256 |         task_request = TaskRequest(**task_request_dict)
+257 |         
+258 |         logger.info(f"🔄 Démarrage workflow LangGraph", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+259 |                    task_id=task_id,
+260 |                    workflow_title=task_request.title,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:277:25
+    |
+275 |             )
+276 |             
+277 |             logger.info(f"✅ Workflow terminé", 
+    |                         ^^^^^^^^^^^^^^^^^^^^^^
+278 |                        task_id=task_id,
+279 |                        success=result.get('success', False),
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:291:26
+    |
+290 |         except Exception as exc:
+291 |             logger.error(f"❌ Erreur dans asyncio.run pour execute_workflow", error=str(exc))
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+292 |             raise
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:295:22
+    |
+294 |     except Exception as exc:
+295 |         logger.error(f"❌ Erreur workflow", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^
+296 |                     task_id=task_id, 
+297 |                     error=str(exc), 
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:351:21
+    |
+349 |         from tools.ai_engine_hub import AIEngineHub
+350 |         
+351 |         logger.info(f"🤖 Génération code IA", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+352 |                    task_id=task_id, 
+353 |                    provider=provider,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:364:25
+    |
+362 |             )
+363 |             
+364 |             logger.info(f"✅ Code généré", 
+    |                         ^^^^^^^^^^^^^^^^^
+365 |                        task_id=task_id,
+366 |                        provider=provider,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:378:26
+    |
+377 |         except Exception as exc:
+378 |             logger.error(f"❌ Erreur dans asyncio.run pour generate_code_task", error=str(exc))
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+379 |             raise
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:382:22
+    |
+381 |     except Exception as exc:
+382 |         logger.error(f"❌ Erreur génération code", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+383 |                     task_id=task_id, 
+384 |                     provider=provider,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:438:21
+    |
+436 |         from tools.testing_engine import TestingEngine
+437 |         
+438 |         logger.info(f"🧪 Exécution tests", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^
+439 |                    task_id=task_id,
+440 |                    workflow_id=workflow_id,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:458:25
+    |
+456 |             )
+457 |             
+458 |             logger.info(f"✅ Tests terminés", 
+    |                         ^^^^^^^^^^^^^^^^^^^^
+459 |                        task_id=task_id,
+460 |                        total_tests=total_tests,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:479:26
+    |
+478 |         except Exception as exc:
+479 |             logger.error(f"❌ Erreur dans asyncio.run pour run_tests_task", error=str(exc))
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+480 |             raise
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:483:22
+    |
+482 |     except Exception as exc:
+483 |         logger.error(f"❌ Erreur tests", 
+    |                      ^^^^^^^^^^^^^^^^^^
+484 |                     task_id=task_id,
+485 |                     error=str(exc), 
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:526:22
+    |
+524 |         error = failed_task_data.get("error", "Unknown error")
+525 |         
+526 |         logger.error(f"💀 Tâche en Dead Letter Queue", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+527 |                     dlq_task_id=task_id,
+528 |                     original_task=original_task,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:547:22
+    |
+546 |     except Exception as exc:
+547 |         logger.error(f"❌ Erreur traitement DLQ", error=str(exc))
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+548 |         return {
+549 |             "dlq_processed": False,
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `datetime.timedelta` imported but unused
+   --> services/celery_app.py:558:40
+    |
+556 |     """Tâche périodique de nettoyage des anciennes tâches."""
+557 |     try:
+558 |         from datetime import datetime, timedelta
+    |                                        ^^^^^^^^^
+559 |         
+560 |         logger.info("🧹 Nettoyage des anciennes tâches Celery")
+    |
+help: Remove unused import: `datetime.timedelta`
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:580:22
+    |
+579 |     except Exception as exc:
+580 |         logger.error(f"❌ Erreur nettoyage", error=str(exc))
+    |                      ^^^^^^^^^^^^^^^^^^^^^^
+581 |         return {"status": "failed", "error": str(exc)}
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:597:17
+    |
+595 | def worker_ready_handler(sender=None, **kwargs):
+596 |     """Signal émis quand un worker Celery est prêt."""
+597 |     logger.info(f"🚀 Celery worker prêt", 
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^
+598 |                worker=sender,
+599 |                broker="RabbitMQ",
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:615:17
+    |
+613 | def worker_shutting_down_handler(sender=None, **kwargs):
+614 |     """Signal émis quand un worker Celery s'arrête."""
+615 |     logger.info(f"�� Celery worker arrêt", worker=sender)
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+616 |     
+617 |     # Finaliser les services
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:639:21
+    |
+638 |         task = celery_app.send_task(task_name, args=args, kwargs=kwargs, **task_options)
+639 |         logger.info(f"📨 Tâche soumise", 
+    |                     ^^^^^^^^^^^^^^^^^^^
+640 |                    task_name=task_name, 
+641 |                    task_id=task.id,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/celery_app.py:645:22
+    |
+643 |         return task
+644 |     except Exception as exc:
+645 |         logger.error(f"❌ Erreur soumission tâche", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+646 |                     task_name=task_name, 
+647 |                     error=str(exc))
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `asyncio` imported but unused
+ --> services/cost_monitoring_service.py:3:8
+  |
+1 | """Service de monitoring des coûts IA avec tracking détaillé."""
+2 |
+3 | import asyncio
+  |        ^^^^^^^
+4 | from datetime import datetime, timedelta
+5 | from typing import Dict, Any, List, Optional
+  |
+help: Remove unused import: `asyncio`
+
+F401 [*] `datetime.timedelta` imported but unused
+ --> services/cost_monitoring_service.py:4:32
+  |
+3 | import asyncio
+4 | from datetime import datetime, timedelta
+  |                                ^^^^^^^^^
+5 | from typing import Dict, Any, List, Optional
+6 | from dataclasses import dataclass
+  |
+help: Remove unused import: `datetime.timedelta`
+
+F401 [*] `json` imported but unused
+  --> services/cost_monitoring_service.py:8:8
+   |
+ 6 | from dataclasses import dataclass
+ 7 | from enum import Enum
+ 8 | import json
+   |        ^^^^
+ 9 |
+10 | from utils.logger import get_logger
+   |
+help: Remove unused import: `json`
+
+F401 [*] `asyncio` imported but unused
+ --> services/database_persistence_service.py:6:8
+  |
+4 | """
+5 |
+6 | import asyncio
+  |        ^^^^^^^
+7 | import asyncpg
+8 | import json
+  |
+help: Remove unused import: `asyncio`
+
+F401 [*] `uuid` imported but unused
+ --> services/human_validation_service.py:3:8
+  |
+1 | """Service de gestion des validations humaines avec persistance en base de données."""
+2 |
+3 | import uuid
+  |        ^^^^
+4 | import asyncio
+5 | from datetime import datetime, timedelta
+  |
+help: Remove unused import: `uuid`
+
+F401 [*] `datetime.timedelta` imported but unused
+ --> services/human_validation_service.py:5:32
+  |
+3 | import uuid
+4 | import asyncio
+5 | from datetime import datetime, timedelta
+  |                                ^^^^^^^^^
+6 | from typing import Dict, Any, Optional, List
+7 | import asyncpg
+  |
+help: Remove unused import: `datetime.timedelta`
+
+F541 [*] f-string without any placeholders
+   --> services/monday_validation_service.py:155:24
+    |
+153 |         # Erreurs si présentes
+154 |         if error_logs:
+155 |             message += f"\n**⚠️ Erreurs rencontrées**:\n"
+    |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+156 |             for error in error_logs[-3:]:  # Dernières 3 erreurs
+157 |                 message += f"- {error}\n"
+    |
+help: Remove extraneous `f` prefix
+
+E722 Do not use bare `except`
+   --> services/monday_validation_service.py:208:13
+    |
+206 |                 if update_time <= since:
+207 |                     continue  # Trop ancien
+208 |             except:
+    |             ^^^^^^
+209 |                 continue
+    |
+
+F541 [*] f-string without any placeholders
+   --> services/monday_validation_service.py:286:32
+    |
+284 |             else:  # QUESTION ou UNCLEAR
+285 |                 # Par défaut, considérer comme rejet pour sécurité
+286 |                 logger.warning(f"⚠️ Intention unclear/question - traiter comme rejet par sécurité")
+    |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+287 |                 status = HumanValidationStatus.REJECTED
+288 |                 should_merge = False
+    |
+help: Remove extraneous `f` prefix
+
+E722 Do not use bare `except`
+   --> services/monday_validation_service.py:373:9
+    |
+371 |                 duration = (datetime.now() - created_at).total_seconds() / 60
+372 |                 return int(duration)
+373 |         except:
+    |         ^^^^^^
+374 |             pass
+375 |         return None
+    |
+
+F401 [*] `structlog` imported but unused
+  --> services/monitoring_service.py:12:8
+   |
+10 | from contextlib import asynccontextmanager
+11 |
+12 | import structlog
+   |        ^^^^^^^^^
+13 | from fastapi import WebSocket 
+14 | from sqlalchemy.ext.asyncio import AsyncSession
+   |
+help: Remove unused import: `structlog`
+
+F401 [*] `sqlalchemy.ext.asyncio.AsyncSession` imported but unused
+  --> services/monitoring_service.py:14:36
+   |
+12 | import structlog
+13 | from fastapi import WebSocket 
+14 | from sqlalchemy.ext.asyncio import AsyncSession
+   |                                    ^^^^^^^^^^^^
+15 | from pydantic import BaseModel
+   |
+help: Remove unused import: `sqlalchemy.ext.asyncio.AsyncSession`
+
+F401 [*] `pydantic.BaseModel` imported but unused
+  --> services/monitoring_service.py:15:22
+   |
+13 | from fastapi import WebSocket 
+14 | from sqlalchemy.ext.asyncio import AsyncSession
+15 | from pydantic import BaseModel
+   |                      ^^^^^^^^^
+16 |
+17 | from utils.logger import get_logger
+   |
+help: Remove unused import: `pydantic.BaseModel`
+
+E722 Do not use bare `except`
+   --> services/monitoring_service.py:412:13
+    |
+410 |             try:
+411 |                 await client.send_json(message)
+412 |             except:
+    |             ^^^^^^
+413 |                 disconnected.append(client)
+    |
+
+E722 Do not use bare `except`
+   --> services/monitoring_service.py:438:13
+    |
+436 |             try:
+437 |                 await client.send_json(message)
+438 |             except:
+    |             ^^^^^^
+439 |                 self.connected_clients.remove(client)
+    |
+
+E722 Do not use bare `except`
+   --> services/monitoring_service.py:525:13
+    |
+523 |             try:
+524 |                 await client.send_json(alert_message)
+525 |             except:
+    |             ^^^^^^
+526 |                 self.connected_clients.remove(client)
+    |
+
+F841 [*] Local variable `e` is assigned to but never used
+   --> services/monitoring_service.py:632:25
+    |
+630 |         await monitoring_service.start_workflow_monitoring(workflow_id, task_request)
+631 |         yield monitoring_service
+632 |     except Exception as e:
+    |                         ^
+633 |         await monitoring_service.complete_workflow(workflow_id, False)
+634 |         raise
+    |
+help: Remove assignment to unused variable `e`
+
+F401 [*] `json` imported but unused
+ --> services/webhook_persistence_service.py:3:8
+  |
+1 | """Service pour traiter et persister les webhooks Monday.com."""
+2 |
+3 | import json
+  |        ^^^^
+4 | from datetime import datetime
+5 | from typing import Dict, Any, Optional
+  |
+help: Remove unused import: `json`
+
+F401 [*] `datetime.datetime` imported but unused
+ --> services/webhook_persistence_service.py:4:22
+  |
+3 | import json
+4 | from datetime import datetime
+  |                      ^^^^^^^^
+5 | from typing import Dict, Any, Optional
+6 | from services.database_persistence_service import db_persistence
+  |
+help: Remove unused import: `datetime.datetime`
+
+F841 Local variable `board_id` is assigned to but never used
+  --> services/webhook_persistence_service.py:95:13
+   |
+93 |             pulse_id = payload.get("pulseId")
+94 |             pulse_name = payload.get("pulseName", "Tâche sans titre")
+95 |             board_id = payload.get("boardId")
+   |             ^^^^^^^^
+96 |             
+97 |             # Rechercher si la tâche existe déjà
+   |
+help: Remove assignment to unused variable `board_id`
+
+F541 [*] f-string without any placeholders
+  --> services/webhook_service.py:71:32
+   |
+69 | …     duplicate_check = await self._check_duplicate_webhook(payload)
+70 | …     if duplicate_check:
+71 | …         logger.warning(f"⚠️ Webhook en doublon détecté:")
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+72 | …         logger.warning(f"   Webhook similaire traité: {duplicate_check['webhook_events_id']} à {duplicate_check['processed_at']}")
+73 | …         logger.warning(f"   🛑 Webhook ignoré pour éviter la duplication")
+   |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+  --> services/webhook_service.py:73:32
+   |
+71 | …     logger.warning(f"⚠️ Webhook en doublon détecté:")
+72 | …     logger.warning(f"   Webhook similaire traité: {duplicate_check['webhook_events_id']} à {duplicate_check['processed_at']}")
+73 | …     logger.warning(f"   🛑 Webhook ignoré pour éviter la duplication")
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+74 | …     await self._update_webhook_status(webhook_id, 'processed', 'Doublon ignoré')
+75 | …     return {
+   |
+help: Remove extraneous `f` prefix
+
+F841 Local variable `run_id` is assigned to but never used
+   --> services/webhook_service.py:109:13
+    |
+108 |             # 9. Sauvegarder le run en base
+109 |             run_id = await self._save_task_run(task_id, task_request)
+    |             ^^^^^^
+110 |             
+111 |             # Note : Le statut de la tâche est automatiquement mis à jour par le trigger sync_task_status
+    |
+help: Remove assignment to unused variable `run_id`
+
+F541 [*] f-string without any placeholders
+   --> services/webhook_service.py:260:32
+    |
+259 |             if similar_task:
+260 |                 logger.warning(f"⚠️ Tâche similaire détectée dans les 5 dernières minutes:")
+    |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+261 |                 logger.warning(f"   Existante: ID {similar_task['tasks_id']}, Monday ID {similar_task['monday_item_id']}")
+262 |                 logger.warning(f"   Nouvelle: Monday ID {task_request.task_id}")
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> services/webhook_service.py:264:32
+    |
+262 |                 logger.warning(f"   Nouvelle: Monday ID {task_request.task_id}")
+263 |                 logger.warning(f"   Titre: {task_request.title}")
+264 |                 logger.warning(f"   🛑 Duplication probable détectée - utilisation de la tâche existante")
+    |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+265 |                 return similar_task['tasks_id']
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+  --> test_monday_permissions.py:38:15
+   |
+36 |             print(diagnosis)
+37 |         
+38 |         print(f"\n🔍 DÉTAILS TECHNIQUES:")
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+39 |         print("=" * 25)
+40 |         print(json.dumps(diagnostic, indent=2, ensure_ascii=False))
+   |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+  --> test_monday_permissions.py:43:15
+   |
+42 |         # Test spécifique de création d'update
+43 |         print(f"\n🧪 TEST CRÉATION UPDATE:")
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+44 |         print("=" * 25)
+   |
+help: Remove extraneous `f` prefix
+
+F401 [*] `fastapi.Depends` imported but unused
+ --> test_repo/admin/backend/main.py:3:30
+  |
+1 | """Backend d'administration principal pour l'agent AI."""
+2 |
+3 | from fastapi import FastAPI, Depends, HTTPException, status
+  |                              ^^^^^^^
+4 | from fastapi.middleware.cors import CORSMiddleware
+5 | from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+  |
+help: Remove unused import: `fastapi.Depends`
+
+F401 [*] `fastapi.security.HTTPAuthorizationCredentials` imported but unused
+ --> test_repo/admin/backend/main.py:5:42
+  |
+3 | from fastapi import FastAPI, Depends, HTTPException, status
+4 | from fastapi.middleware.cors import CORSMiddleware
+5 | from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+  |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+6 | from contextlib import asynccontextmanager
+7 | import uvicorn
+  |
+help: Remove unused import: `fastapi.security.HTTPAuthorizationCredentials`
+
+F811 Redefinition of unused `status` from line 3
+   --> test_repo/admin/backend/main.py:112:11
+    |
+111 | @app.get("/api/status", response_model=dict)
+112 | async def status():
+    |           ^^^^^^ `status` redefined here
+113 |     """Statut détaillé du système."""
+114 |     from admin.backend.services.monitoring_service import get_detailed_status
+    |
+   ::: test_repo/admin/backend/main.py:3:54
+    |
+  1 | """Backend d'administration principal pour l'agent AI."""
+  2 |
+  3 | from fastapi import FastAPI, Depends, HTTPException, status
+    |                                                      ------ previous definition of `status` here
+  4 | from fastapi.middleware.cors import CORSMiddleware
+  5 | from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+    |
+help: Remove definition: `status`
+
+F401 [*] `fastapi.Depends` imported but unused
+ --> test_repo/admin/monitoring_endpoints.py:3:79
+  |
+1 | """Endpoints FastAPI pour le monitoring AI-Agent optimisé RabbitMQ."""
+2 |
+3 | from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Depends
+  |                                                                               ^^^^^^^
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+  |
+help: Remove unused import: `fastapi.Depends`
+
+F401 [*] `typing.Dict` imported but unused
+ --> test_repo/admin/monitoring_endpoints.py:5:20
+  |
+3 | from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Depends
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+  |                    ^^^^
+6 | from datetime import datetime, timedelta
+7 | import json
+  |
+help: Remove unused import
+
+F401 [*] `typing.List` imported but unused
+ --> test_repo/admin/monitoring_endpoints.py:5:26
+  |
+3 | from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Depends
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+  |                          ^^^^
+6 | from datetime import datetime, timedelta
+7 | import json
+  |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+ --> test_repo/admin/monitoring_endpoints.py:5:32
+  |
+3 | from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Depends
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+  |                                ^^^
+6 | from datetime import datetime, timedelta
+7 | import json
+  |
+help: Remove unused import
+
+F401 [*] `typing.Optional` imported but unused
+ --> test_repo/admin/monitoring_endpoints.py:5:37
+  |
+3 | from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Depends
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+  |                                     ^^^^^^^^
+6 | from datetime import datetime, timedelta
+7 | import json
+  |
+help: Remove unused import
+
+F401 [*] `datetime.timedelta` imported but unused
+ --> test_repo/admin/monitoring_endpoints.py:6:32
+  |
+4 | from fastapi.responses import HTMLResponse
+5 | from typing import Dict, List, Any, Optional
+6 | from datetime import datetime, timedelta
+  |                                ^^^^^^^^^
+7 | import json
+  |
+help: Remove unused import: `datetime.timedelta`
+
+F401 [*] `typing.List` imported but unused
+ --> test_repo/config/settings.py:4:20
+  |
+3 | from functools import lru_cache
+4 | from typing import List, Optional
+  |                    ^^^^
+5 | from pydantic import Field
+6 | from pydantic_settings import BaseSettings
+  |
+help: Remove unused import: `typing.List`
+
+F541 [*] f-string without any placeholders
+   --> test_repo/graph/workflow_graph.py:120:21
+    |
+119 |     if tests_passed:
+120 |         logger.info(f"✅ Tests réussis - passage à l'assurance qualité")
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+121 |         return "continue"
+122 |     elif debug_attempts >= max_debug_attempts:
+    |
+help: Remove extraneous `f` prefix
+
+E402 Module level import not at top of file
+ --> test_repo/main.py:3:1
+  |
+1 | """Point d'entrée principal de l'Agent d'Automatisation IA."""
+2 | print("🔴 DEBUG: main.py est exécuté !")
+3 | import sys
+  | ^^^^^^^^^^
+4 | print(f"🔴 DEBUG: Python path: {sys.path}")
+5 | import asyncio
+  |
+
+E402 Module level import not at top of file
+ --> test_repo/main.py:5:1
+  |
+3 | import sys
+4 | print(f"🔴 DEBUG: Python path: {sys.path}")
+5 | import asyncio
+  | ^^^^^^^^^^^^^^
+6 | from typing import Dict
+7 | from pydantic import BaseModel, Field, field_validator
+  |
+
+F401 [*] `asyncio` imported but unused
+ --> test_repo/main.py:5:8
+  |
+3 | import sys
+4 | print(f"🔴 DEBUG: Python path: {sys.path}")
+5 | import asyncio
+  |        ^^^^^^^
+6 | from typing import Dict
+7 | from pydantic import BaseModel, Field, field_validator
+  |
+help: Remove unused import: `asyncio`
+
+E402 Module level import not at top of file
+ --> test_repo/main.py:6:1
+  |
+4 | print(f"🔴 DEBUG: Python path: {sys.path}")
+5 | import asyncio
+6 | from typing import Dict
+  | ^^^^^^^^^^^^^^^^^^^^^^^
+7 | from pydantic import BaseModel, Field, field_validator
+8 | from models.schemas import MondayColumnValue
+  |
+
+E402 Module level import not at top of file
+ --> test_repo/main.py:7:1
+  |
+5 | import asyncio
+6 | from typing import Dict
+7 | from pydantic import BaseModel, Field, field_validator
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+8 | from models.schemas import MondayColumnValue
+9 | from contextlib import asynccontextmanager
+  |
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:8:1
+   |
+ 6 | from typing import Dict
+ 7 | from pydantic import BaseModel, Field, field_validator
+ 8 | from models.schemas import MondayColumnValue
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 9 | from contextlib import asynccontextmanager
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+   |
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:9:1
+   |
+ 7 | from pydantic import BaseModel, Field, field_validator
+ 8 | from models.schemas import MondayColumnValue
+ 9 | from contextlib import asynccontextmanager
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+11 | from fastapi.middleware.cors import CORSMiddleware
+   |
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:10:1
+   |
+ 8 | from models.schemas import MondayColumnValue
+ 9 | from contextlib import asynccontextmanager
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+   |
+
+F401 [*] `fastapi.Depends` imported but unused
+  --> test_repo/main.py:10:45
+   |
+ 8 | from models.schemas import MondayColumnValue
+ 9 | from contextlib import asynccontextmanager
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+   |                                             ^^^^^^^
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+   |
+help: Remove unused import: `fastapi.Depends`
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:11:1
+   |
+ 9 | from contextlib import asynccontextmanager
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+11 | from fastapi.middleware.cors import CORSMiddleware
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+   |
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:12:1
+   |
+10 | from fastapi import FastAPI, HTTPException, Depends, Request
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from pydantic import BaseModel, Field, validator
+14 | from typing import Dict, Any, Optional, Union
+   |
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:13:1
+   |
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 | from typing import Dict, Any, Optional, Union
+   |
+
+F811 [*] Redefinition of unused `BaseModel` from line 7
+  --> test_repo/main.py:13:22
+   |
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+   |                      ^^^^^^^^^ `BaseModel` redefined here
+14 | from typing import Dict, Any, Optional, Union
+   |
+  ::: test_repo/main.py:7:22
+   |
+ 5 | import asyncio
+ 6 | from typing import Dict
+ 7 | from pydantic import BaseModel, Field, field_validator
+   |                      --------- previous definition of `BaseModel` here
+ 8 | from models.schemas import MondayColumnValue
+ 9 | from contextlib import asynccontextmanager
+   |
+help: Remove definition: `BaseModel`
+
+F811 [*] Redefinition of unused `Field` from line 7
+  --> test_repo/main.py:13:33
+   |
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+   |                                 ^^^^^ `Field` redefined here
+14 | from typing import Dict, Any, Optional, Union
+   |
+  ::: test_repo/main.py:7:33
+   |
+ 5 | import asyncio
+ 6 | from typing import Dict
+ 7 | from pydantic import BaseModel, Field, field_validator
+   |                                 ----- previous definition of `Field` here
+ 8 | from models.schemas import MondayColumnValue
+ 9 | from contextlib import asynccontextmanager
+   |
+help: Remove definition: `Field`
+
+F401 [*] `pydantic.validator` imported but unused
+  --> test_repo/main.py:13:40
+   |
+11 | from fastapi.middleware.cors import CORSMiddleware
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+   |                                        ^^^^^^^^^
+14 | from typing import Dict, Any, Optional, Union
+   |
+help: Remove unused import: `pydantic.validator`
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:14:1
+   |
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+14 | from typing import Dict, Any, Optional, Union
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 |
+16 | from models.schemas import TaskRequest, WebhookPayload
+   |
+
+F811 [*] Redefinition of unused `Dict` from line 6
+  --> test_repo/main.py:14:20
+   |
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+14 | from typing import Dict, Any, Optional, Union
+   |                    ^^^^ `Dict` redefined here
+15 |
+16 | from models.schemas import TaskRequest, WebhookPayload
+   |
+  ::: test_repo/main.py:6:20
+   |
+ 4 | print(f"🔴 DEBUG: Python path: {sys.path}")
+ 5 | import asyncio
+ 6 | from typing import Dict
+   |                    ---- previous definition of `Dict` here
+ 7 | from pydantic import BaseModel, Field, field_validator
+ 8 | from models.schemas import MondayColumnValue
+   |
+help: Remove definition: `Dict`
+
+F401 [*] `typing.Any` imported but unused
+  --> test_repo/main.py:14:26
+   |
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+14 | from typing import Dict, Any, Optional, Union
+   |                          ^^^
+15 |
+16 | from models.schemas import TaskRequest, WebhookPayload
+   |
+help: Remove unused import
+
+F401 [*] `typing.Union` imported but unused
+  --> test_repo/main.py:14:41
+   |
+12 | from fastapi.responses import JSONResponse
+13 | from pydantic import BaseModel, Field, validator
+14 | from typing import Dict, Any, Optional, Union
+   |                                         ^^^^^
+15 |
+16 | from models.schemas import TaskRequest, WebhookPayload
+   |
+help: Remove unused import
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:16:1
+   |
+14 | from typing import Dict, Any, Optional, Union
+15 |
+16 | from models.schemas import TaskRequest, WebhookPayload
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+17 | from services.webhook_service import WebhookService
+18 | from services.celery_app import celery_app, submit_task
+   |
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:17:1
+   |
+16 | from models.schemas import TaskRequest, WebhookPayload
+17 | from services.webhook_service import WebhookService
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+18 | from services.celery_app import celery_app, submit_task
+19 | from config.settings import get_settings
+   |
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:18:1
+   |
+16 | from models.schemas import TaskRequest, WebhookPayload
+17 | from services.webhook_service import WebhookService
+18 | from services.celery_app import celery_app, submit_task
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+19 | from config.settings import get_settings
+20 | from utils.logger import get_logger
+   |
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:19:1
+   |
+17 | from services.webhook_service import WebhookService
+18 | from services.celery_app import celery_app, submit_task
+19 | from config.settings import get_settings
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 | from utils.logger import get_logger
+   |
+
+E402 Module level import not at top of file
+  --> test_repo/main.py:20:1
+   |
+18 | from services.celery_app import celery_app, submit_task
+19 | from config.settings import get_settings
+20 | from utils.logger import get_logger
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21 |
+22 | logger = get_logger(__name__)
+   |
+
+F541 [*] f-string without any placeholders
+   --> test_repo/main.py:174:28
+    |
+172 |             webhook_payload = WebhookPayload(**payload_raw)
+173 |         except Exception as validation_error:
+174 |             logger.warning(f"⚠️ Payload webhook malformé", 
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+175 |                          error=str(validation_error),
+176 |                          payload_keys=list(payload_raw.keys()) if isinstance(payload_raw, dict) else "non-dict")
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/main.py:222:21
+    |
+221 |         # Logs détaillés du webhook reçu
+222 |         logger.info(f"📨 Webhook Monday.com reçu", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+223 |                    pulse_id=webhook_payload.event.pulseId,
+224 |                    board_id=webhook_payload.event.boardId,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/main.py:246:21
+    |
+244 |         )
+245 |         
+246 |         logger.info(f"📨 Webhook envoyé à RabbitMQ", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+247 |                    task_id=task.id,
+248 |                    webhook_type=webhook_payload.type,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/main.py:277:22
+    |
+275 |         raise
+276 |     except Exception as e:
+277 |         logger.error(f"❌ Erreur lors de la réception du webhook", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+278 |                     error=str(e),
+279 |                     error_type=type(e).__name__,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/main.py:323:20
+    |
+321 |         raise HTTPException(
+322 |             status_code=500,
+323 |             detail=f"Erreur lors de la récupération du statut de la tâche"
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+324 |         )
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> test_repo/nodes/analyze_node.py:4:28
+  |
+3 | from typing import Dict, Any
+4 | from models.schemas import WorkflowStatus, WorkflowState
+  |                            ^^^^^^^^^^^^^^
+5 | from tools.ai_engine_hub import ai_hub, AIRequest, TaskType
+6 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F541 [*] f-string without any placeholders
+   --> test_repo/nodes/analyze_node.py:98:21
+    |
+ 96 |         risk_level = analysis_result.get("risk_level", "Medium")
+ 97 |         
+ 98 |         logger.info(f"✅ Analyse requirements terminée",
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 99 |                    estimated_effort=estimated_effort,
+100 |                    risk_level=risk_level,
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> test_repo/nodes/debug_node.py:5:28
+  |
+3 | from typing import Dict, Any
+4 |
+5 | from models.schemas import WorkflowStatus
+  |                            ^^^^^^^^^^^^^^
+6 | from tools.claude_code_tool import ClaudeCodeTool
+7 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+E722 Do not use bare `except`
+   --> test_repo/nodes/debug_node.py:152:5
+    |
+150 |             if log_result["success"]:
+151 |                 analysis += f"\n### Contenu {log_file}:\n{log_result['content'][:300]}...\n"
+152 |     except:
+    |     ^^^^^^
+153 |         pass
+    |
+
+F841 Local variable `solution` is assigned to but never used
+   --> test_repo/nodes/debug_node.py:280:17
+    |
+278 |                 problem = line.split(':', 1)[1].strip()
+279 |             elif line.startswith('solution:'):
+280 |                 solution = line.split(':', 1)[1].strip()
+    |                 ^^^^^^^^
+281 |             elif line.startswith('file_path:'):
+282 |                 file_path = line.split(':', 1)[1].strip()
+    |
+help: Remove assignment to unused variable `solution`
+
+F841 Local variable `old_content_result` is assigned to but never used
+   --> test_repo/nodes/debug_node.py:290:13
+    |
+288 |         if file_path and content:
+289 |             # Sauvegarder l'ancien contenu pour rollback si nécessaire
+290 |             old_content_result = await claude_tool._arun(action="read_file", file_path=file_path)
+    |             ^^^^^^^^^^^^^^^^^^
+291 |             
+292 |             result = await claude_tool._arun(
+    |
+help: Remove assignment to unused variable `old_content_result`
+
+F841 Local variable `problem` is assigned to but never used
+   --> test_repo/nodes/debug_node.py:329:17
+    |
+327 |         for line in lines:
+328 |             if line.startswith('problem:'):
+329 |                 problem = line.split(':', 1)[1].strip()
+    |                 ^^^^^^^
+330 |             elif line.startswith('command:'):
+331 |                 command = line.split(':', 1)[1].strip()
+    |
+help: Remove assignment to unused variable `problem`
+
+F841 Local variable `explanation` is assigned to but never used
+   --> test_repo/nodes/debug_node.py:333:17
+    |
+331 |                 command = line.split(':', 1)[1].strip()
+332 |             elif line.startswith('explanation:'):
+333 |                 explanation = line.split(':', 1)[1].strip()
+    |                 ^^^^^^^^^^^
+334 |         
+335 |         if command:
+    |
+help: Remove assignment to unused variable `explanation`
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> test_repo/nodes/finalize_node.py:5:28
+  |
+3 | from typing import Dict, Any
+4 |
+5 | from models.schemas import WorkflowStatus, PullRequestInfo
+  |                            ^^^^^^^^^^^^^^
+6 | from tools.github_tool import GitHubTool
+7 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> test_repo/nodes/implement_node.py:5:28
+  |
+3 | from typing import Dict, Any, List
+4 |
+5 | from models.schemas import WorkflowStatus
+  |                            ^^^^^^^^^^^^^^
+6 | from tools.claude_code_tool import ClaudeCodeTool
+7 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F401 [*] `tools.ai_engine_hub.AIProvider` imported but unused
+  --> test_repo/nodes/implement_node.py:65:70
+   |
+64 |         # Initialiser le nouveau moteur IA multi-provider
+65 |         from tools.ai_engine_hub import ai_hub, AIRequest, TaskType, AIProvider
+   |                                                                      ^^^^^^^^^^
+66 |         
+67 |         claude_tool.working_directory = working_directory
+   |
+help: Remove unused import: `tools.ai_engine_hub.AIProvider`
+
+E722 Do not use bare `except`
+   --> test_repo/nodes/implement_node.py:151:13
+    |
+149 |                     structure_info += f"\n\n=== {config_file} ===\n"
+150 |                     structure_info += config_result["content"][:500] + "..."
+151 |             except:
+    |             ^^^^^^
+152 |                 continue
+    |
+
+F841 Local variable `description` is assigned to but never used
+   --> test_repo/nodes/implement_node.py:332:17
+    |
+330 |                 file_path = line.split(':', 1)[1].strip()
+331 |             elif line.startswith('description:'):
+332 |                 description = line.split(':', 1)[1].strip()
+    |                 ^^^^^^^^^^^
+333 |             elif line.startswith('content:'):
+334 |                 content_started = True
+    |
+help: Remove assignment to unused variable `description`
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> test_repo/nodes/prepare_node.py:5:48
+  |
+3 | from typing import Dict, Any
+4 |
+5 | from models.schemas import GitOperationResult, WorkflowStatus
+  |                                                ^^^^^^^^^^^^^^
+6 | from tools.claude_code_tool import ClaudeCodeTool
+7 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F401 [*] `pathlib.Path` imported but unused
+ --> test_repo/nodes/qa_node.py:7:21
+  |
+5 | import asyncio
+6 | from typing import Dict, Any, List, Tuple
+7 | from pathlib import Path
+  |                     ^^^^
+8 | from models.schemas import WorkflowStatus, WorkflowState
+9 | from utils.logger import get_logger
+  |
+help: Remove unused import: `pathlib.Path`
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> test_repo/nodes/qa_node.py:8:28
+  |
+6 | from typing import Dict, Any, List, Tuple
+7 | from pathlib import Path
+8 | from models.schemas import WorkflowStatus, WorkflowState
+  |                            ^^^^^^^^^^^^^^
+9 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F541 [*] f-string without any placeholders
+  --> test_repo/nodes/qa_node.py:95:21
+   |
+94 |         # 7. Logs et métriques
+95 |         logger.info(f"✅ Assurance qualité terminée",
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+96 |                    overall_score=qa_summary["overall_score"],
+97 |                    passed_checks=qa_summary["passed_checks"],
+   |
+help: Remove extraneous `f` prefix
+
+E722 Do not use bare `except`
+   --> test_repo/nodes/qa_node.py:182:13
+    |
+180 |                 if result.returncode == 0:
+181 |                     project_info["qa_tools_available"].append(tool)
+182 |             except:
+    |             ^^^^^^
+183 |                 continue
+    |
+
+E722 Do not use bare `except`
+   --> test_repo/nodes/qa_node.py:299:5
+    |
+297 |             result["issues_count"] = len(issues)
+298 |             result["critical_issues"] = len([i for i in issues if i.get("type") in ["error", "fatal"]])
+299 |     except:
+    |     ^^^^^^
+300 |         pass
+    |
+
+E722 Do not use bare `except`
+   --> test_repo/nodes/qa_node.py:390:5
+    |
+388 |             result["issues_count"] = len(issues)
+389 |             result["critical_issues"] = len([i for i in issues if i.get("issue_severity") in ["HIGH", "MEDIUM"]])
+390 |     except:
+    |     ^^^^^^
+391 |         pass
+    |
+
+F401 [*] `models.schemas.WorkflowStatus` imported but unused
+ --> test_repo/nodes/test_node.py:5:28
+  |
+3 | from typing import Dict, Any
+4 |
+5 | from models.schemas import WorkflowStatus, TestResult
+  |                            ^^^^^^^^^^^^^^
+6 | from tools.claude_code_tool import ClaudeCodeTool
+7 | from utils.logger import get_logger
+  |
+help: Remove unused import: `models.schemas.WorkflowStatus`
+
+F401 [*] `tools.testing_engine.TestType` imported but unused
+  --> test_repo/nodes/test_node.py:44:57
+   |
+43 |         # Initialiser le nouveau moteur de tests
+44 |         from tools.testing_engine import TestingEngine, TestType
+   |                                                         ^^^^^^^^
+45 |         
+46 |         testing_engine = TestingEngine()
+   |
+help: Remove unused import: `tools.testing_engine.TestType`
+
+F821 Undefined name `claude_tool`
+  --> test_repo/nodes/test_node.py:70:37
+   |
+69 |             try:
+70 |                 test_result = await claude_tool._run_tests(test_cmd)
+   |                                     ^^^^^^^^^^^
+71 |                 
+72 |                 # Si la commande s'est exécutée (même en échec), on s'arrête là
+   |
+
+F541 [*] f-string without any placeholders
+   --> test_repo/nodes/test_node.py:124:30
+    |
+122 |                 state.results["current_status"] = "FAILED".lower()
+123 |                 state.results["ai_messages"].append(f"❌ Limite de tentatives de debug atteinte ({state.max_debug_attempts})")
+124 |                 logger.error(f"❌ Limite de debug atteinte - Arrêt du workflow")
+    |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+125 |         
+126 |     except Exception as e:
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `os` imported but unused
+  --> test_repo/services/celery_app.py:8:8
+   |
+ 6 | from typing import Dict, Any, Optional
+ 7 | import asyncio
+ 8 | import os
+   |        ^^
+ 9 |
+10 | from config.settings import get_settings
+   |
+help: Remove unused import: `os`
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:179:21
+    |
+178 |     try:
+179 |         logger.info(f"🚀 Démarrage traitement webhook Celery", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+180 |                    task_id=task_id, 
+181 |                    queue="webhooks",
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:193:25
+    |
+191 |             )
+192 |             
+193 |             logger.info(f"✅ Webhook traité avec succès", 
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+194 |                        task_id=task_id, 
+195 |                        success=result.get('success', False))
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:209:22
+    |
+208 |     except Exception as exc:
+209 |         logger.error(f"❌ Erreur traitement webhook", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+210 |                     task_id=task_id, 
+211 |                     error=str(exc), 
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:259:21
+    |
+257 |         task_request = TaskRequest(**task_request_dict)
+258 |         
+259 |         logger.info(f"🔄 Démarrage workflow LangGraph", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+260 |                    task_id=task_id,
+261 |                    workflow_title=task_request.title,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:282:25
+    |
+280 |             )
+281 |             
+282 |             logger.info(f"✅ Workflow terminé", 
+    |                         ^^^^^^^^^^^^^^^^^^^^^^
+283 |                        task_id=task_id,
+284 |                        success=result.get('success', False),
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:299:22
+    |
+298 |     except Exception as exc:
+299 |         logger.error(f"❌ Erreur workflow", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^
+300 |                     task_id=task_id, 
+301 |                     error=str(exc), 
+    |
+help: Remove extraneous `f` prefix
+
+E722 Do not use bare `except`
+   --> test_repo/services/celery_app.py:312:9
+    |
+310 |             )
+311 |             loop.close()
+312 |         except:
+    |         ^^^^^^
+313 |             pass
+    |
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:358:21
+    |
+356 |         from tools.ai_engine_hub import AIEngineHub
+357 |         
+358 |         logger.info(f"🤖 Génération code IA", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+359 |                    task_id=task_id, 
+360 |                    provider=provider,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:374:25
+    |
+372 |             )
+373 |             
+374 |             logger.info(f"✅ Code généré", 
+    |                         ^^^^^^^^^^^^^^^^^
+375 |                        task_id=task_id,
+376 |                        provider=provider,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:391:22
+    |
+390 |     except Exception as exc:
+391 |         logger.error(f"❌ Erreur génération code", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+392 |                     task_id=task_id, 
+393 |                     provider=provider,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:447:21
+    |
+445 |         from tools.testing_engine import TestingEngine
+446 |         
+447 |         logger.info(f"🧪 Exécution tests", 
+    |                     ^^^^^^^^^^^^^^^^^^^^^
+448 |                    task_id=task_id,
+449 |                    workflow_id=workflow_id,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:470:25
+    |
+468 |             )
+469 |             
+470 |             logger.info(f"✅ Tests terminés", 
+    |                         ^^^^^^^^^^^^^^^^^^^^
+471 |                        task_id=task_id,
+472 |                        total_tests=total_tests,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:494:22
+    |
+493 |     except Exception as exc:
+494 |         logger.error(f"❌ Erreur tests", 
+    |                      ^^^^^^^^^^^^^^^^^^
+495 |                     task_id=task_id,
+496 |                     error=str(exc), 
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:537:22
+    |
+535 |         error = failed_task_data.get("error", "Unknown error")
+536 |         
+537 |         logger.error(f"💀 Tâche en Dead Letter Queue", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+538 |                     dlq_task_id=task_id,
+539 |                     original_task=original_task,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:558:22
+    |
+557 |     except Exception as exc:
+558 |         logger.error(f"❌ Erreur traitement DLQ", error=str(exc))
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+559 |         return {
+560 |             "dlq_processed": False,
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `datetime.timedelta` imported but unused
+   --> test_repo/services/celery_app.py:569:40
+    |
+567 |     """Tâche périodique de nettoyage des anciennes tâches."""
+568 |     try:
+569 |         from datetime import datetime, timedelta
+    |                                        ^^^^^^^^^
+570 |         
+571 |         logger.info("🧹 Nettoyage des anciennes tâches Celery")
+    |
+help: Remove unused import: `datetime.timedelta`
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:591:22
+    |
+590 |     except Exception as exc:
+591 |         logger.error(f"❌ Erreur nettoyage", error=str(exc))
+    |                      ^^^^^^^^^^^^^^^^^^^^^^
+592 |         return {"status": "failed", "error": str(exc)}
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:608:17
+    |
+606 | def worker_ready_handler(sender=None, **kwargs):
+607 |     """Signal émis quand un worker Celery est prêt."""
+608 |     logger.info(f"🚀 Celery worker prêt", 
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^
+609 |                worker=sender,
+610 |                broker="RabbitMQ",
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:617:17
+    |
+615 | def worker_shutting_down_handler(sender=None, **kwargs):
+616 |     """Signal émis quand un worker Celery s'arrête."""
+617 |     logger.info(f"🛑 Celery worker arrêt", worker=sender)
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:632:21
+    |
+631 |         task = celery_app.send_task(task_name, args=args, kwargs=kwargs, **task_options)
+632 |         logger.info(f"📨 Tâche soumise", 
+    |                     ^^^^^^^^^^^^^^^^^^^
+633 |                    task_name=task_name, 
+634 |                    task_id=task.id,
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/services/celery_app.py:638:22
+    |
+636 |         return task
+637 |     except Exception as exc:
+638 |         logger.error(f"❌ Erreur soumission tâche", 
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+639 |                     task_name=task_name, 
+640 |                     error=str(exc))
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `structlog` imported but unused
+  --> test_repo/services/monitoring_service.py:12:8
+   |
+10 | from contextlib import asynccontextmanager
+11 |
+12 | import structlog
+   |        ^^^^^^^^^
+13 | from fastapi import WebSocket 
+14 | from sqlalchemy.ext.asyncio import AsyncSession
+   |
+help: Remove unused import: `structlog`
+
+F401 [*] `sqlalchemy.ext.asyncio.AsyncSession` imported but unused
+  --> test_repo/services/monitoring_service.py:14:36
+   |
+12 | import structlog
+13 | from fastapi import WebSocket 
+14 | from sqlalchemy.ext.asyncio import AsyncSession
+   |                                    ^^^^^^^^^^^^
+15 | from pydantic import BaseModel
+   |
+help: Remove unused import: `sqlalchemy.ext.asyncio.AsyncSession`
+
+F401 [*] `pydantic.BaseModel` imported but unused
+  --> test_repo/services/monitoring_service.py:15:22
+   |
+13 | from fastapi import WebSocket 
+14 | from sqlalchemy.ext.asyncio import AsyncSession
+15 | from pydantic import BaseModel
+   |                      ^^^^^^^^^
+16 |
+17 | from utils.logger import get_logger
+   |
+help: Remove unused import: `pydantic.BaseModel`
+
+E722 Do not use bare `except`
+   --> test_repo/services/monitoring_service.py:380:13
+    |
+378 |             try:
+379 |                 await client.send_json(message)
+380 |             except:
+    |             ^^^^^^
+381 |                 disconnected.append(client)
+    |
+
+E722 Do not use bare `except`
+   --> test_repo/services/monitoring_service.py:406:13
+    |
+404 |             try:
+405 |                 await client.send_json(message)
+406 |             except:
+    |             ^^^^^^
+407 |                 self.connected_clients.remove(client)
+    |
+
+E722 Do not use bare `except`
+   --> test_repo/services/monitoring_service.py:485:13
+    |
+483 |             try:
+484 |                 await client.send_json(alert_message)
+485 |             except:
+    |             ^^^^^^
+486 |                 self.connected_clients.remove(client)
+    |
+
+F841 [*] Local variable `e` is assigned to but never used
+   --> test_repo/services/monitoring_service.py:592:25
+    |
+590 |         await monitoring_dashboard.start_workflow_monitoring(workflow_id, task_request)
+591 |         yield monitoring_dashboard
+592 |     except Exception as e:
+    |                         ^
+593 |         await monitoring_dashboard.complete_workflow(workflow_id, False)
+594 |         raise
+    |
+help: Remove assignment to unused variable `e`
+
+F841 Local variable `run_id` is assigned to but never used
+  --> test_repo/services/webhook_service.py:95:13
+   |
+94 |             # 9. Sauvegarder le run en base
+95 |             run_id = await self._save_task_run(task_id, task_request)
+   |             ^^^^^^
+96 |             
+97 |             # 9.1 Mettre la tâche en 'processing' (idempotent)
+   |
+help: Remove assignment to unused variable `run_id`
+
+F401 [*] `datetime.datetime` imported but unused
+ --> test_repo/tests/scripts/debug_workflow.py:7:22
+  |
+5 | import sys
+6 | import os
+7 | from datetime import datetime
+  |                      ^^^^^^^^
+8 |
+9 | # Ajouter le répertoire racine au path
+  |
+help: Remove unused import: `datetime.datetime`
+
+F401 [*] `re` imported but unused
+ --> test_repo/tests/scripts/fix_all_nodes.py:5:8
+  |
+4 | import os
+5 | import re
+  |        ^^
+6 |
+7 | def fix_file(filepath):
+  |
+help: Remove unused import: `re`
+
+F401 [*] `re` imported but unused
+ --> test_repo/tests/scripts/fix_workflow.py:4:8
+  |
+2 | """Script pour corriger l'erreur dans workflow_graph.py"""
+3 |
+4 | import re
+  |        ^^
+5 |
+6 | # Lire le fichier
+  |
+help: Remove unused import: `re`
+
+F401 [*] `typing.Optional` imported but unused
+ --> test_repo/tests/workflow/test_github_tool.py:4:20
+  |
+2 | import sys
+3 | import asyncio
+4 | from typing import Optional
+  |                    ^^^^^^^^
+5 |
+6 | # Assure l'import depuis la racine du projet
+  |
+help: Remove unused import: `typing.Optional`
+
+F401 [*] `json` imported but unused
+  --> test_repo/tests/workflow/test_rabbitmq_integration.py:17:8
+   |
+16 | import asyncio
+17 | import json
+   |        ^^^^
+18 | import time
+19 | import sys
+   |
+help: Remove unused import: `json`
+
+F401 [*] `typing.Dict` imported but unused
+  --> test_repo/tests/workflow/test_rabbitmq_integration.py:22:20
+   |
+20 | import argparse
+21 | from datetime import datetime
+22 | from typing import Dict, Any
+   |                    ^^^^
+23 |
+24 | # Imports du projet
+   |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+  --> test_repo/tests/workflow/test_rabbitmq_integration.py:22:26
+   |
+20 | import argparse
+21 | from datetime import datetime
+22 | from typing import Dict, Any
+   |                          ^^^
+23 |
+24 | # Imports du projet
+   |
+help: Remove unused import
+
+F401 [*] `models.schemas.TaskRequest` imported but unused
+  --> test_repo/tests/workflow/test_rabbitmq_integration.py:26:44
+   |
+24 | # Imports du projet
+25 | from config.settings import get_settings
+26 | from models.schemas import WebhookPayload, TaskRequest
+   |                                            ^^^^^^^^^^^
+27 | from services.celery_app import celery_app, submit_task
+28 | from utils.logger import get_logger
+   |
+help: Remove unused import: `models.schemas.TaskRequest`
+
+F541 [*] f-string without any placeholders
+   --> test_repo/tests/workflow/test_rabbitmq_integration.py:197:26
+    |
+195 |             if task and task.id:
+196 |                 self.log(f"✅ Tâche soumise avec succès: {task.id}", "SUCCESS")
+197 |                 self.log(f"   → Queue: webhooks")
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^
+198 |                 self.log(f"   → Priorité: 8")
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> test_repo/tests/workflow/test_rabbitmq_integration.py:198:26
+    |
+196 |                 self.log(f"✅ Tâche soumise avec succès: {task.id}", "SUCCESS")
+197 |                 self.log(f"   → Queue: webhooks")
+198 |                 self.log(f"   → Priorité: 8")
+    |                          ^^^^^^^^^^^^^^^^^^^
+199 |                 
+200 |                 # Attendre un peu et vérifier le statut
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `datetime.datetime` imported but unused
+ --> test_repo/tests/workflow/test_workflow.py:7:22
+  |
+5 | import sys
+6 | import os
+7 | from datetime import datetime
+  |                      ^^^^^^^^
+8 |
+9 | # Ajouter le répertoire racine au path
+  |
+help: Remove unused import: `datetime.datetime`
+
+F541 [*] f-string without any placeholders
+  --> test_repo/tests/workflow/test_workflow.py:68:15
+   |
+66 |         result = await run_workflow(task_request)
+67 |         
+68 |         print(f"✅ Workflow terminé!")
+   |               ^^^^^^^^^^^^^^^^^^^^^^^
+69 |         print(f"📊 Résultat: {result}")
+   |
+help: Remove extraneous `f` prefix
+
+F401 [*] `typing.Type` imported but unused
+ --> test_repo/tools/ai_engine_hub.py:4:47
+  |
+3 | from abc import ABC, abstractmethod
+4 | from typing import Any, Dict, List, Optional, Type
+  |                                               ^^^^
+5 | from enum import Enum
+6 | from pydantic import BaseModel
+  |
+help: Remove unused import: `typing.Type`
+
+F401 [*] `asyncio` imported but unused
+ --> test_repo/tools/ai_engine_hub.py:7:8
+  |
+5 | from enum import Enum
+6 | from pydantic import BaseModel
+7 | import asyncio
+  |        ^^^^^^^
+8 |
+9 | from anthropic import Client as AnthropicClient
+  |
+help: Remove unused import: `asyncio`
+
+F401 [*] `typing.List` imported but unused
+ --> test_repo/tools/claude_code_tool.py:7:31
+  |
+5 | import subprocess
+6 | import time
+7 | from typing import Any, Dict, List, Optional
+  |                               ^^^^
+8 | from pydantic import Field
+9 | from anthropic import Client
+  |
+help: Remove unused import: `typing.List`
+
+F401 [*] `models.schemas.TaskRequest` imported but unused
+  --> test_repo/tools/claude_code_tool.py:12:28
+   |
+11 | from .base_tool import BaseTool
+12 | from models.schemas import TaskRequest, WorkflowState, TestResult
+   |                            ^^^^^^^^^^^
+   |
+help: Remove unused import
+
+F401 [*] `models.schemas.WorkflowState` imported but unused
+  --> test_repo/tools/claude_code_tool.py:12:41
+   |
+11 | from .base_tool import BaseTool
+12 | from models.schemas import TaskRequest, WorkflowState, TestResult
+   |                                         ^^^^^^^^^^^^^
+   |
+help: Remove unused import
+
+F401 [*] `models.schemas.TaskRequest` imported but unused
+ --> test_repo/tools/github_tool.py:9:28
+  |
+8 | from .base_tool import BaseTool
+9 | from models.schemas import TaskRequest, WorkflowState, GitOperationResult, PullRequestInfo
+  |                            ^^^^^^^^^^^
+  |
+help: Remove unused import
+
+F401 [*] `models.schemas.WorkflowState` imported but unused
+ --> test_repo/tools/github_tool.py:9:41
+  |
+8 | from .base_tool import BaseTool
+9 | from models.schemas import TaskRequest, WorkflowState, GitOperationResult, PullRequestInfo
+  |                                         ^^^^^^^^^^^^^
+  |
+help: Remove unused import
+
+F841 Local variable `add_result` is assigned to but never used
+   --> test_repo/tools/github_tool.py:158:17
+    |
+156 |             try:
+157 |                 # Ajouter tous les fichiers modifiés
+158 |                 add_result = subprocess.run(
+    |                 ^^^^^^^^^^
+159 |                     ["git", "add", "."],
+160 |                     capture_output=True,
+    |
+help: Remove assignment to unused variable `add_result`
+
+F841 Local variable `commit_result` is assigned to but never used
+   --> test_repo/tools/github_tool.py:166:17
+    |
+165 |                 # Committer les changements
+166 |                 commit_result = subprocess.run(
+    |                 ^^^^^^^^^^^^^
+167 |                     ["git", "commit", "-m", f"Implémentation automatique - {branch}"],
+168 |                     capture_output=True,
+    |
+help: Remove assignment to unused variable `commit_result`
+
+F841 Local variable `push_result` is assigned to but never used
+   --> test_repo/tools/github_tool.py:174:17
+    |
+173 |                 # Pousser la branche
+174 |                 push_result = subprocess.run(
+    |                 ^^^^^^^^^^^
+175 |                     ["git", "push", "origin", branch],
+176 |                     capture_output=True,
+    |
+help: Remove assignment to unused variable `push_result`
+
+F401 [*] `asyncio` imported but unused
+ --> test_repo/tools/monday_tool.py:3:8
+  |
+1 | """Outil pour interagir avec Monday.com via OAuth."""
+2 |
+3 | import asyncio
+  |        ^^^^^^^
+4 | import httpx
+5 | import json
+  |
+help: Remove unused import: `asyncio`
+
+F401 [*] `datetime.timedelta` imported but unused
+ --> test_repo/tools/monday_tool.py:6:32
+  |
+4 | import httpx
+5 | import json
+6 | from datetime import datetime, timedelta
+  |                                ^^^^^^^^^
+7 | from typing import Dict, Any, Optional, List
+8 | from urllib.parse import urlencode
+  |
+help: Remove unused import: `datetime.timedelta`
+
+F401 [*] `typing.List` imported but unused
+ --> test_repo/tools/monday_tool.py:7:41
+  |
+5 | import json
+6 | from datetime import datetime, timedelta
+7 | from typing import Dict, Any, Optional, List
+  |                                         ^^^^
+8 | from urllib.parse import urlencode
+9 | from pydantic import Field
+  |
+help: Remove unused import: `typing.List`
+
+F401 [*] `urllib.parse.urlencode` imported but unused
+ --> test_repo/tools/monday_tool.py:8:26
+  |
+6 | from datetime import datetime, timedelta
+7 | from typing import Dict, Any, Optional, List
+8 | from urllib.parse import urlencode
+  |                          ^^^^^^^^^
+9 | from pydantic import Field
+  |
+help: Remove unused import: `urllib.parse.urlencode`
+
+F401 [*] `config.settings.get_settings` imported but unused
+  --> test_repo/tools/monday_tool.py:12:29
+   |
+11 | from .base_tool import BaseTool
+12 | from config.settings import get_settings
+   |                             ^^^^^^^^^^^^
+13 | from models.schemas import TaskRequest
+14 | from utils.logger import get_logger
+   |
+help: Remove unused import: `config.settings.get_settings`
+
+F401 [*] `models.schemas.TaskRequest` imported but unused
+  --> test_repo/tools/monday_tool.py:13:28
+   |
+11 | from .base_tool import BaseTool
+12 | from config.settings import get_settings
+13 | from models.schemas import TaskRequest
+   |                            ^^^^^^^^^^^
+14 | from utils.logger import get_logger
+   |
+help: Remove unused import: `models.schemas.TaskRequest`
+
+F401 [*] `utils.logger.get_logger` imported but unused
+  --> test_repo/tools/monday_tool.py:14:26
+   |
+12 | from config.settings import get_settings
+13 | from models.schemas import TaskRequest
+14 | from utils.logger import get_logger
+   |                          ^^^^^^^^^^
+   |
+help: Remove unused import: `utils.logger.get_logger`
+
+F841 Local variable `status_value` is assigned to but never used
+   --> test_repo/tools/monday_tool.py:257:9
+    |
+255 |         }
+256 |         
+257 |         status_value = status_mapping.get(status, status.lower())
+    |         ^^^^^^^^^^^^
+258 |         
+259 |         query = """
+    |
+help: Remove assignment to unused variable `status_value`
+
+F401 [*] `subprocess` imported but unused
+ --> test_repo/tools/testing_engine.py:4:8
+  |
+3 | import os
+4 | import subprocess
+  |        ^^^^^^^^^^
+5 | import asyncio
+6 | import json
+  |
+help: Remove unused import: `subprocess`
+
+F401 [*] `tempfile` imported but unused
+ --> test_repo/tools/testing_engine.py:7:8
+  |
+5 | import asyncio
+6 | import json
+7 | import tempfile
+  |        ^^^^^^^^
+8 | from typing import Any, Dict, List, Optional, Union
+9 | from enum import Enum
+  |
+help: Remove unused import: `tempfile`
+
+F401 [*] `typing.Union` imported but unused
+  --> test_repo/tools/testing_engine.py:8:47
+   |
+ 6 | import json
+ 7 | import tempfile
+ 8 | from typing import Any, Dict, List, Optional, Union
+   |                                               ^^^^^
+ 9 | from enum import Enum
+10 | from pathlib import Path
+   |
+help: Remove unused import: `typing.Union`
+
+F401 [*] `pathlib.Path` imported but unused
+  --> test_repo/tools/testing_engine.py:10:21
+   |
+ 8 | from typing import Any, Dict, List, Optional, Union
+ 9 | from enum import Enum
+10 | from pathlib import Path
+   |                     ^^^^
+11 | from pydantic import BaseModel, Field
+   |
+help: Remove unused import: `pathlib.Path`
+
+F841 Local variable `skipped_tests` is assigned to but never used
+   --> test_repo/tools/testing_engine.py:327:17
+    |
+325 |                 passed_tests = summary.get("passed", 0)
+326 |                 failed_tests = summary.get("failed", 0)
+327 |                 skipped_tests = summary.get("skipped", 0)
+    |                 ^^^^^^^^^^^^^
+328 |                 execution_time = report.get("duration", 0.0)
+329 |                 success = summary.get("failed", 0) == 0
+    |
+help: Remove assignment to unused variable `skipped_tests`
+
+F841 Local variable `execution_time` is assigned to but never used
+   --> test_repo/tools/testing_engine.py:328:17
+    |
+326 |                 failed_tests = summary.get("failed", 0)
+327 |                 skipped_tests = summary.get("skipped", 0)
+328 |                 execution_time = report.get("duration", 0.0)
+    |                 ^^^^^^^^^^^^^^
+329 |                 success = summary.get("failed", 0) == 0
+    |
+help: Remove assignment to unused variable `execution_time`
+
+F841 Local variable `failures` is assigned to but never used
+   --> test_repo/tools/testing_engine.py:332:17
+    |
+331 |                 # Parser les échecs
+332 |                 failures = self._parse_test_failures(report.get("tests", []))
+    |                 ^^^^^^^^
+333 |                 
+334 |             except Exception as e:
+    |
+help: Remove assignment to unused variable `failures`
+
+F401 [*] `datetime.datetime` imported but unused
+ --> test_repo/utils/custom_monitoring.py:4:22
+  |
+3 | import time
+4 | from datetime import datetime
+  |                      ^^^^^^^^
+5 | from typing import Dict, Any, Optional
+6 | from functools import wraps
+  |
+help: Remove unused import: `datetime.datetime`
+
+F401 [*] `typing.Optional` imported but unused
+ --> test_repo/utils/custom_monitoring.py:5:31
+  |
+3 | import time
+4 | from datetime import datetime
+5 | from typing import Dict, Any, Optional
+  |                               ^^^^^^^^
+6 | from functools import wraps
+  |
+help: Remove unused import: `typing.Optional`
+
+F401 [*] `services.monitoring_service.workflow_monitoring_context` imported but unused
+  --> test_repo/utils/custom_monitoring.py:9:63
+   |
+ 8 | from models.state import GraphState
+ 9 | from services.monitoring_service import monitoring_dashboard, workflow_monitoring_context
+   |                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from utils.logger import get_logger
+   |
+help: Remove unused import: `services.monitoring_service.workflow_monitoring_context`
+
+F401 [*] `typing.Optional` imported but unused
+ --> tests/integration/test_github_tool.py:4:20
+  |
+2 | import sys
+3 | import asyncio
+4 | from typing import Optional
+  |                    ^^^^^^^^
+5 |
+6 | # Assure l'import depuis la racine du projet
+  |
+help: Remove unused import: `typing.Optional`
+
+F401 [*] `json` imported but unused
+  --> tests/integration/test_rabbitmq_integration.py:17:8
+   |
+16 | import asyncio
+17 | import json
+   |        ^^^^
+18 | import time
+19 | import sys
+   |
+help: Remove unused import: `json`
+
+F401 [*] `typing.Dict` imported but unused
+  --> tests/integration/test_rabbitmq_integration.py:22:20
+   |
+20 | import argparse
+21 | from datetime import datetime
+22 | from typing import Dict, Any
+   |                    ^^^^
+23 |
+24 | # Imports du projet
+   |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+  --> tests/integration/test_rabbitmq_integration.py:22:26
+   |
+20 | import argparse
+21 | from datetime import datetime
+22 | from typing import Dict, Any
+   |                          ^^^
+23 |
+24 | # Imports du projet
+   |
+help: Remove unused import
+
+F401 [*] `models.schemas.TaskRequest` imported but unused
+  --> tests/integration/test_rabbitmq_integration.py:26:44
+   |
+24 | # Imports du projet
+25 | from config.settings import get_settings
+26 | from models.schemas import WebhookPayload, TaskRequest
+   |                                            ^^^^^^^^^^^
+27 | from services.celery_app import celery_app, submit_task
+28 | from utils.logger import get_logger
+   |
+help: Remove unused import: `models.schemas.TaskRequest`
+
+F541 [*] f-string without any placeholders
+   --> tests/integration/test_rabbitmq_integration.py:197:26
+    |
+195 |             if task and task.id:
+196 |                 self.log(f"✅ Tâche soumise avec succès: {task.id}", "SUCCESS")
+197 |                 self.log(f"   → Queue: webhooks")
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^
+198 |                 self.log(f"   → Priorité: 8")
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> tests/integration/test_rabbitmq_integration.py:198:26
+    |
+196 |                 self.log(f"✅ Tâche soumise avec succès: {task.id}", "SUCCESS")
+197 |                 self.log(f"   → Queue: webhooks")
+198 |                 self.log(f"   → Priorité: 8")
+    |                          ^^^^^^^^^^^^^^^^^^^
+199 |                 
+200 |                 # Attendre un peu et vérifier le statut
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `datetime.datetime` imported but unused
+ --> tests/integration/test_workflow.py:7:22
+  |
+5 | import sys
+6 | import os
+7 | from datetime import datetime
+  |                      ^^^^^^^^
+8 |
+9 | # Ajouter le répertoire racine au path
+  |
+help: Remove unused import: `datetime.datetime`
+
+F541 [*] f-string without any placeholders
+  --> tests/integration/test_workflow.py:68:15
+   |
+66 |         result = await run_workflow(task_request)
+67 |         
+68 |         print(f"✅ Workflow terminé!")
+   |               ^^^^^^^^^^^^^^^^^^^^^^^
+69 |         print(f"📊 Résultat: {result}")
+   |
+help: Remove extraneous `f` prefix
+
+F401 [*] `datetime.datetime` imported but unused
+ --> tests/test_fixes.py:7:22
+  |
+5 | import sys
+6 | import os
+7 | from datetime import datetime
+  |                      ^^^^^^^^
+8 | from typing import Dict, Any
+  |
+help: Remove unused import: `datetime.datetime`
+
+F401 [*] `typing.Dict` imported but unused
+  --> tests/test_fixes.py:8:20
+   |
+ 6 | import os
+ 7 | from datetime import datetime
+ 8 | from typing import Dict, Any
+   |                    ^^^^
+ 9 |
+10 | # Ajouter le répertoire parent au PYTHONPATH
+   |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+  --> tests/test_fixes.py:8:26
+   |
+ 6 | import os
+ 7 | from datetime import datetime
+ 8 | from typing import Dict, Any
+   |                          ^^^
+ 9 |
+10 | # Ajouter le répertoire parent au PYTHONPATH
+   |
+help: Remove unused import
+
+F401 [*] `nodes.analyze_node._get_default_analysis_with_error` imported but unused
+  --> tests/test_fixes.py:15:72
+   |
+13 | from models.schemas import WorkflowStatus, TaskRequest, TaskPriority
+14 | from models.state import WorkflowState
+15 | from nodes.analyze_node import _parse_analysis_response, _repair_json, _get_default_analysis_with_error
+   |                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 | from utils.logger import get_logger
+   |
+help: Remove unused import: `nodes.analyze_node._get_default_analysis_with_error`
+
+F841 Local variable `parsed` is assigned to but never used
+  --> tests/test_fixes.py:85:9
+   |
+84 |     try:
+85 |         parsed = json.loads(repaired) 
+   |         ^^^^^^
+86 |         print("✅ Guillemets manquants ajoutés")
+87 |     except json.JSONDecodeError:
+   |
+help: Remove assignment to unused variable `parsed`
+
+F541 [*] f-string without any placeholders
+  --> tests/test_langsmith_integration.py:26:11
+   |
+24 |     project = os.getenv("LANGSMITH_PROJECT", "ai-agent-production")
+25 |     
+26 |     print(f"📋 Configuration:")
+   |           ^^^^^^^^^^^^^^^^^^^^
+27 |     print(f"   API Key: {'✅ Configurée' if api_key else '❌ Manquante'}")
+28 |     print(f"   Project: {project}")
+   |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+  --> tests/test_langsmith_integration.py:33:11
+   |
+32 |     # Tester l'initialisation du client
+33 |     print(f"\n🔧 Test client:")
+   |           ^^^^^^^^^^^^^^^^^^^^
+34 |     if langsmith_config.is_configured:
+35 |         client = langsmith_config.client
+   |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> tests/test_langsmith_integration.py:228:15
+    |
+226 |         print(f"\n🔗 Consultez vos traces sur: https://smith.langchain.com/projects/{langsmith_config.project}")
+227 |     else:
+228 |         print(f"\n💡 Pour activer LangSmith:")
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+229 |         print(f"   1. Obtenez une API key sur https://smith.langchain.com")
+230 |         print(f"   2. Ajoutez LANGSMITH_API_KEY=your_key dans votre .env")
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> tests/test_langsmith_integration.py:229:15
+    |
+227 |     else:
+228 |         print(f"\n💡 Pour activer LangSmith:")
+229 |         print(f"   1. Obtenez une API key sur https://smith.langchain.com")
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+230 |         print(f"   2. Ajoutez LANGSMITH_API_KEY=your_key dans votre .env")
+231 |         print(f"   3. Redémarrez l'application")
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> tests/test_langsmith_integration.py:230:15
+    |
+228 |         print(f"\n💡 Pour activer LangSmith:")
+229 |         print(f"   1. Obtenez une API key sur https://smith.langchain.com")
+230 |         print(f"   2. Ajoutez LANGSMITH_API_KEY=your_key dans votre .env")
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+231 |         print(f"   3. Redémarrez l'application")
+    |
+help: Remove extraneous `f` prefix
+
+F541 [*] f-string without any placeholders
+   --> tests/test_langsmith_integration.py:231:15
+    |
+229 |         print(f"   1. Obtenez une API key sur https://smith.langchain.com")
+230 |         print(f"   2. Ajoutez LANGSMITH_API_KEY=your_key dans votre .env")
+231 |         print(f"   3. Redémarrez l'application")
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+232 |     
+233 |     return all_passed
+    |
+help: Remove extraneous `f` prefix
+
+F401 [*] `asyncio` imported but unused
+ --> tests/test_monday_fixes.py:4:8
+  |
+3 | import pytest
+4 | import asyncio
+  |        ^^^^^^^
+5 | from unittest.mock import Mock, patch, AsyncMock
+6 | from typing import Dict, Any
+  |
+help: Remove unused import: `asyncio`
+
+F401 [*] `unittest.mock.Mock` imported but unused
+ --> tests/test_monday_fixes.py:5:27
+  |
+3 | import pytest
+4 | import asyncio
+5 | from unittest.mock import Mock, patch, AsyncMock
+  |                           ^^^^
+6 | from typing import Dict, Any
+  |
+help: Remove unused import
+
+F401 [*] `unittest.mock.AsyncMock` imported but unused
+ --> tests/test_monday_fixes.py:5:40
+  |
+3 | import pytest
+4 | import asyncio
+5 | from unittest.mock import Mock, patch, AsyncMock
+  |                                        ^^^^^^^^^
+6 | from typing import Dict, Any
+  |
+help: Remove unused import
+
+F401 [*] `typing.Dict` imported but unused
+ --> tests/test_monday_fixes.py:6:20
+  |
+4 | import asyncio
+5 | from unittest.mock import Mock, patch, AsyncMock
+6 | from typing import Dict, Any
+  |                    ^^^^
+7 |
+8 | # Import des services corrigés
+  |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+ --> tests/test_monday_fixes.py:6:26
+  |
+4 | import asyncio
+5 | from unittest.mock import Mock, patch, AsyncMock
+6 | from typing import Dict, Any
+  |                          ^^^
+7 |
+8 | # Import des services corrigés
+  |
+help: Remove unused import
+
+F401 [*] `services.webhook_service.WebhookService` imported but unused
+  --> tests/test_monday_fixes.py:10:38
+   |
+ 8 | # Import des services corrigés
+ 9 | from services.database_persistence_service import DatabasePersistenceService
+10 | from services.webhook_service import WebhookService
+   |                                      ^^^^^^^^^^^^^^
+11 | from utils.helpers import get_working_directory, set_working_directory, ensure_working_directory, validate_working_directory
+12 | from utils.github_parser import extract_github_url_from_description, enrich_task_with_description_info
+   |
+help: Remove unused import: `services.webhook_service.WebhookService`
+
+F841 Local variable `persistence` is assigned to but never used
+  --> tests/test_monday_fixes.py:31:9
+   |
+29 |         }
+30 |         
+31 |         persistence = DatabasePersistenceService()
+   |         ^^^^^^^^^^^
+32 |         
+33 |         # Simuler la logique d'extraction
+   |
+help: Remove assignment to unused variable `persistence`
+
+F401 [*] `unittest.mock.MagicMock` imported but unused
+  --> tests/test_monday_validation_fix.py:10:38
+   |
+ 8 | import sys
+ 9 | import os
+10 | from unittest.mock import AsyncMock, MagicMock, patch
+   |                                      ^^^^^^^^^
+11 |
+12 | # Ajouter le répertoire parent au PYTHONPATH
+   |
+help: Remove unused import: `unittest.mock.MagicMock`
+
+F401 [*] `datetime.datetime` imported but unused
+ --> tests/unit/debug_workflow.py:7:22
+  |
+5 | import sys
+6 | import os
+7 | from datetime import datetime
+  |                      ^^^^^^^^
+8 |
+9 | # Ajouter le répertoire racine au path
+  |
+help: Remove unused import: `datetime.datetime`
+
+F401 [*] `re` imported but unused
+ --> tests/unit/fix_all_nodes.py:5:8
+  |
+4 | import os
+5 | import re
+  |        ^^
+6 |
+7 | def fix_file(filepath):
+  |
+help: Remove unused import: `re`
+
+F401 [*] `re` imported but unused
+ --> tests/unit/fix_workflow.py:4:8
+  |
+2 | """Script pour corriger l'erreur dans workflow_graph.py"""
+3 |
+4 | import re
+  |        ^^
+5 |
+6 | # Lire le fichier
+  |
+help: Remove unused import: `re`
+
+F401 [*] `typing.Type` imported but unused
+ --> tools/ai_engine_hub.py:4:47
+  |
+3 | from abc import ABC, abstractmethod
+4 | from typing import Any, Dict, List, Optional, Type
+  |                                               ^^^^
+5 | from enum import Enum
+6 | from pydantic import BaseModel, ConfigDict
+  |
+help: Remove unused import: `typing.Type`
+
+F401 [*] `asyncio` imported but unused
+ --> tools/ai_engine_hub.py:7:8
+  |
+5 | from enum import Enum
+6 | from pydantic import BaseModel, ConfigDict
+7 | import asyncio
+  |        ^^^^^^^
+8 |
+9 | from anthropic import Client as AnthropicClient
+  |
+help: Remove unused import: `asyncio`
+
+F811 [*] Redefinition of unused `asyncio` from line 7
+   --> tools/ai_engine_hub.py:491:16
+    |
+490 |         # Retry/backoff + fallback
+491 |         import asyncio
+    |                ^^^^^^^ `asyncio` redefined here
+492 |         attempts = 0
+493 |         last_error = None
+    |
+   ::: tools/ai_engine_hub.py:7:8
+    |
+  5 | from enum import Enum
+  6 | from pydantic import BaseModel, ConfigDict
+  7 | import asyncio
+    |        ------- previous definition of `asyncio` here
+  8 |
+  9 | from anthropic import Client as AnthropicClient
+    |
+help: Remove definition: `asyncio`
+
+F811 [*] Redefinition of unused `asyncio` from line 7
+   --> tools/ai_engine_hub.py:530:16
+    |
+528 | …         return AIResponse(content="Analyse impossible - aucun provider disponible", provider=AIProvider.CLAUDE, model_used="none", …
+529 | …     
+530 | …     import asyncio
+    |              ^^^^^^^ `asyncio` redefined here
+531 | …     attempts = 0
+532 | …     last_error = None
+    |
+   ::: tools/ai_engine_hub.py:7:8
+    |
+  5 | from enum import Enum
+  6 | from pydantic import BaseModel, ConfigDict
+  7 | import asyncio
+    |        ------- previous definition of `asyncio` here
+  8 |
+  9 | from anthropic import Client as AnthropicClient
+    |
+help: Remove definition: `asyncio`
+
+F401 [*] `typing.List` imported but unused
+  --> tools/claude_code_tool.py:8:31
+   |
+ 6 | import subprocess
+ 7 | import time
+ 8 | from typing import Any, Dict, List, Optional
+   |                               ^^^^
+ 9 | from pydantic import Field
+10 | from anthropic import Client
+   |
+help: Remove unused import: `typing.List`
+
+F401 [*] `models.schemas.TaskRequest` imported but unused
+  --> tools/claude_code_tool.py:14:28
+   |
+13 | from .base_tool import BaseTool
+14 | from models.schemas import TaskRequest, TestResult
+   |                            ^^^^^^^^^^^
+15 | from models.state import GraphState
+16 | from config.langsmith_config import langsmith_config
+   |
+help: Remove unused import
+
+F401 [*] `models.schemas.TestResult` imported but unused
+  --> tools/claude_code_tool.py:14:41
+   |
+13 | from .base_tool import BaseTool
+14 | from models.schemas import TaskRequest, TestResult
+   |                                         ^^^^^^^^^^
+15 | from models.state import GraphState
+16 | from config.langsmith_config import langsmith_config
+   |
+help: Remove unused import
+
+F401 [*] `models.state.GraphState` imported but unused
+  --> tools/claude_code_tool.py:15:26
+   |
+13 | from .base_tool import BaseTool
+14 | from models.schemas import TaskRequest, TestResult
+15 | from models.state import GraphState
+   |                          ^^^^^^^^^^
+16 | from config.langsmith_config import langsmith_config
+   |
+help: Remove unused import: `models.state.GraphState`
+
+F821 Undefined name `monitoring_dashboard`
+   --> tools/claude_code_tool.py:211:27
+    |
+209 |                 run_step_id = context.get("run_step_id")
+210 |                 if run_step_id:
+211 |                     await monitoring_dashboard.save_ai_interaction(
+    |                           ^^^^^^^^^^^^^^^^^^^^
+212 |                         run_step_id=run_step_id,
+213 |                         provider="claude",
+    |
+
+F541 [*] f-string without any placeholders
+   --> tools/claude_code_tool.py:409:37
+    |
+407 |             # ✅ CORRECTION: Continuer même si clonage échoue
+408 |             if not clone_success:
+409 |                 self.logger.warning(f"⚠️ Clonage échoué - création d'un workspace vide")
+    |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+410 |                 # Créer un workspace minimal fonctionnel
+411 |                 await self._create_minimal_workspace(branch)
+    |
+help: Remove extraneous `f` prefix
+
+E722 Do not use bare `except`
+   --> tools/claude_code_tool.py:581:9
+    |
+579 |             await self._execute_command(f"git checkout -b {branch}", cwd=self.working_directory)
+580 |             self.logger.info(f"✅ Workspace git minimal créé avec branche {branch}")
+581 |         except:
+    |         ^^^^^^
+582 |             self.logger.warning("⚠️ Impossible d'initialiser git - workspace sans version")
+    |
+
+E722 Do not use bare `except`
+   --> tools/claude_code_tool.py:596:13
+    |
+594 |                 with open(file_path, 'w', encoding='utf-8') as f:
+595 |                     f.write(content)
+596 |             except:
+    |             ^^^^^^
+597 |                 pass  # Ignorer les erreurs de création de fichiers
+    |
+
+F401 [*] `models.schemas.TaskRequest` imported but unused
+  --> tools/github_tool.py:9:28
+   |
+ 8 | from .base_tool import BaseTool
+ 9 | from models.schemas import TaskRequest, GitOperationResult, PullRequestInfo
+   |                            ^^^^^^^^^^^
+10 | from models.state import GraphState
+11 | from config.langsmith_config import langsmith_config
+   |
+help: Remove unused import: `models.schemas.TaskRequest`
+
+F401 [*] `models.state.GraphState` imported but unused
+  --> tools/github_tool.py:10:26
+   |
+ 8 | from .base_tool import BaseTool
+ 9 | from models.schemas import TaskRequest, GitOperationResult, PullRequestInfo
+10 | from models.state import GraphState
+   |                          ^^^^^^^^^^
+11 | from config.langsmith_config import langsmith_config
+   |
+help: Remove unused import: `models.state.GraphState`
+
+F541 [*] f-string without any placeholders
+  --> tools/github_tool.py:84:34
+   |
+82 |                     return {
+83 |                         "success": False,
+84 |                         "error": f"Token GitHub invalide ou expiré (401). Vérifiez GITHUB_TOKEN."
+   |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+85 |                     }
+86 |                 raise
+   |
+help: Remove extraneous `f` prefix
+
+F841 Local variable `add_result` is assigned to but never used
+   --> tools/github_tool.py:215:17
+    |
+213 |             try:
+214 |                 # Ajouter tous les fichiers modifiés
+215 |                 add_result = subprocess.run(
+    |                 ^^^^^^^^^^
+216 |                     ["git", "add", "."],
+217 |                     capture_output=True,
+    |
+help: Remove assignment to unused variable `add_result`
+
+F841 Local variable `commit_result` is assigned to but never used
+   --> tools/github_tool.py:223:17
+    |
+222 |                 # Committer les changements
+223 |                 commit_result = subprocess.run(
+    |                 ^^^^^^^^^^^^^
+224 |                     ["git", "commit", "-m", f"Implémentation automatique - {branch}"],
+225 |                     capture_output=True,
+    |
+help: Remove assignment to unused variable `commit_result`
+
+F841 Local variable `push_result` is assigned to but never used
+   --> tools/github_tool.py:231:17
+    |
+230 |                 # Pousser la branche
+231 |                 push_result = subprocess.run(
+    |                 ^^^^^^^^^^^
+232 |                     ["git", "push", "origin", branch],
+233 |                     capture_output=True,
+    |
+help: Remove assignment to unused variable `push_result`
+
+F401 [*] `datetime.timedelta` imported but unused
+ --> tools/monday_tool.py:6:32
+  |
+4 | import httpx
+5 | import json
+6 | from datetime import datetime, timedelta
+  |                                ^^^^^^^^^
+7 | from typing import Dict, Any, Optional, List
+8 | from urllib.parse import urlencode
+  |
+help: Remove unused import: `datetime.timedelta`
+
+F401 [*] `typing.List` imported but unused
+ --> tools/monday_tool.py:7:41
+  |
+5 | import json
+6 | from datetime import datetime, timedelta
+7 | from typing import Dict, Any, Optional, List
+  |                                         ^^^^
+8 | from urllib.parse import urlencode
+9 | from pydantic import Field
+  |
+help: Remove unused import: `typing.List`
+
+F401 [*] `urllib.parse.urlencode` imported but unused
+ --> tools/monday_tool.py:8:26
+  |
+6 | from datetime import datetime, timedelta
+7 | from typing import Dict, Any, Optional, List
+8 | from urllib.parse import urlencode
+  |                          ^^^^^^^^^
+9 | from pydantic import Field
+  |
+help: Remove unused import: `urllib.parse.urlencode`
+
+F401 [*] `config.settings.get_settings` imported but unused
+  --> tools/monday_tool.py:12:29
+   |
+11 | from .base_tool import BaseTool
+12 | from config.settings import get_settings
+   |                             ^^^^^^^^^^^^
+13 | from models.schemas import TaskRequest
+14 | from utils.logger import get_logger
+   |
+help: Remove unused import: `config.settings.get_settings`
+
+F401 [*] `models.schemas.TaskRequest` imported but unused
+  --> tools/monday_tool.py:13:28
+   |
+11 | from .base_tool import BaseTool
+12 | from config.settings import get_settings
+13 | from models.schemas import TaskRequest
+   |                            ^^^^^^^^^^^
+14 | from utils.logger import get_logger
+   |
+help: Remove unused import: `models.schemas.TaskRequest`
+
+F401 [*] `utils.logger.get_logger` imported but unused
+  --> tools/monday_tool.py:14:26
+   |
+12 | from config.settings import get_settings
+13 | from models.schemas import TaskRequest
+14 | from utils.logger import get_logger
+   |                          ^^^^^^^^^^
+   |
+help: Remove unused import: `utils.logger.get_logger`
+
+F841 Local variable `status_value` is assigned to but never used
+   --> tools/monday_tool.py:387:9
+    |
+385 |         }
+386 |         
+387 |         status_value = status_mapping.get(status, status.lower())
+    |         ^^^^^^^^^^^^
+388 |         
+389 |         try:
+    |
+help: Remove assignment to unused variable `status_value`
+
+F401 [*] `subprocess` imported but unused
+ --> tools/testing_engine.py:4:8
+  |
+3 | import os
+4 | import subprocess
+  |        ^^^^^^^^^^
+5 | import asyncio
+6 | import json
+  |
+help: Remove unused import: `subprocess`
+
+F401 [*] `tempfile` imported but unused
+ --> tools/testing_engine.py:7:8
+  |
+5 | import asyncio
+6 | import json
+7 | import tempfile
+  |        ^^^^^^^^
+8 | from typing import Any, Dict, List, Optional, Union
+9 | from enum import Enum
+  |
+help: Remove unused import: `tempfile`
+
+F401 [*] `typing.Union` imported but unused
+  --> tools/testing_engine.py:8:47
+   |
+ 6 | import json
+ 7 | import tempfile
+ 8 | from typing import Any, Dict, List, Optional, Union
+   |                                               ^^^^^
+ 9 | from enum import Enum
+10 | from pathlib import Path
+   |
+help: Remove unused import: `typing.Union`
+
+F401 [*] `pathlib.Path` imported but unused
+  --> tools/testing_engine.py:10:21
+   |
+ 8 | from typing import Any, Dict, List, Optional, Union
+ 9 | from enum import Enum
+10 | from pathlib import Path
+   |                     ^^^^
+11 | from pydantic import BaseModel, Field
+   |
+help: Remove unused import: `pathlib.Path`
+
+F401 [*] `models.schemas.TestResult` imported but unused
+  --> tools/testing_engine.py:14:28
+   |
+13 | from .base_tool import BaseTool
+14 | from models.schemas import TestResult
+   |                            ^^^^^^^^^^
+15 |
+16 | from config.settings import get_settings
+   |
+help: Remove unused import: `models.schemas.TestResult`
+
+F821 Undefined name `total_success`
+   --> tools/testing_engine.py:207:24
+    |
+206 |         return {
+207 |             "success": total_success,
+    |                        ^^^^^^^^^^^^^
+208 |             "test_results": all_results,
+209 |             "coverage": coverage_result,
+    |
+
+F821 Undefined name `all_results`
+   --> tools/testing_engine.py:208:29
+    |
+206 |         return {
+207 |             "success": total_success,
+208 |             "test_results": all_results,
+    |                             ^^^^^^^^^^^
+209 |             "coverage": coverage_result,
+210 |             "summary": self._generate_test_summary(all_results),
+    |
+
+F821 Undefined name `all_results`
+   --> tools/testing_engine.py:210:52
+    |
+208 |             "test_results": all_results,
+209 |             "coverage": coverage_result,
+210 |             "summary": self._generate_test_summary(all_results),
+    |                                                    ^^^^^^^^^^^
+211 |             "recommendations": self._generate_recommendations(all_results, coverage_result)
+212 |         }
+    |
+
+F821 Undefined name `all_results`
+   --> tools/testing_engine.py:211:63
+    |
+209 |             "coverage": coverage_result,
+210 |             "summary": self._generate_test_summary(all_results),
+211 |             "recommendations": self._generate_recommendations(all_results, coverage_result)
+    |                                                               ^^^^^^^^^^^
+212 |         }
+    |
+
+F811 [*] Redefinition of unused `Path` from line 10
+   --> tools/testing_engine.py:369:29
+    |
+367 |         ]
+368 |         
+369 |         from pathlib import Path
+    |                             ^^^^ `Path` redefined here
+370 |         working_path = Path(working_directory)
+    |
+   ::: tools/testing_engine.py:10:21
+    |
+  8 | from typing import Any, Dict, List, Optional, Union
+  9 | from enum import Enum
+ 10 | from pathlib import Path
+    |                     ---- previous definition of `Path` here
+ 11 | from pydantic import BaseModel, Field
+    |
+help: Remove definition: `Path`
+
+F841 Local variable `skipped_tests` is assigned to but never used
+   --> tools/testing_engine.py:479:17
+    |
+477 |                 passed_tests = summary.get("passed", 0)
+478 |                 failed_tests = summary.get("failed", 0)
+479 |                 skipped_tests = summary.get("skipped", 0)
+    |                 ^^^^^^^^^^^^^
+480 |                 execution_time = report.get("duration", 0.0)
+481 |                 success = summary.get("failed", 0) == 0
+    |
+help: Remove assignment to unused variable `skipped_tests`
+
+F401 [*] `datetime.datetime` imported but unused
+ --> utils/custom_monitoring.py:4:22
+  |
+3 | import time
+4 | from datetime import datetime
+  |                      ^^^^^^^^
+5 | from typing import Dict, Any, Optional
+6 | from functools import wraps
+  |
+help: Remove unused import: `datetime.datetime`
+
+F401 [*] `typing.Optional` imported but unused
+ --> utils/custom_monitoring.py:5:31
+  |
+3 | import time
+4 | from datetime import datetime
+5 | from typing import Dict, Any, Optional
+  |                               ^^^^^^^^
+6 | from functools import wraps
+  |
+help: Remove unused import: `typing.Optional`
+
+F401 [*] `services.monitoring_service.workflow_monitoring_context` imported but unused
+  --> utils/custom_monitoring.py:9:63
+   |
+ 8 | from models.state import GraphState
+ 9 | from services.monitoring_service import monitoring_dashboard, workflow_monitoring_context
+   |                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from utils.logger import get_logger
+11 | from utils.langsmith_tracing import workflow_tracer
+   |
+help: Remove unused import: `services.monitoring_service.workflow_monitoring_context`
+
+F541 [*] f-string without any placeholders
+   --> utils/github_parser.py:196:25
+    |
+195 |         if old_url and old_url != github_url:
+196 |             logger.info(f"🔄 Repository URL remplacée par celle de la description:")
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+197 |             logger.info(f"   Ancienne: {old_url}")
+198 |             logger.info(f"   Nouvelle: {github_url}")
+    |
+help: Remove extraneous `f` prefix
+
+F811 [*] Redefinition of unused `Optional` from line 6
+  --> utils/helpers.py:6:31
+   |
+ 4 | import hmac
+ 5 | import re
+ 6 | from typing import Any, Dict, Optional
+   |                               -------- previous definition of `Optional` here
+ 7 | from datetime import datetime
+ 8 | import os
+ 9 | import tempfile
+10 | from typing import Optional, Dict, Any
+   |                    ^^^^^^^^ `Optional` redefined here
+11 | from utils.logger import get_logger
+   |
+help: Remove definition: `Optional`
+
+F811 [*] Redefinition of unused `Dict` from line 6
+  --> utils/helpers.py:6:25
+   |
+ 4 | import hmac
+ 5 | import re
+ 6 | from typing import Any, Dict, Optional
+   |                         ---- previous definition of `Dict` here
+ 7 | from datetime import datetime
+ 8 | import os
+ 9 | import tempfile
+10 | from typing import Optional, Dict, Any
+   |                              ^^^^ `Dict` redefined here
+11 | from utils.logger import get_logger
+   |
+help: Remove definition: `Dict`
+
+F811 [*] Redefinition of unused `Any` from line 6
+  --> utils/helpers.py:6:20
+   |
+ 4 | import hmac
+ 5 | import re
+ 6 | from typing import Any, Dict, Optional
+   |                    --- previous definition of `Any` here
+ 7 | from datetime import datetime
+ 8 | import os
+ 9 | import tempfile
+10 | from typing import Optional, Dict, Any
+   |                                    ^^^ `Any` redefined here
+11 | from utils.logger import get_logger
+   |
+help: Remove definition: `Any`
+
+F401 [*] `typing.List` imported but unused
+ --> utils/langsmith_tracing.py:5:41
+  |
+3 | """
+4 |
+5 | from typing import Dict, Any, Optional, List
+  |                                         ^^^^
+6 | from datetime import datetime
+7 | from config.langsmith_config import langsmith_config
+  |
+help: Remove unused import: `typing.List`
+
+F401 [*] `tempfile` imported but unused
+  --> validate_fixes.py:9:8
+   |
+ 7 | import sys
+ 8 | import os
+ 9 | import tempfile
+   |        ^^^^^^^^
+10 | import asyncio
+11 | from typing import Dict, Any
+   |
+help: Remove unused import: `tempfile`
+
+F401 [*] `asyncio` imported but unused
+  --> validate_fixes.py:10:8
+   |
+ 8 | import os
+ 9 | import tempfile
+10 | import asyncio
+   |        ^^^^^^^
+11 | from typing import Dict, Any
+   |
+help: Remove unused import: `asyncio`
+
+F401 [*] `typing.Dict` imported but unused
+  --> validate_fixes.py:11:20
+   |
+ 9 | import tempfile
+10 | import asyncio
+11 | from typing import Dict, Any
+   |                    ^^^^
+12 |
+13 | # Ajouter le répertoire racine au path
+   |
+help: Remove unused import
+
+F401 [*] `typing.Any` imported but unused
+  --> validate_fixes.py:11:26
+   |
+ 9 | import tempfile
+10 | import asyncio
+11 | from typing import Dict, Any
+   |                          ^^^
+12 |
+13 | # Ajouter le répertoire racine au path
+   |
+help: Remove unused import
+
+F401 [*] `utils.helpers.ensure_working_directory` imported but unused
+  --> validate_fixes.py:17:101
+   |
+16 | from utils.github_parser import extract_github_url_from_description, enrich_task_with_description_info
+17 | from utils.helpers import get_working_directory, set_working_directory, validate_working_directory, ensure_working_directory
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: Remove unused import: `utils.helpers.ensure_working_directory`
+
+Found 374 errors.
+[*] 283 fixable with the `--fix` option (29 hidden fixes can be enabled with the `--unsafe-fixes` option).

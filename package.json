@@ -1,0 +1,46 @@
+{
+  "name": "ai-agent",
+  "version": "1.0.0",
+  "description": "Agent d'Automatisation IA avec LangGraph et Monday.com",
+  "main": "main.py",
+  "scripts": {
+    "start": "python3 main.py",
+    "test": "python3 -m pytest tests/",
+    "test:simple": "python3 tests/test_simple_validation.py",
+    "lint": "flake8 .",
+    "format": "black .",
+    "dev": "python3 main.py --dev"
+  },
+  "keywords": [
+    "ai",
+    "automation",
+    "langgraph",
+    "monday.com",
+    "workflow",
+    "python"
+  ],
+  "author": "Smartelia <contact@smartelia.fr>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smartelia/ai-agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smartelia/ai-agent/issues"
+  },
+  "homepage": "https://github.com/smartelia/ai-agent#readme",
+  "engines": {
+    "python": ">=3.8"
+  },
+  "dependencies": {
+    "chrome-devtools-mcp": "^0.10.1"
+  },
+  "directories": {
+    "test": "tests",
+    "doc": "docs"
+  },
+  "config": {
+    "python_version": "3.12",
+    "test_framework": "pytest"
+  }
+}

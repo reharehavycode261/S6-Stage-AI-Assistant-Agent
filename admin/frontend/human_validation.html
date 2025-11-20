@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Humaine - AI Agent</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet">
+    <style>
+        .code-preview {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .urgent-validation {
+            border-left: 4px solid #ef4444;
+            animation: pulse 2s infinite;
+        }
+        .validation-card {
+            transition: all 0.3s ease;
+        }
+        .validation-card:hover {
+            transform: translateY(-2px);
+            shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-900">🤝 Validation Humaine</h1>
+                    <span id="statsRefresh" class="ml-4 text-sm text-gray-500">Dernière mise à jour: <span id="lastUpdate">--</span></span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center bg-blue-50 px-3 py-1 rounded-full">
+                        <span class="text-sm font-medium text-blue-800">En attente: </span>
+                        <span id="pendingCount" class="ml-1 text-sm font-bold text-blue-900">--</span>
+                    </div>
+                    <div class="flex items-center bg-red-50 px-3 py-1 rounded-full">
+                        <span class="text-sm font-medium text-red-800">Urgent: </span>
+                        <span id="urgentCount" class="ml-1 text-sm font-bold text-red-900">--</span>
+                    </div>
+                    <button onclick="refreshValidations()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                        🔄 Actualiser
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Loading State -->
+        <div id="loadingState" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <p class="mt-2 text-gray-600">Chargement des validations...</p>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="text-center py-12 hidden">
+            <div class="text-6xl mb-4">🎉</div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Aucune validation en attente</h3>
+            <p class="text-gray-600">Toutes les validations ont été traitées. Excellent travail !</p>
+        </div>
+
+        <!-- Validations Grid -->
+        <div id="validationsGrid" class="grid gap-6 lg:grid-cols-2 xl:grid-cols-3 hidden">
+            <!-- Les cartes de validation seront insérées ici dynamiquement -->
+        </div>
+    </main>
+
+    <!-- Modal de détails -->
+    <div id="validationModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white">
+            <!-- Header du modal -->
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalTitle" class="text-lg font-medium text-gray-900">Détails de la validation</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <span class="sr-only">Fermer</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Contenu du modal -->
+            <div id="modalContent" class="space-y-6">
+                <!-- Le contenu sera inséré dynamiquement -->
+            </div>
+
+            <!-- Actions du modal -->
+            <div id="modalActions" class="flex justify-end space-x-3 pt-6 border-t">
+                <button onclick="closeModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                    Annuler
+                </button>
+                <button id="rejectBtn" onclick="showRejectForm()" class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">
+                    ❌ Rejeter
+                </button>
+                <button id="approveBtn" onclick="showApproveForm()" class="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700">
+                    ✅ Approuver
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-css.min.js"></script>
+
+    <script>
+        // Configuration de l'API
+        const API_BASE_URL = 'http://localhost:8000/api';
+        let currentValidations = [];
+        let currentValidationId = null;
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshValidations();
+            // Auto-refresh toutes les 30 secondes
+            setInterval(refreshValidations, 30000);
+        });
+
+        // Fonction principale de rafraîchissement
+        async function refreshValidations() {
+            try {
+                showLoading(true);
+                
+                // Récupérer les statistiques
+                const statsResponse = await fetch(`${API_BASE_URL}/validations/stats/summary`);
+                const stats = await statsResponse.json();
+                
+                // Récupérer les validations
+                const validationsResponse = await fetch(`${API_BASE_URL}/validations/pending?include_expired=false`);
+                const validationsData = await validationsResponse.json();
+                
+                currentValidations = validationsData.validations;
+                
+                // Mettre à jour l'interface
+                updateStats(stats);
+                renderValidations(currentValidations);
+                updateLastUpdate();
+                
+                showLoading(false);
+                
+            } catch (error) {
+                console.error('Erreur lors du rafraîchissement:', error);
+                showError('Erreur lors du chargement des validations');
+                showLoading(false);
+            }
+        }
+
+        // Affichage des statistiques
+        function updateStats(stats) {
+            document.getElementById('pendingCount').textContent = stats.pending_validations || 0;
+            document.getElementById('urgentCount').textContent = stats.urgent_validations || 0;
+        }
+
+        // Rendu des validations
+        function renderValidations(validations) {
+            const grid = document.getElementById('validationsGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (!validations || validations.length === 0) {
+                grid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            grid.classList.remove('hidden');
+            
+            grid.innerHTML = validations.map(validation => createValidationCard(validation)).join('');
+        }
+
+        // Création d'une carte de validation
+        function createValidationCard(validation) {
+            const isUrgent = validation.is_urgent;
+            const hasTestFailures = validation.has_test_failures;
+            const timeRemaining = getTimeRemaining(validation.expires_at);
+            
+            return `
+                <div class="validation-card bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg ${isUrgent ? 'urgent-validation' : ''}" 
+                     onclick="openValidationModal('${validation.validation_id}')">
+                    <!-- Header -->
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-1">${validation.task_title}</h3>
+                            <p class="text-sm text-gray-600">ID: ${validation.validation_id}</p>
+                        </div>
+                        <div class="flex flex-col items-end space-y-1">
+                            ${isUrgent ? '<span class="bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">🚨 URGENT</span>' : ''}
+                            ${hasTestFailures ? '<span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">⚠️ Tests</span>' : ''}
+                        </div>
+                    </div>
+                    
+                    <!-- Informations -->
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Fichiers:</span>
+                            <span class="font-medium">${validation.files_count}</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Expiration:</span>
+                            <span class="font-medium ${isUrgent ? 'text-red-600' : 'text-gray-900'}">${timeRemaining}</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Créé:</span>
+                            <span class="font-medium">${formatDate(validation.created_at)}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div class="flex space-x-2">
+                        <button onclick="event.stopPropagation(); openValidationModal('${validation.validation_id}')" 
+                                class="flex-1 bg-blue-600 text-white text-sm py-2 px-3 rounded hover:bg-blue-700 transition-colors">
+                            👁️ Examiner
+                        </button>
+                        ${validation.pr_url ? 
+                            `<a href="${validation.pr_url}" target="_blank" onclick="event.stopPropagation()" 
+                               class="bg-gray-600 text-white text-sm py-2 px-3 rounded hover:bg-gray-700 transition-colors">
+                                🔗 PR
+                            </a>` : ''
+                        }
+                    </div>
+                </div>
+            `;
+        }
+
+        // Ouverture du modal de détails
+        async function openValidationModal(validationId) {
+            try {
+                currentValidationId = validationId;
+                
+                // Récupérer les détails
+                const response = await fetch(`${API_BASE_URL}/validations/${validationId}`);
+                const validation = await response.json();
+                
+                // Remplir le modal
+                document.getElementById('modalTitle').textContent = validation.task_title;
+                
+                const modalContent = document.getElementById('modalContent');
+                modalContent.innerHTML = `
+                    <!-- Informations générales -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-medium text-gray-900 mb-2">Informations générales</h4>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div><span class="font-medium">Type:</span> ${validation.task_type || 'N/A'}</div>
+                            <div><span class="font-medium">Priorité:</span> ${validation.priority || 'N/A'}</div>
+                            <div><span class="font-medium">Repository:</span> <a href="${validation.repository_url || '#'}" target="_blank" class="text-blue-600 hover:underline">${validation.repository_url || 'N/A'}</a></div>
+                            <div><span class="font-medium">Branche:</span> ${validation.git_branch || 'N/A'}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">Description de la tâche</h4>
+                        <p class="text-sm text-gray-700 bg-gray-50 p-3 rounded">${validation.original_request}</p>
+                    </div>
+                    
+                    <!-- Résumé des modifications -->
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">Résumé des modifications</h4>
+                        <pre class="text-sm text-gray-700 bg-gray-50 p-3 rounded whitespace-pre-wrap">${validation.code_summary}</pre>
+                    </div>
+                    
+                    <!-- Code généré -->
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">Code généré (${validation.files_modified.length} fichier(s))</h4>
+                        <div class="space-y-4">
+                            ${Object.entries(validation.generated_code).map(([filename, content]) => `
+                                <div class="border rounded-lg">
+                                    <div class="bg-gray-100 px-4 py-2 border-b">
+                                        <span class="font-medium text-gray-900">${filename}</span>
+                                    </div>
+                                    <div class="code-preview">
+                                        <pre class="text-sm"><code class="language-javascript">${escapeHtml(content)}</code></pre>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <!-- Tests -->
+                    ${validation.test_results ? `
+                        <div>
+                            <h4 class="font-medium text-gray-900 mb-2">Résultats des tests</h4>
+                            <div class="bg-${validation.test_results.success ? 'green' : 'red'}-50 p-3 rounded">
+                                <p class="text-sm text-${validation.test_results.success ? 'green' : 'red'}-800">
+                                    ${validation.test_results.success ? '✅ Tests réussis' : '❌ Tests échoués'}
+                                </p>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <!-- Pull Request -->
+                    ${validation.pr_info ? `
+                        <div>
+                            <h4 class="font-medium text-gray-900 mb-2">Pull Request</h4>
+                            <div class="bg-blue-50 p-3 rounded">
+                                <p class="text-sm text-blue-800">
+                                    PR #${validation.pr_info.number} : <a href="${validation.pr_info.url}" target="_blank" class="font-medium hover:underline">${validation.pr_info.title}</a>
+                                </p>
+                            </div>
+                        </div>
+                    ` : ''}
+                `;
+                
+                // Afficher le modal
+                document.getElementById('validationModal').classList.remove('hidden');
+                
+                // Appliquer la coloration syntaxique
+                setTimeout(() => {
+                    Prism.highlightAll();
+                }, 100);
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des détails:', error);
+                showError('Erreur lors du chargement des détails de la validation');
+            }
+        }
+
+        // Fermeture du modal
+        function closeModal() {
+            document.getElementById('validationModal').classList.add('hidden');
+            currentValidationId = null;
+        }
+
+        // Approbation
+        function showApproveForm() {
+            const comments = prompt('Commentaires d\'approbation (optionnel):');
+            const validatedBy = prompt('Votre nom:') || 'Validateur';
+            
+            if (confirm('Confirmer l\'approbation de cette validation ?')) {
+                approveValidation(currentValidationId, comments, validatedBy);
+            }
+        }
+
+        async function approveValidation(validationId, comments, validatedBy) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/validations/${validationId}/approve`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        validation_id: validationId,
+                        comments: comments,
+                        validated_by: validatedBy
+                    })
+                });
+                
+                if (response.ok) {
+                    showSuccess('Validation approuvée avec succès');
+                    closeModal();
+                    refreshValidations();
+                } else {
+                    const error = await response.json();
+                    showError(error.detail || 'Erreur lors de l\'approbation');
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'approbation:', error);
+                showError('Erreur lors de l\'approbation');
+            }
+        }
+
+        // Rejet
+        function showRejectForm() {
+            const comments = prompt('Raison du rejet (obligatoire):');
+            if (!comments) {
+                alert('Une raison du rejet est obligatoire');
+                return;
+            }
+            
+            const suggestions = prompt('Suggestions d\'amélioration (optionnel):');
+            const validatedBy = prompt('Votre nom:') || 'Validateur';
+            
+            if (confirm('Confirmer le rejet de cette validation ?')) {
+                rejectValidation(currentValidationId, comments, suggestions, validatedBy);
+            }
+        }
+
+        async function rejectValidation(validationId, comments, suggestions, validatedBy) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/validations/${validationId}/reject`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        validation_id: validationId,
+                        comments: comments,
+                        suggested_changes: suggestions,
+                        validated_by: validatedBy
+                    })
+                });
+                
+                if (response.ok) {
+                    showSuccess('Validation rejetée');
+                    closeModal();
+                    refreshValidations();
+                } else {
+                    const error = await response.json();
+                    showError(error.detail || 'Erreur lors du rejet');
+                }
+            } catch (error) {
+                console.error('Erreur lors du rejet:', error);
+                showError('Erreur lors du rejet');
+            }
+        }
+
+        // Fonctions utilitaires
+        function showLoading(show) {
+            document.getElementById('loadingState').classList.toggle('hidden', !show);
+        }
+
+        function showError(message) {
+            alert('Erreur: ' + message);
+        }
+
+        function showSuccess(message) {
+            alert('Succès: ' + message);
+        }
+
+        function updateLastUpdate() {
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+        }
+
+        function getTimeRemaining(expiresAt) {
+            const now = new Date();
+            const expires = new Date(expiresAt);
+            const diff = expires.getTime() - now.getTime();
+            
+            if (diff <= 0) return 'Expiré';
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            if (hours > 0) {
+                return `${hours}h ${minutes}m`;
+            } else {
+                return `${minutes}m`;
+            }
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleString();
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Fermer le modal en cliquant à l'extérieur
+        document.getElementById('validationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html> 

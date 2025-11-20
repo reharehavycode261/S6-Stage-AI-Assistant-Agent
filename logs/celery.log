@@ -1,0 +1,14 @@
+[2025-11-20 09:42:15] WARNING  [celery.redirected:232] [MainProcess] {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T06:42:15.772826Z"}
+[2025-11-20 09:42:15] WARNING  [celery.redirected:232] [MainProcess] {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T06:42:15.774280Z"}
+[2025-11-20 09:42:15] WARNING  [celery.redirected:232] [MainProcess] {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T06:42:15.774460Z"}
+[2025-11-20 09:42:15] INFO     [celery.apps.worker:175] [MainProcess] celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 09:43:18] INFO     [celery.worker.strategy:161] [MainProcess] Task ai_agent_background.execute_workflow[b882e4dd-6ea8-4d42-8d6a-ecb773d6d486] received
+[2025-11-20 09:47:39] WARNING  [celery.redirected:232] [MainProcess] {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T06:47:39.848030Z"}
+[2025-11-20 09:47:39] WARNING  [celery.redirected:232] [MainProcess] {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T06:47:39.848925Z"}
+[2025-11-20 09:47:39] WARNING  [celery.redirected:232] [MainProcess] {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T06:47:39.849194Z"}
+[2025-11-20 09:47:39] INFO     [celery.apps.worker:175] [MainProcess] celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 09:48:26] WARNING  [celery.redirected:232] [MainProcess] {"event": "📊 Logging Celery configuré: logs (env: development)", "level": "info", "timestamp": "2025-11-20T06:48:26.437578Z"}
+[2025-11-20 09:48:26] WARNING  [celery.redirected:232] [MainProcess] {"event": "✅ Logging Celery configuré de manière robuste", "level": "info", "timestamp": "2025-11-20T06:48:26.439135Z"}
+[2025-11-20 09:48:26] WARNING  [celery.redirected:232] [MainProcess] {"event": "📊 Logs: logs (development)", "level": "info", "timestamp": "2025-11-20T06:48:26.439398Z"}
+[2025-11-20 09:48:26] INFO     [celery.apps.worker:175] [MainProcess] celery@MBP130-SMARTELIA-2.local ready.
+[2025-11-20 09:49:35] INFO     [celery.worker.strategy:161] [MainProcess] Task ai_agent_background.execute_workflow[abda42d2-3d79-45cc-8af6-1a3cd68acf10] received

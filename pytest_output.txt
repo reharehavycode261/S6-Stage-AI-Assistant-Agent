@@ -1,0 +1,15 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-7.4.3, pluggy-1.6.0
+rootdir: /Users/stagiaire_vycode/Stage Smartelia/AI-Agent
+plugins: mock-3.15.0, cov-4.1.0, asyncio-0.21.1, anyio-3.7.1
+asyncio: mode=Mode.STRICT
+collected 37 items
+
+tests/test_fixes.py ..s.s                                                [ 13%]
+tests/test_langsmith_integration.py sss                                  [ 21%]
+tests/test_monday_fixes.py ...................                           [ 72%]
+tests/test_monday_validation_fix.py ss.                                  [ 81%]
+tests/integration/test_github_tool.py sssss                              [ 94%]
+tests/integration/test_workflow.py ss                                    [100%]
+
+================= 23 passed, 14 skipped, 56 warnings in 3.13s ==================
